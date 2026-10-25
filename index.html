@@ -55,6 +55,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 .hd{display:flex;justify-content:center;align-items:center;gap:14px;position:relative}.hd>div{text-align:left}#mbtn{position:absolute;right:12px;top:50%;transform:translateY(-50%);margin-left:0}
 .axt{fill:var(--fg);font-weight:800;font-size:23px}@media(max-width:640px){.axt{font-size:15px}}
 .axt .p{font-weight:500;font-size:.68em;fill:var(--mut)}#h1 small.p,.ttl h1 small.p{font-size:.52em;font-weight:500;color:var(--mut);margin-left:.3em}
+@media(max-width:640px){footer{display:none}}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴</button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
@@ -105,7 +106,7 @@ function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
 function draw(){
  const fy=timer?fc:cur;
  const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
- W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-330))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:42,r:8,t:8,b:40}:{l:72,r:20,t:16,b:58};
+ W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-265))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:42,r:8,t:8,b:40}:{l:72,r:20,t:16,b:58};
  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
  const pts=[];let xs=[],ys=[];
  for(const c of Object.keys(CT)){const x=val(X,c,fy),p=val(P,c,fy),y=val(Y,c,fy);
