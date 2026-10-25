@@ -98,11 +98,12 @@ function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  for(const t of k){if(t<y)a=t;else if(t>y){b=t;break}}
  if(a==null||b==null||y-a>5||b-y>5)return null;return o[a]+(o[b]-o[a])*(y-a)/(b-a)}
 function draw(){
+ const fy=timer?fc:cur;
  const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
  W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-330))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:36,r:8,t:8,b:36}:{l:60,r:20,t:16,b:50};
  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
  const pts=[];let xs=[],ys=[];
- for(const c of Object.keys(CT)){const x=val(X,c,cur),p=val(P,c,cur),y=val(Y,c,cur);
+ for(const c of Object.keys(CT)){const x=val(X,c,fy),p=val(P,c,fy),y=val(Y,c,fy);
   if(x&&p&&y!=null)pts.push({c,x,p,y});}
  const allY=[];for(const c in Y)for(const k in Y[c])allY.push(Y[c][k]);
  const allX=[];for(const c in X)for(const k in X[c])allX.push(X[c][k]);
@@ -142,13 +143,14 @@ function draw(){
   el.onmouseleave=()=>$("tip").style.display="none";
   el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
 let spd=1;
-$("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));if(timer){clearInterval(timer);timer=setInterval(step,350/spd)}};
-let wait=false;
-function step(){if(cur>=years.at(-1)){if(!wait){wait=true;setTimeout(()=>{wait=false;if(timer){cur=years[0];$("yr").value=cur;draw()}},1600)}return}cur++;$("yr").value=cur;draw()}
+$("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));};
+let wait=false,fc=0;const MS=1750;
+function step(){const L=years.at(-1);if(fc>=L){if(!wait){wait=true;setTimeout(()=>{wait=false;if(timer){fc=years[0];cur=fc;$("yr").value=cur;draw()}},1600)}return}
+ fc=Math.min(L,fc+50/MS*spd);cur=Math.floor(fc+1e-9);$("yr").value=cur;draw()}
 function go(d){if(!years.length)return;stop();cur=Math.max(years[0],Math.min(years.at(-1),cur+d));$("yr").value=cur;draw()}
 addEventListener("keydown",e=>{if(e.key==="ArrowLeft"){e.preventDefault();go(-1)}else if(e.key==="ArrowRight"){e.preventDefault();go(1)}else if(e.key===" "&&!/BUTTON|SELECT/.test(document.activeElement.tagName)){e.preventDefault();toggle()}});
 function stop(){clearInterval(timer);timer=null;$("play").textContent="▶"}
 function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("play").textContent="❚❚";
- timer=setInterval(step,350/spd)}
+ fc=cur;timer=setInterval(step,50)}
 addEventListener("resize",()=>{if(Y&&ind&&ind.status==="ready")draw()});
 </script></body></html>
