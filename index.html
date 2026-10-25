@@ -2,34 +2,43 @@
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OECD 갭마인더</title>
 <style>
-:root{--bg:#fff;--fg:#111;--mut:#444;--line:#d8d8d8;--card:#fff;color-scheme:light}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.5 -apple-system,"Noto Sans KR",sans-serif}
-.wrap{max-width:1000px;margin:0 auto;padding:16px}
-h1{font-size:28px;margin:0 0 4px}.sub{color:var(--mut);font-size:16px;margin-bottom:12px}
-.ctl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-select,button{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
-.row{display:flex;align-items:center;gap:10px;margin-top:6px}.row input{flex:1}
-#chart{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;display:block}
-.ax{fill:var(--mut);font-size:16px}.grid{stroke:var(--line);stroke-width:1}
-.yr{font-size:110px;font-weight:700;fill:var(--fg);opacity:.1}
-circle{stroke:var(--card);stroke-width:1;cursor:pointer;fill-opacity:.8}circle.sel{stroke:var(--fg);stroke-width:2}
-.lab{font-size:16px;font-weight:600;fill:var(--fg);pointer-events:none}
-#tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:16px;display:none}
-.leg{display:flex;gap:16px;flex-wrap:wrap;font-size:16px;color:var(--mut);margin:8px 0}.leg i{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:4px}
-#msg{color:var(--mut);padding:30px;text-align:center}
-footer{margin-top:20px;font-size:14px;color:var(--mut);text-align:center}footer a{color:inherit}
-</style></head><body><div class="wrap">
-<h1>OECD 갭마인더</h1><div class="sub">OECD 38개국 · X: 1인당 GDP(PPP) · 크기: 인구 · 분류와 지표를 골라 연도별 변화를 보세요</div>
+:root{--bg:#eaf6f3;--fg:#1d2a3a;--mut:#4f5f6f;--line:#d9ece7;--card:#fff;--teal:#2bb8a0;--deep:#0f7a68;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:20px/1.5 -apple-system,"Noto Sans KR","Pretendard",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px}
+.card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+#big{font-size:64px;font-weight:800;line-height:1;letter-spacing:-1px}
+#big small{display:block;font-size:18px;font-weight:500;color:var(--mut);letter-spacing:0;margin-top:4px}
+.ttl{text-align:right}.ttl h1{font-size:34px;margin:0;font-weight:800}.sub{color:var(--mut);font-size:17px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 8px}
+select{font:inherit;font-weight:600;padding:10px 38px 10px 18px;border:2px solid var(--teal);border-radius:999px;background:#f3fbf9;color:var(--fg)}
+.box{border:2px dashed #a9ddd2;border-radius:12px;margin-top:6px}
+#chart{width:100%;height:auto;display:block}
+.ax{fill:var(--mut);font-size:17px}.grid{stroke:var(--line);stroke-width:1.5}
+circle{stroke:#fff;stroke-width:2;cursor:pointer;fill-opacity:.92}circle.sel{stroke:var(--deep);stroke-width:4}
+.lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
+.stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
+.stats .l{color:var(--mut);font-size:17px;font-weight:600}.stats .v{font-size:46px;font-weight:800;line-height:1.1}.v.t{color:var(--deep)}.r{text-align:right}
+.row{display:flex;align-items:center;gap:18px;margin-top:12px}
+#play{width:64px;height:64px;border-radius:50%;border:0;background:var(--teal);color:#fff;font-size:26px;cursor:pointer;flex:none}
+input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
+.leg{display:flex;gap:18px;flex-wrap:wrap;font-size:18px;color:var(--mut);margin-top:10px}.leg i{display:inline-block;width:16px;height:16px;border-radius:50%;margin-right:6px;vertical-align:-2px}
+#tip{position:fixed;pointer-events:none;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:10px 14px;font-size:18px;display:none}
+#msg{color:var(--mut);padding:60px 10px;text-align:center}
+.src{font-size:15px;color:var(--mut);margin-top:10px}
+footer{margin-top:18px;font-size:15px;color:var(--mut);text-align:center}footer a{color:inherit}
+@media(max-width:640px){body{font-size:17px}#big{font-size:44px}.ttl h1{font-size:24px}.card{padding:14px;border-width:4px;border-radius:24px}.stats .v{font-size:32px}}
+</style></head><body><div class="wrap"><div class="card">
+<div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><h1>OECD 갭마인더</h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
 <div class="ctl"><select id="cat"></select><select id="ind"></select></div>
-<div id="msg" hidden></div>
-<svg id="chart" viewBox="0 0 960 560"></svg>
-<div class="row"><button id="play">▶ 재생</button><input id="yr" type="range"><b id="yv"></b></div>
-<div class="leg" id="leg"></div><div id="tip"></div>
-<footer>데이터: OECD, World Bank · <b>Lloyd's balcony lab</b> · with claude · <a href="https://github.com/lloydknam">GitHub(@lloydknam)</a></footer>
-</div>
+<div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 520"></svg></div>
+<div class="stats"><div><div class="l" id="l1"></div><div class="v" id="v1">—</div></div><div class="r"><div class="l" id="l2"></div><div class="v t" id="v2">—</div></div></div>
+<div class="row"><button id="play">▶</button><input id="yr" type="range"></div>
+<div class="leg" id="leg"></div><div class="src">출처: OECD · World Bank (1인당 GDP·인구) · 선·점 위에 마우스를 올리면 값이 보입니다</div>
+</div><footer><b>Lloyd's balcony lab</b> · with claude · <a href="https://github.com/lloydknam">GitHub(@lloydknam)</a></footer></div><div id="tip"></div>
 <script>
-const COL={"유럽":"#4e79a7","아시아":"#e15759","북미":"#59a14f","중남미":"#f28e2b","오세아니아":"#b07aa1"};
-const M={l:78,r:20,t:20,b:56},W=960,H=560;
+const COL={"유럽":"#9cc3f5","아시아":"#f7a3b5","북미":"#9edcb8","중남미":"#fbcf8f","오세아니아":"#c9b0ec"};
+const M={l:96,r:20,t:16,b:62},W=960,H=520;
 let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
@@ -51,7 +60,8 @@ async function load(){stop();sel=null;
  catch(e){svg.style.display="none";msg.hidden=false;msg.textContent="data/ 폴더에 데이터가 없습니다. GitHub Actions의 update-data를 먼저 실행하세요.";return}
  msg.hidden=true;svg.style.display="block";
  const ys=new Set();Object.values(Y).forEach(o=>Object.keys(o).forEach(y=>ys.add(+y)));
- years=[...ys].sort((a,b)=>a-b);const s=$("yr");s.min=years[0];s.max=years.at(-1);s.step=1;s.value=cur=years.at(-1);draw()}
+ years=[...ys].sort((a,b)=>a-b);const s=$("yr");s.min=years[0];s.max=years.at(-1);s.step=1;const cnt={};Object.values(Y).forEach(o=>Object.keys(o).forEach(y=>cnt[y]=(cnt[y]||0)+1));const mx=Math.max(...Object.values(cnt));
+ s.value=cur=[...years].reverse().find(y=>cnt[y]>=mx*.8)||years.at(-1);draw()}
 function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  const k=Object.keys(o).map(Number).sort((a,b)=>a-b);let a=null,b=null;
  for(const t of k){if(t<y)a=t;else if(t>y){b=t;break}}
@@ -69,21 +79,26 @@ function draw(){
  const pm=Math.max(...Object.values(P).flatMap(o=>Object.values(o)));
  const sr=p=>3+Math.sqrt(p/pm)*38;
  let h="";
- const xt=[2000,5000,10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
+ const xt=[10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
  xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+22}" text-anchor="middle">${v.toLocaleString()}</text>`);
  const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-6}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
- h+=`<text class="ax" x="${W/2}" y="${H-8}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="18" y="${H/2}" transform="rotate(-90 18 ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
- h+=`<text class="yr" x="${W-M.r-10}" y="${H-M.b-14}" text-anchor="end">${cur}</text>`;
+ h+=`<text class="ax" x="${W/2}" y="${H-8}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="16" y="${H/2}" transform="rotate(-90 16 ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
+
  pts.sort((a,b)=>b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="${COL[CT[d.c][1]]}"/>`;
   if(f||d.p>pm*.08||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
- svg.innerHTML=h;$("yv").textContent=cur;
+ svg.innerHTML=h;
+ $("big").firstChild.textContent=cur;$("bigsub").textContent=ind.name+" ("+ind.unit+")";
+ const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
+ $("l1").textContent="OECD 단순평균 ("+pts.length+"개국)";$("v1").textContent=avg.toFixed(1)+" "+ind.unit;
+ const ko=[...pts].sort((a,b)=>b.y-a.y).findIndex(d=>d.c==="KOR"),kd=pts.find(d=>d.c==="KOR");
+ $("l2").textContent="한국"+(ko>=0?" · "+(ko+1)+"위(높은 순)":"");$("v2").textContent=kd?kd.y.toFixed(1)+" "+ind.unit:"—";
  svg.querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
   el.onmousemove=e=>{const t=$("tip");t.style.display="block";t.style.left=e.clientX+12+"px";t.style.top=e.clientY+12+"px";
    t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${d.y.toFixed(1)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`};
   el.onmouseleave=()=>$("tip").style.display="none";
   el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
-function stop(){clearInterval(timer);timer=null;$("play").textContent="▶ 재생"}
-function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("play").textContent="❚❚ 정지";
+function stop(){clearInterval(timer);timer=null;$("play").textContent="▶"}
+function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("play").textContent="❚❚";
  timer=setInterval(()=>{if(cur>=years.at(-1))return stop();cur++;$("yr").value=cur;draw()},350)}
 </script></body></html>
