@@ -1,0 +1,177 @@
+OECD.CTP.TPS	DSD_ECR@DF_SEP	1.0	Shares of CO2 emissions from energy priced
+OECD.CTP.TPS	DSD_REF_GLOBAL@DF_REFSERIES_GLOBAL	2.0	Global Revenue Statistics - Reference series
+OECD.CTP.TPS	DSD_REF_OECD@DF_REFSERIES_OECD	2.0	Revenue Statistics in OECD member countries - Reference series
+OECD.CTP.TPS	DSD_REV_COMP_GLOBAL@DF_RSGLOBAL	2.1	Global Revenue Statistics - Comparative tax revenues
+OECD.CTP.TPS	DSD_REV_COMP_OECD@DF_RSOECD	2.0	Revenue Statistics in OECD member countries - Comparative tax revenues
+OECD.CTP.TPS	DSD_TAX_WAGES_DECOMP@DF_TW_DECOMP	2.1	Labour taxation – tax wedge decompositions
+OECD.DAF.CM	DSD_FP@DF_BC	1.0	Benefit payments and contributions to asset-backed pensions
+OECD.DAF.CM	DSD_FP@DF_FPS	1.0	Asset-backed pensions - main database
+OECD.DAF.CM	DSD_FP@DF_MB	1.0	Pension plan membership
+OECD.DAF.CM	DSD_FP@DF_OC	1.0	Operating costs of asset-backed pensions
+OECD.DAF.CM	DSD_FP@DF_SPS	1.0	Structure of asset-backed pensions
+OECD.DAF.CM	DSD_FP@DF_WI	1.0	Asset allocation of pension funds and other pension providers
+OECD.DCD.FSD	DSD_GDFF@DF_IND	1.0	GNI and population indicators by ODA recipient country
+OECD.DEV.LAC	DSD_KIIBIH@DF_B10	1.0	Households with workers living with less than international poverty line by household formality
+OECD.DEV.LAC	DSD_KIIBIH@DF_B11	1.0	Workers living with less than the national poverty line by worker formality
+OECD.DEV.LAC	DSD_KIIBIH@DF_B12	1.0	Workers living with less than the international poverty line by worker formality, gender and status in employment
+OECD.DEV.LAC	DSD_KIIBIH@DF_B14	1.0	Households with at least one member benefiting from a pension by household informality
+OECD.DEV.LAC	DSD_KIIBIH@DF_B17	1.0	Health expenditure as share of household expenditure by household informality
+OECD.DEV.LAC	DSD_KIIBIH@DF_B20	1.0	Workers by formality status gender and hours worked
+OECD.DEV.LAC	DSD_KIIBIH@DF_B26	1.0	Workers contributing to pension by worker formality and gender
+OECD.DEV.LAC	DSD_KIIBIH@DF_B28	1.0	Population living with less than the international poverty line by household formality and gender
+OECD.DEV.LAC	DSD_KIIBIH@DF_B6	1.0	Population by urbanisation level and household informality
+OECD.DEV.LAC	DSD_KIIBIH@DF_B7	1.0	Population by households informality and welfare quintile
+OECD.DEV.LAC	DSD_KIIBIH_POV@DF_POV	1.1	Household and working poverty
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_DISTR_MEDIAN	1.0	Earners distribution based on their level of earnings relative to the overall median, by age group, gender and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_FIELD	1.0	Earnings differences by field of study among tertiary-educated workers, by age group, gender and level of tertiary educational attainment
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_REL_BEL	1.0	Earnings of workers relative to the earnings of workers with below upper secondary educational attainment, by age group, gender and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_REL_MALE	1.0	Earnings differences by gender, by age group and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_REL_NATIVE	1.0	Earnings differences by country of birth and age at migration, by age group, gender and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_REL_UPPER	1.0	Earnings of workers relative to the earnings of workers with upper secondary educational attainment, by age group, gender and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_EARN_REL_YAD	1.0	Earnings of workers relative to the earnings of 25-34 year-olds, by age group, gender and educational attainment level
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_ALL	1.0	National Educational Attainment Classification (NEAC) and labour market status (full dataset)
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_DURUNEMP	1.0	Duration of unemployment distribution among unemployed adults, by educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_EA	1.0	Adults' educational attainment distribution, by age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_EA_FIELD	1.0	Field of study distribution of tertiary-educated adults, by level of tertiary educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_EA_MIGR	1.0	Adults' educational attainment distribution, by country of birth, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_GENDER	1.0	Adults' gender distribution, by educational attainment level and age group
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_DISTR_MIGR	1.0	Adults' migration status distribution, by educational attainment level, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_EMP	1.0	Employment rates of adults, by educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_EMP_FIELD	1.0	Employment rates of tertiary-educated adults, by field of study, tertiary educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_EMP_MIGR	1.0	Employment rates of adults, by educational attainment, age group, gender, country of birth and age at migration
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_INAC	1.0	Inactivity rates of adults, by educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_INAC_FIELD	1.0	Inactivity rates of tertiary-educated adults, by field of study, tertiary educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_INAC_MIGR	1.0	Inactivity rates of adults, by educational attainment, age group, gender, country of birth and age at migration
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_LF	1.0	Labour force participation rates of adults, by educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_UNEMP	1.0	Unemployment rates of adults, by educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_UNEMPLOYED	1.0	Share of unemployed adults among all adults, by educational attainment level, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_UNEMP_FIELD	1.0	Unemployment rates of tertiary-educated adults, by field of study, tertiary educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_NEAC_UNEMP_MIGR	1.0	Unemployment rates of adults, by educational attainment, age group, gender, country of birth and age at migration
+OECD.EDU.IMEP	DSD_EAG_LSO_EA@DF_LSO_TRANS	1.0	Distribution of young adults' education and work status, for a given level of educational attainment, age group and gender
+OECD.EDU.IMEP	DSD_EAG_SAL_ACT@DF_EAG_SAL_ACT_SCH_REL	1.1	School heads' actual salary relative to earnings of tertiary-educated workers
+OECD.EDU.IMEP	DSD_EAG_SAL_ACT@DF_EAG_SAL_ACT_TCH_REL	1.1	Teachers' actual salary relative to earnings of tertiary-educated workers
+OECD.EDU.IMEP	DSD_EAG_SAL_STA@DF_EAG_SAL_STA_SCH_REL	1.1	School heads' statutory salary relative to earnings of tertiary-educated workers
+OECD.EDU.IMEP	DSD_EAG_SAL_STA@DF_EAG_SAL_STA_TCH_REL	1.1	Teachers' statutory salary relative to earnings of tertiary-educated workers
+OECD.EDU.IMEP	DSD_EAG_UOE_NON_FIN_STUD@DF_UOE_NF_NAT_MOB	1.1	Share of national tertiary students enrolled abroad
+OECD.EDU.IMEP	DSD_EAG_UOE_NON_FIN_STUD@DF_UOE_NF_NR_NAT_ABROAD	1.1	Number of national tertiary students enrolled abroad
+OECD.EDU.IMEP	DSD_EAG_UOE_NON_FIN_STUD@DF_UOE_NF_SHARE_FIRST	1.1	Share of new entrants to and first-time graduates at tertiary education
+OECD.EDU.IMEP	DSD_EAG_UOE_NON_FIN_STUD@DF_UOE_NF_SHARE_MOB_DEST	1.1	Share of mobile students enrolled at tertiary level by country of destination
+OECD.EDU.IMEP	DSD_EAG_UOE_NON_FIN_STUD@DF_UOE_NF_SHARE_MOB_ORG	1.1	Share of mobile students enrolled at tertiary level by country of origin
+OECD.ELS.HD	DSD_GHGHC@DF_GHGHC	1.0	Greenhouse gas emissions in the healthcare sector
+OECD.ELS.HD	DSD_HEALTH_EMP_REAC@DF_PHYS	1.1	Physicians
+OECD.ELS.HD	DSD_HEALTH_EMP_REAC@DF_PHYS_AGE_SEX	1.1	Physicians by age and sex
+OECD.ELS.HD	DSD_HEALTH_EMP_REAC@DF_PHYS_CAT	1.1	Physicians by categories
+OECD.ELS.HD	DSD_HEALTH_LVNG@DF_HEALTH_LVNG_AC	1.0	Alcohol consumption
+OECD.ELS.HD	DSD_HEALTH_REAC_EMP@DF_NURSE	1.1	Nurses
+OECD.ELS.HD	DSD_HEALTH_REAC_EMP@DF_NURS_AGE_SEX	1.1	Nurses by age and sex
+OECD.ELS.HD	DSD_HEALTH_REAC_HOSP@DF_BEDS_FUNC	1.1	Hospital beds by function of healthcare
+OECD.ELS.HD	DSD_HEALTH_REAC_HOSP@DF_BEDS_SECT	1.1	Hospital beds by sector
+OECD.ELS.HD	DSD_HEALTH_STAT@DF_AM	1.1	Avoidable mortality
+OECD.ELS.HD	DSD_HEALTH_STAT@DF_LE	1.1	Life expectancy
+OECD.ELS.HD	DSD_HEALTH_STAT@DF_MIM	1.1	Maternal and infant mortality
+OECD.ELS.HD	DSD_SHA@DF_SHA	1.1	Health expenditure and financing
+OECD.ELS.IMD	DSD_MIG@DF_MIG	1.0	International migration database
+OECD.ELS.IMD	DSD_MIG@DF_MIG_EMP_EDU	1.0	Labour market outcomes of immigrants - Employment rates by educational attainment
+OECD.ELS.IMD	DSD_MIG_F@DF_MIG_POPF	1.0	International migration database - stocks of foreign-born population
+OECD.ELS.JAI	DSD_TAXBEN_HOURSPOV@DF_HOURSPOV	1.0	Hours of work needed to escape poverty
+OECD.ELS.JAI	DSD_TAXBEN_IMW@DF_IMW	1.0	Annual net and gross earnings of minimum wage earners
+OECD.ELS.SAE	DSD_EARNINGS@AV_AN_WAGE	1.0	Average annual wages
+OECD.ELS.SAE	DSD_EARNINGS@MW_CURP	1.0	Minimum wages at current prices in national currency units (NCU)
+OECD.ELS.SAE	DSD_EARNINGS@RMW	1.0	Real minimum wages at constant prices
+OECD.ELS.SAE	DSD_HW@DF_AVG_USL_WK_WKD	1.0	Average usual weekly hours worked on the main job
+OECD.ELS.SAE	DSD_HW@DF_EMP_LNG_USL_WK_HRS	1.0	Incidence of employment by long usual weekly hours worked
+OECD.ELS.SAE	DSD_HW@DF_EMP_USL_WK_HRS	1.0	Incidence of employment by usual weekly hours worked
+OECD.ELS.SAE	DSD_HW@DF_USL_WK_HRS	1.0	Usual hours worked by weekly hour bands
+OECD.ELS.SAE	DSD_POPULATION@DF_POP_ALL	1.0	Population data
+OECD.ELS.SAE	DSD_POPULATION@DF_POP_HIST	1.0	Historical population data
+OECD.ELS.SAE	DSD_POPULATION@DF_POP_PROJ	1.0	Population projections
+OECD.ELS.SAE	DSD_TUD_CBC@DF_CBC	1.0	Collective bargaining coverage
+OECD.ELS.SAE	DSD_TUD_CBC@DF_TUD	1.0	Trade union density
+OECD.ELS.SPD	DSD_PAG@DF_DPS	1.0	Design of pension systems
+OECD.ELS.SPD	DSD_PAG@DF_IPOP	1.0	Income and poverty of older people
+OECD.ELS.SPD	DSD_PAG@DF_PAG	1.0	Pensions at a glance
+OECD.ELS.SPD	DSD_PAG@DF_PRR	1.0	Pension replacement rates
+OECD.ELS.SPD	DSD_PAG@DF_PW	1.0	Pension wealth
+OECD.ELS.SPD	DSD_SOCX_AGG@DF_NET_GDP	1.0	Net total social expenditure in % GDP
+OECD.ELS.SPD	DSD_SOCX_AGG@DF_PUB_OLD	1.0	Public expenditure on old-age and survivors cash benefits in % GDP
+OECD.ELS.SPD	DSD_SOCX_AGG@DF_PUB_PRV	1.0	Public and private social expenditure
+OECD.ELS.SPD	DSD_SOCX_AGG@DF_SOCX_AGG	1.0	Social expenditure aggregates
+OECD.ENV.EEI	DSD_GHG_PLC@DF_GHG_PLC	1.0	Greenhouse gas emissions from Plastic Lifecycle from 2015 to 2019
+OECD.ENV.EEI	DSD_GHG_PLC_P@DF_GHG_PLC_P	1.0	Projections of Greenhouse Gas Emissions from Plastic Lifecycle
+OECD.ENV.EPI	DSD_AIR_GHG@DF_AIR_GHG	1.0	Air emissions - Greenhouse gas emissions Inventories
+OECD.ENV.EPI	DSD_AIR_POL@DF_AIR_POLL	1.0	Exposure to air pollution
+OECD.ENV.EPI	DSD_MUNW@DF_MUNW	1.0	Waste - Municipal waste: generation and treatment
+OECD.ENV.EPI	DSD_PAT_COL@DF_PAT_COL	1.0	Patents - international bilateral collaboration in technology development
+OECD.ENV.EPI	DSD_PAT_COL_RATES@DF_PAT_COL_RATES	1.0	Patents - international collaboration in technology development
+OECD.ENV.EPI	DSD_PAT_DEV@DF_PAT_DEV	1.0	Patents - technology development
+OECD.ENV.EPI	DSD_PAT_DIFF@DF_PAT_DIFF	1.0	Patents - technology diffusion
+OECD.ENV.EPI	DSD_PAT_IND@DF_PAT_IND	1.0	Patents - indicators
+OECD.GOV.GIP	DSD_GOV_FIN_INSTR@DF_GOV_FIN_INSTR_2023	1.0	Government debt by financial instrument - Government at a glance indicators, 2023 edition
+OECD.GOV.GIP	DSD_GOV_FIN_INSTR@DF_GOV_FIN_INSTR_2025	1.0	Government debt by financial instrument - government at a glance indicators, 2025 edition
+OECD.GOV.GIP	DSD_GOV_FIN_INSTR@DF_GOV_FIN_INSTR_YU	1.0	Government debt by financial instrument - government at a glance indicators, yearly updates
+OECD.SDD.NAD	DSD_EGDNA_CONS_HHT@DF_CONS_HHT	1.0	Household consumption in the National Accounts: distributions by household type
+OECD.SDD.NAD	DSD_EGDNA_CONS_INC@DF_CONS_INC	1.0	Household consumption in the National Accounts: distributions by income quintile
+OECD.SDD.NAD	DSD_EGDNA_CONS_MSI@DF_CONS_MSI	1.0	Household consumption in the National Accounts: distributions by main source of income
+OECD.SDD.NAD	DSD_EGDNA_INC_HHT@DF_INC_HHT	1.0	Household income and saving in the National Accounts: distributions by household type
+OECD.SDD.NAD	DSD_EGDNA_INC_INC@DF_INC_INC	1.0	Household income and saving in the National Accounts: distributions by income quintile
+OECD.SDD.NAD	DSD_EGDNA_INC_MSI@DF_INC_MSI	1.0	Household income and saving in the National Accounts: distributions by main source of income
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC	1.0	Annual Distributional National Accounts: Socio-demographic characteristics
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_AGE	1.0	Population in the National Accounts: distribution of people in income quintiles by age
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_EDUCATION	1.0	Population in the National Accounts: distribution of people in income quintiles by educational attainment level
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_GENDER	1.0	Population in the National Accounts: distribution of people in income quintiles by sex
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_HHGROUP	1.0	Population in the National Accounts: distributions by household type
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_HHOWN	1.0	Population in the National Accounts: distribution of households in income quintiles by home ownership status
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_HHTYPE	1.0	Population in the National Accounts: distribution of households in income quintiles by household type
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_LABOUR	1.0	Population in the National Accounts: distribution of people in income quintiles by labour market status
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_MAININC	1.0	Population in the National Accounts: distributions by main source of income
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_MSI	1.0	Annual Distributional National Accounts: Socio-demographic characteristics: Disposable income group by main source of income
+OECD.SDD.NAD	DSD_EGDNA_SOCDEM@DF_SOCIODEMOGRAPHIC_QUINTILES	1.0	Population in the National Accounts: distributions of income quintiles by socio-demographic groups
+OECD.SDD.NAD	DSD_NAMAIN10@DF_TABLE3	2.0	Annual employment and population (for 'Developer API')
+OECD.SDD.NAD	DSD_NAMAIN10@DF_TABLE3_POP_EMPNC	2.0	Annual population and employment, national concept
+OECD.SDD.NAD	DSD_NAMAIN1@DF_QNA	1.1	Quarterly National Accounts (for 'Developer API')
+OECD.SDD.NAD	DSD_NAMAIN1@DF_QNA_EXPENDITURE_CAPITA	1.1	Quarterly GDP per capita
+OECD.SDD.NAD	DSD_NAMAIN1@DF_QNA_POP_EMPNC	1.1	Quarterly population and employment, national concept
+OECD.SDD.NAD	DSD_NAPENS@DF_TABLE29	1.0	Social insurance pensions
+OECD.SDD.NAD	DSD_NAPENS_IDC@DF_TABLE29_IDC	1.0	Social insurance pensions International Transfer
+OECD.SDD.NAD	DSD_PSD_D1D4@DF_PSD_D1D4	1.0	Government debt by instrument coverage
+OECD.SDD.NAD.SEEA	DSD_MARITIME_TRANSPORT@DF_MARITIME_TRANSPORT	2.0	Maritime transport CO2 emissions (experimental)
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_EMP_ISIC4_Q	1.0	Employed population by economic activity
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_EMP_Q	1.0	Employed population by age groups
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_EMP_WAP_Q	1.0	Employment rate
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_LF_Q	1.0	Labour force population
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_OLF_WAP_Q	1.0	Population outside the labour force
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_UNE_M	1.0	Monthly unemployment rates
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_UNE_Q	1.0	Unemployed population
+OECD.SDD.TPS	DSD_LFS@DF_IALFS_WAP_Q	1.0	Working-age population
+OECD.SDD.TPS	DSD_PDB@DF_PDB_LV	1.0	Productivity levels
+OECD.SDD.TPS	DSD_PRICES@DF_PRICES_N_CP01	1.0	National CPI, Growth rate over one year, All countries, Food and non-alcoholic beverages, COICOP 1999
+OECD.SDD.TPS	DSD_PRICES_COICOP2018@DF_PRICES_C2018_N_CP01	1.0	National CPI, Growth rate over one year, All countries, Food and non-alcoholic beverages, COICOP 2018
+OECD.STI.DEP	DSD_BB_DATABASE@DF_BB_TEL_DATABASE	2.0	Broadband and telecom databases
+OECD.STI.PIE	DSD_ICIO_GHG_EXPD@DF_ICIO_GHG_EXPD_2023	1.0	Greenhouse Gas Footprints (GHGFP): Emissions embodied in final demand by expenditure category
+OECD.STI.PIE	DSD_ICIO_GHG_EXPD_2025@DF_ICIO_GHG_EXPD_2025	1.0	Greenhouse Gas Footprints (GHGFP) 2025 edition: Emissions embodied in final demand by expenditure category
+OECD.STI.PIE	DSD_ICIO_GHG_MAIN@DF_ICIO_GHG_MAIN_2023	1.0	Greenhouse Gas Footprints (GHGFP): Principal indicators
+OECD.STI.PIE	DSD_ICIO_GHG_MAIN_2025@DF_ICIO_GHG_MAIN_2025	1.0	Greenhouse Gas Footprints (GHGFP) 2025 edition: Principal indicators
+OECD.STI.PIE	DSD_ICIO_GHG_ORGN@DF_ICIO_GHG_ORGN_2023	1.0	Greenhouse Gas Footprints (GHGFP): Origin of emissions embodied in final demand
+OECD.STI.PIE	DSD_ICIO_GHG_ORGN_2025@DF_ICIO_GHG_ORGN_2025	1.0	Greenhouse Gas Footprints (GHGFP) 2025 edition: Origin of emissions embodied in final demand
+OECD.STI.PIE	DSD_ICIO_GHG_SCOPE@DF_ICIO_GHG_SCOPE_2023	1.0	Greenhouse Gas Footprints (GHGFP): Emissions embodied in production by scope
+OECD.STI.PIE	DSD_ICIO_GHG_SCOPE_2025@DF_ICIO_GHG_SCOPE_2025	1.0	Greenhouse Gas Footprints (GHGFP) 2025 edition: Emissions embodied in production by scope
+OECD.STI.PIE	DSD_ICIO_GHG_TRADE@DF_ICIO_GHG_TRADE_2023	1.0	Greenhouse Gas Footprints (GHGFP): Emissions embodied in bilateral trade
+OECD.STI.PIE	DSD_ICIO_GHG_TRADE_2025@DF_ICIO_GHG_TRADE_2025	1.0	Greenhouse Gas Footprints (GHGFP) 2025 edition: Emissions embodied in bilateral trade
+OECD.STI.PIE	DSD_PATENTS@DF_PATENTS	1.0	Patents by technology
+OECD.STI.PIE	DSD_PATENTS@DF_PATENTS_COINVENTOR	1.0	Patents with foreign co-inventors
+OECD.STI.PIE	DSD_PATENTS@DF_PATENTS_ENVIROMENT	1.0	Environment-related technologies patents
+OECD.STI.PIE	DSD_PATENTS@DF_PATENTS_OECDSPECIFIC	1.0	Patents in OECD selected technologies
+OECD.STI.PIE	DSD_PATENTS@DF_PATENTS_WIPO	1.0	Patents by WIPO technology domains
+OECD.STI.STP	DSD_INNOSTAT@DF_INNOEMPUD	1.0	Innovation-active enterprises by share of employees with tertiary education
+OECD.STI.STP	DSD_MSTI@DF_MSTI	1.3	Main Science and Technology Indicators (MSTI database)
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_FORD	1.0	Gross domestic expenditure on R&D by sector of performance and field of R&D
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_REG	1.0	Gross domestic expenditure on R&D by sector of performance and region
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_SEO	1.0	Gross domestic expenditure on R&D by sector of performance and socio-economic objectives
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_SOF	1.0	Gross domestic expenditure on R&D by sector of performance and source of funds
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_TOE	1.0	Gross domestic expenditure on R&D by sector of performance and type of expenditure
+OECD.STI.STP	DSD_RDS_GERD@DF_GERD_TORD	1.0	Gross domestic expenditure on R&D by sector of performance and type of R&D
+OECD.TAD.ARP	DSD_AGRI_ENV@DF_AGGHGSEM	1.2	Agricultural greenhouse gases emissions
+OECD.WISE.INE	DSD_WISE_IDD@DF_IDD	1.0	Income distribution database
+OECD.WISE.RSB	DSD_SDG@DF_SDG_G_1	2.0	Sustainable Development Goal 01 - No poverty
+OECD.WISE.RSB	DSD_SDG@DF_SDG_G_10	2.0	Sustainable Development Goal 10 - Reduced inequality
+OECD.WISE.WDP	DSD_HSL@DF_HSL_CWB_INEQ	1.1	Current well-being vertical inequality
