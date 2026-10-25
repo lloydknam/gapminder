@@ -49,14 +49,14 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 지표 메뉴</button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
-<div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 520"></svg></div>
+<div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 640"></svg></div>
 <div class="stats"><div><div class="l" id="l1"></div><div class="v" id="v1">—</div></div><div class="r"><div class="l" id="l2"></div><div class="v t" id="v2">—</div></div></div>
 <div class="row"><button id="play">▶</button><input id="yr" type="range"></div>
 <div class="leg" id="leg"></div><div class="src">출처: OECD · World Bank (1인당 GDP·인구) · 선·점 위에 마우스를 올리면 값이 보입니다</div>
 </div><footer><a href="https://github.com/lloydknam" target="_blank" rel="noopener"><img src="assets/brand/lockup-light.svg" alt="Lloyd's balcony lab · with claude · GitHub(@lloydknam)" height="48"></a></footer></div></main></div><div id="tip"></div>
 <script>
 const COL={"유럽":"#9cc3f5","아시아":"#f7a3b5","북미":"#9edcb8","중남미":"#fbcf8f","오세아니아":"#c9b0ec"};
-const M={l:96,r:20,t:16,b:62},W=960,H=520;
+const M={l:96,r:20,t:16,b:62},W=960,H=640;
 let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
@@ -107,7 +107,16 @@ function draw(){
 
  pts.sort((a,b)=>b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="${COL[CT[d.c][1]]}"/>`;
-  if(f||d.p>pm*.2||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
+  });
+ const placed=[],ov=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+ const order=[...pts].sort((a,b)=>(b.c==="KOR")-(a.c==="KOR")||(b.c===sel)-(a.c===sel)||b.p-a.p);
+ order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=d.c==="KOR"||d.c===sel?20:16,w=nm.length*fs*1.02+4,hh=fs+2;
+  const cands=[];for(const k of [0,1,2,3,4]){const o=k*20;cands.push([cx-w/2,cy-r-hh-1-o],[cx-w/2,cy+r+2+o],[cx+r+3+o,cy-hh/2],[cx-r-3-w-o,cy-hh/2],[cx+r+3+o,cy-hh-o/2],[cx-r-3-w-o,cy-hh-o/2],[cx+r+3+o,cy+o/2],[cx-r-3-w-o,cy+o/2])}
+  let best=null,bs=1e9;
+  for(const [x,y] of cands){const b={x:Math.max(M.l,Math.min(W-M.r-w,x)),y:Math.max(2,Math.min(H-M.b-hh,y)),w,h:hh};const sc=placed.filter(q=>ov(b,q)).length;if(sc<bs){bs=sc;best=b}if(!sc)break}
+  const lx=best.x+w/2,ly=best.y+hh/2;if(Math.hypot(lx-cx,ly-cy)>r+hh+4)h+=`<line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly}" stroke="#7a8896" stroke-width="1"/>`;
+  placed.push(best);
+  h+=`<text class="lab" style="font-size:${fs}px" x="${best.x+w/2}" y="${best.y+hh-4}" text-anchor="middle">${nm}</text>`});
  svg.innerHTML=h;
  $("big").firstChild.textContent=cur;$("bigsub").textContent="단위: "+ind.unit;
  const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
