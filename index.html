@@ -91,7 +91,8 @@ async function load(){stop();sel=null;
  msg.hidden=true;svg.style.display="block";
  const ys=new Set();Object.values(Y).forEach(o=>Object.keys(o).forEach(y=>ys.add(+y)));
  years=[...ys].sort((a,b)=>a-b);const s=$("yr");s.min=years[0];s.max=years.at(-1);s.step=1;const cnt={};Object.values(Y).forEach(o=>Object.keys(o).forEach(y=>cnt[y]=(cnt[y]||0)+1));const mx=Math.max(...Object.values(cnt));
- s.value=cur=[...years].reverse().find(y=>cnt[y]>=mx*.8)||years.at(-1);draw()}
+ s.value=cur=[...years].reverse().find(y=>cnt[y]>=mx*.8)||years.at(-1);draw();
+ if(!matchMedia("(prefers-reduced-motion: reduce)").matches){cur=years[0];s.value=cur;draw();toggle()}}
 function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  const k=Object.keys(o).map(Number).sort((a,b)=>a-b);let a=null,b=null;
  for(const t of k){if(t<y)a=t;else if(t>y){b=t;break}}
