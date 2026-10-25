@@ -2,23 +2,22 @@
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OECD 갭마인더</title>
 <style>
-:root{--bg:#fafaf7;--fg:#222;--mut:#777;--line:#ddd;--card:#fff}
-@media(prefers-color-scheme:dark){:root{--bg:#16171a;--fg:#eee;--mut:#999;--line:#333;--card:#1e2024}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,"Noto Sans KR",sans-serif}
+:root{--bg:#fff;--fg:#111;--mut:#444;--line:#d8d8d8;--card:#fff;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.5 -apple-system,"Noto Sans KR",sans-serif}
 .wrap{max-width:1000px;margin:0 auto;padding:16px}
-h1{font-size:20px;margin:0 0 4px}.sub{color:var(--mut);font-size:13px;margin-bottom:12px}
+h1{font-size:28px;margin:0 0 4px}.sub{color:var(--mut);font-size:16px;margin-bottom:12px}
 .ctl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-select,button{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+select,button{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
 .row{display:flex;align-items:center;gap:10px;margin-top:6px}.row input{flex:1}
 #chart{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;display:block}
-.ax{fill:var(--mut);font-size:11px}.grid{stroke:var(--line);stroke-width:1}
-.yr{font-size:80px;font-weight:700;fill:var(--fg);opacity:.08}
+.ax{fill:var(--mut);font-size:16px}.grid{stroke:var(--line);stroke-width:1}
+.yr{font-size:110px;font-weight:700;fill:var(--fg);opacity:.1}
 circle{stroke:var(--card);stroke-width:1;cursor:pointer;fill-opacity:.8}circle.sel{stroke:var(--fg);stroke-width:2}
-.lab{font-size:11px;fill:var(--fg);pointer-events:none}
-#tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;display:none}
-.leg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0}.leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+.lab{font-size:16px;font-weight:600;fill:var(--fg);pointer-events:none}
+#tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:16px;display:none}
+.leg{display:flex;gap:16px;flex-wrap:wrap;font-size:16px;color:var(--mut);margin:8px 0}.leg i{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:4px}
 #msg{color:var(--mut);padding:30px;text-align:center}
-footer{margin-top:20px;font-size:12px;color:var(--mut);text-align:center}footer a{color:inherit}
+footer{margin-top:20px;font-size:14px;color:var(--mut);text-align:center}footer a{color:inherit}
 </style></head><body><div class="wrap">
 <h1>OECD 갭마인더</h1><div class="sub">OECD 38개국 · X: 1인당 GDP(PPP) · 크기: 인구 · 분류와 지표를 골라 연도별 변화를 보세요</div>
 <div class="ctl"><select id="cat"></select><select id="ind"></select></div>
@@ -30,7 +29,7 @@ footer{margin-top:20px;font-size:12px;color:var(--mut);text-align:center}footer 
 </div>
 <script>
 const COL={"유럽":"#4e79a7","아시아":"#e15759","북미":"#59a14f","중남미":"#f28e2b","오세아니아":"#b07aa1"};
-const M={l:60,r:20,t:20,b:44},W=960,H=560;
+const M={l:78,r:20,t:20,b:56},W=960,H=560;
 let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
@@ -71,13 +70,13 @@ function draw(){
  const sr=p=>3+Math.sqrt(p/pm)*38;
  let h="";
  const xt=[2000,5000,10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
- xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+16}" text-anchor="middle">${v.toLocaleString()}</text>`);
+ xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+22}" text-anchor="middle">${v.toLocaleString()}</text>`);
  const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-6}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
- h+=`<text class="ax" x="${W/2}" y="${H-6}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="14" y="${H/2}" transform="rotate(-90 14 ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
+ h+=`<text class="ax" x="${W/2}" y="${H-8}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="18" y="${H/2}" transform="rotate(-90 18 ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
  h+=`<text class="yr" x="${W-M.r-10}" y="${H-M.b-14}" text-anchor="end">${cur}</text>`;
  pts.sort((a,b)=>b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="${COL[CT[d.c][1]]}"/>`;
-  if(f||d.p>pm*.15||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
+  if(f||d.p>pm*.08||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
  svg.innerHTML=h;$("yv").textContent=cur;
  svg.querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
   el.onmousemove=e=>{const t=$("tip");t.style.display="block";t.style.left=e.clientX+12+"px";t.style.top=e.clientY+12+"px";
