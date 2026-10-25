@@ -107,7 +107,7 @@ function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
 function draw(){
  const fy=timer?fc:cur;
  const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
- W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-265))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:42,r:8,t:8,b:40}:{l:72,r:20,t:16,b:58};
+ W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-265))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:33,r:6,t:8,b:40}:{l:72,r:20,t:16,b:58};
  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
  const pts=[];let xs=[],ys=[];
  for(const c of Object.keys(CT)){const x=val(X,c,fy),p=val(P,c,fy),y=val(Y,c,fy);
@@ -123,8 +123,8 @@ function draw(){
  let h=`<text x="${W-M.r-8}" y="${H-M.b-12}" text-anchor="end" style="font-size:${MOB?96:170}px;font-weight:800;fill:#bfe9df;opacity:.85;pointer-events:none">${cur}</text>`;
  const xt=[10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
  xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+(MOB?16:21)}" text-anchor="middle">${v.toLocaleString()}</text>`);
- const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-3}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
- h+=`<text class="axt" x="${W/2}" y="${H-(MOB?5:7)}" text-anchor="middle">${kw(CAT.x.name+" (로그)")}</text><text class="axt" x="${MOB?11:20}" y="${H/2}" transform="rotate(-90 ${MOB?11:20} ${H/2})" text-anchor="middle">${kw(ind.name+" ("+ind.unit+")")}</text>`;
+ const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-(MOB?2:3)}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
+ h+=`<text class="axt" x="${W/2}" y="${H-(MOB?5:7)}" text-anchor="middle">${kw(CAT.x.name+" (로그)")}</text><text class="axt" x="${MOB?8:20}" y="${H/2}" transform="rotate(-90 ${MOB?8:20} ${H/2})" text-anchor="middle">${kw(ind.name+" ("+ind.unit+")")}</text>`;
 
  pts.sort((a,b)=>(a.c==="KOR")-(b.c==="KOR")||(a.c===sel)-(b.c===sel)||b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="url(#g${Object.keys(COL).indexOf(CT[d.c][1])})"/>`;
