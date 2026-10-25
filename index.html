@@ -129,7 +129,7 @@ function draw(){
   });
  const placed=[],ov=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
  const order=[...pts].sort((a,b)=>(b.c==="KOR")-(a.c==="KOR")||(b.c===sel)-(a.c===sel)||b.p-a.p);
- order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?15:12):(d.c==="KOR"||d.c===sel?23:18),w=nm.length*fs*1.02+4,hh=fs+2;
+ order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?13:10):(d.c==="KOR"||d.c===sel?23:18),w=nm.length*fs*1.02+4,hh=fs+2;
   const cands=[];for(const k of [0,1,2,3,4]){const o=k*20;cands.push([cx-w/2,cy-r-hh-1-o],[cx-w/2,cy+r+2+o],[cx+r+3+o,cy-hh/2],[cx-r-3-w-o,cy-hh/2],[cx+r+3+o,cy-hh-o/2],[cx-r-3-w-o,cy-hh-o/2],[cx+r+3+o,cy+o/2],[cx-r-3-w-o,cy+o/2])}
   let best=null,bs=1e9;
   for(const [x,y] of cands){const b={x:Math.max(M.l,Math.min(W-M.r-w,x)),y:Math.max(2,Math.min(H-M.b-hh,y)),w,h:hh};const sc=placed.filter(q=>ov(b,q)).length;if(sc<bs){bs=sc;best=b}if(!sc)break}
