@@ -1,5 +1,8 @@
 name: discover
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    paths: ["scripts/discover.py", ".github/workflows/discover.yml"]
 permissions: {contents: write}
 jobs:
   d:
