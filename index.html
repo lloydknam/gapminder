@@ -86,7 +86,7 @@ function draw(){
 
  pts.sort((a,b)=>b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="${COL[CT[d.c][1]]}"/>`;
-  if(f||d.p>pm*.08||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
+  if(f||d.p>pm*.2||d.c==="KOR")h+=`<text class="lab" x="${sx(d.x)}" y="${sy(d.y)-sr(d.p)-3}" text-anchor="middle">${CT[d.c][0]}</text>`});
  svg.innerHTML=h;
  $("big").firstChild.textContent=cur;$("bigsub").textContent=ind.name+" ("+ind.unit+")";
  const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
