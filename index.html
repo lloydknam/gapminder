@@ -15,7 +15,7 @@
 select{font:inherit;font-weight:600;padding:10px 38px 10px 18px;border:2px solid var(--teal);border-radius:999px;background:#f3fbf9;color:var(--fg)}
 .box{border:2px dashed #a9ddd2;border-radius:12px;margin-top:6px}
 #chart{width:100%;height:auto;display:block}
-.ax{fill:var(--mut);font-size:17px}.grid{stroke:var(--line);stroke-width:1.5}
+.ax{fill:var(--mut);font-size:19px}.grid{stroke:var(--line);stroke-width:1.5}
 circle{stroke:#fff;stroke-width:2;cursor:pointer;fill-opacity:.92}circle.sel{stroke:var(--deep);stroke-width:4}
 .lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
 .stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
@@ -50,7 +50,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 .kr{stroke:#ff4f7b;stroke-width:5;transform-box:fill-box;transform-origin:center;animation:kp 1.4s ease-out infinite}.kr.k2{animation-delay:.7s}@keyframes kp{0%{transform:scale(1);opacity:.95}100%{transform:scale(2.3);opacity:0}}@media(prefers-reduced-motion:reduce){.kr{animation:none;opacity:.6}}
 #spd{display:flex;gap:4px;flex:none}#spd button{font:inherit;font-size:16px;font-weight:700;padding:6px 12px;border:2px solid var(--teal);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}#spd button.on{background:var(--teal);color:#fff}@media(max-width:640px){.row{flex-wrap:wrap;gap:10px}#yr{order:3;flex:1 0 100%}#spd{margin-left:auto}#spd button{font-size:14px;padding:5px 10px}}
 @media(max-width:640px){html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}.hd{position:static}.shell{padding:4px 4px}#big,.chip,.sub,.src{display:none}.top{margin:0}.ttl{text-align:left}.ttl h1{font-size:21px;margin:4px 2px 2px}.box{margin-top:0}.stats{margin-top:4px}.stats .l{font-size:13px}.stats .v{font-size:22px}.row{margin-top:6px;gap:8px;flex-wrap:wrap}#play{width:44px;height:44px;font-size:18px}#spd{margin-left:auto;gap:3px}#spd button{font-size:13px;padding:4px 8px;border-width:1.5px}#yr{order:3;flex:1 0 100%;height:8px;margin:2px 0}.leg{font-size:13px;gap:6px 12px;margin-top:4px}.leg i{width:11px;height:11px;margin-right:4px}footer{margin-top:8px}footer img{height:36px;width:auto}}
-@media(min-width:901px){.shell{display:block;max-width:1240px}#nav{width:auto;position:static;max-height:none;overflow:visible;display:flex;flex-wrap:wrap;gap:8px 8px;align-items:center;padding:12px 16px;margin-bottom:16px}.cg{display:contents}#nav h3{order:1;margin:0;cursor:pointer;font-size:19px;padding:8px 18px;border-radius:999px;background:#eaf6f3;color:var(--deep);border:2px solid transparent}#nav h3:first-child{margin:0}#nav .cg.act h3{background:var(--deep);color:#fff}.ci{order:2;flex:0 0 100%;display:none;flex-wrap:wrap;gap:8px;padding-top:10px;margin-top:4px;border-top:2px dashed var(--line)}.cg.act .ci{display:flex}#nav button{display:inline-block;width:auto;font-size:18px;padding:8px 16px;margin:0;border-radius:999px;border:2px solid #bfe3da;background:#fff}#nav button.on{border-color:var(--teal)}}
+@media(min-width:901px){.shell{display:block;max-width:1800px;padding:20px 28px}#nav{width:auto;position:static;max-height:none;overflow:visible;display:flex;flex-wrap:wrap;gap:8px 8px;align-items:center;padding:12px 16px;margin-bottom:16px}.cg{display:contents}#nav h3{order:1;margin:0;cursor:pointer;font-size:19px;padding:8px 18px;border-radius:999px;background:#eaf6f3;color:var(--deep);border:2px solid transparent}#nav h3:first-child{margin:0}#nav .cg.act h3{background:var(--deep);color:#fff}.ci{order:2;flex:0 0 100%;display:none;flex-wrap:wrap;gap:8px;padding-top:10px;margin-top:4px;border-top:2px dashed var(--line)}.cg.act .ci{display:flex}#nav button{display:inline-block;width:auto;font-size:18px;padding:8px 16px;margin:0;border-radius:999px;border:2px solid #bfe3da;background:#fff}#nav button.on{border-color:var(--teal)}}
 @media(max-width:900px){.cg h3{margin:14px 8px 6px;font-size:21px;font-weight:800;color:var(--deep)}}
 .hd{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.hd img{grid-column:1;justify-self:start}.hd>div{grid-column:2;text-align:center}#mbtn{grid-column:3;justify-self:end;margin-left:0}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴</button></header>
@@ -98,7 +98,7 @@ function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  if(a==null||b==null||y-a>5||b-y>5)return null;return o[a]+(o[b]-o[a])*(y-a)/(b-a)}
 function draw(){
  const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
- W=MOB?bw:960;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-330))):640;M=MOB?{l:36,r:8,t:8,b:36}:{l:60,r:20,t:16,b:50};
+ W=bw;H=MOB?Math.round(Math.min(bw*1.4,Math.max(bw*.85,innerHeight-330))):Math.round(Math.max(560,Math.min(760,innerHeight-330)));M=MOB?{l:36,r:8,t:8,b:36}:{l:60,r:20,t:16,b:50};
  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
  const pts=[];let xs=[],ys=[];
  for(const c of Object.keys(CT)){const x=val(X,c,cur),p=val(P,c,cur),y=val(Y,c,cur);
@@ -122,7 +122,7 @@ function draw(){
   });
  const placed=[],ov=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
  const order=[...pts].sort((a,b)=>(b.c==="KOR")-(a.c==="KOR")||(b.c===sel)-(a.c===sel)||b.p-a.p);
- order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?15:12):(d.c==="KOR"||d.c===sel?20:16),w=nm.length*fs*1.02+4,hh=fs+2;
+ order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?15:12):(d.c==="KOR"||d.c===sel?23:18),w=nm.length*fs*1.02+4,hh=fs+2;
   const cands=[];for(const k of [0,1,2,3,4]){const o=k*20;cands.push([cx-w/2,cy-r-hh-1-o],[cx-w/2,cy+r+2+o],[cx+r+3+o,cy-hh/2],[cx-r-3-w-o,cy-hh/2],[cx+r+3+o,cy-hh-o/2],[cx-r-3-w-o,cy-hh-o/2],[cx+r+3+o,cy+o/2],[cx-r-3-w-o,cy+o/2])}
   let best=null,bs=1e9;
   for(const [x,y] of cands){const b={x:Math.max(M.l,Math.min(W-M.r-w,x)),y:Math.max(2,Math.min(H-M.b-hh,y)),w,h:hh};const sc=placed.filter(q=>ov(b,q)).length;if(sc<bs){bs=sc;best=b}if(!sc)break}
