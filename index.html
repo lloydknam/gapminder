@@ -28,7 +28,7 @@ input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
 #msg{color:var(--mut);padding:60px 10px;text-align:center}
 .src{font-size:15px;color:var(--mut);margin-top:10px}
 footer{margin-top:18px;font-size:15px;color:var(--mut);text-align:center}footer a{color:inherit}
-@media(max-width:640px){body{font-size:17px}#big{font-size:44px}.ttl h1{font-size:24px}.card{padding:14px;border-width:4px;border-radius:24px}.stats .v{font-size:32px}}
+
 
 .hd{background:#fff;border-bottom:2px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:5}
 .hd img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--teal)}
@@ -46,7 +46,8 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 .chip{display:inline-block;background:#dff4ef;color:var(--deep);font-weight:800;font-size:17px;border-radius:999px;padding:3px 14px;margin-bottom:4px}
 .ttl h1{font-size:38px}
 @media(max-width:900px){#mbtn{display:block}.hd b{font-size:22px}.hd span{display:none}.hd img{width:44px;height:44px}.shell{display:block;padding:12px}#nav{display:none;position:fixed;inset:70px 12px 12px 12px;width:auto;max-height:none;z-index:9;top:70px}#nav.open{display:block}}
-</style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 지표 메뉴</button></header>
+@media(max-width:640px){.ax{font-size:12px}.lab{stroke-width:3px}.hd{padding:10px 12px;gap:10px}.hd b{font-size:17px;white-space:nowrap}.hd{gap:8px}.hd img{width:40px;height:40px;border-width:2px}.hd>div{min-width:0}#mbtn{white-space:nowrap;padding:6px 10px;font-size:14px;flex:none}.ttl{text-align:left;width:100%}.ttl h1{font-size:26px}.sub{font-size:14px}.chip{font-size:14px}#big{font-size:46px}#big small{font-size:15px}.stats{flex-wrap:nowrap}.stats>div{flex:1;min-width:0}.stats .r{text-align:right}.stats .l{font-size:14px}.stats .v{font-size:26px}.leg{font-size:15px;gap:10px 14px}#play{width:52px;height:52px;font-size:22px}.src{font-size:13px}select{font-size:16px}.card{padding:14px 12px;border-width:4px;border-radius:24px}body{font-size:17px}}
+</style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴</button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
 <div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 640"></svg></div>
@@ -56,7 +57,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 </div><footer><a href="https://github.com/lloydknam" target="_blank" rel="noopener"><img src="assets/brand/lockup-light.svg" alt="Lloyd's balcony lab · with claude · GitHub(@lloydknam)" height="48"></a></footer></div></main></div><div id="tip"></div>
 <script>
 const COL={"유럽":"#9cc3f5","아시아":"#f7a3b5","북미":"#9edcb8","중남미":"#fbcf8f","오세아니아":"#c9b0ec"};
-const M={l:96,r:20,t:16,b:62},W=960,H=640;
+let M={l:96,r:20,t:16,b:62},W=960,H=640,MOB=false;
 let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
@@ -88,6 +89,9 @@ function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  for(const t of k){if(t<y)a=t;else if(t>y){b=t;break}}
  if(a==null||b==null||y-a>5||b-y>5)return null;return o[a]+(o[b]-o[a])*(y-a)/(b-a)}
 function draw(){
+ const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
+ W=MOB?bw:960;H=MOB?Math.round(bw*1.2):640;M=MOB?{l:50,r:10,t:10,b:50}:{l:96,r:20,t:16,b:62};
+ svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
  const pts=[];let xs=[],ys=[];
  for(const c of Object.keys(CT)){const x=val(X,c,cur),p=val(P,c,cur),y=val(Y,c,cur);
   if(x&&p&&y!=null)pts.push({c,x,p,y});}
@@ -98,23 +102,23 @@ function draw(){
  const sx=v=>M.l+(Math.log(v)-Math.log(x0))/(Math.log(x1)-Math.log(x0))*(W-M.l-M.r);
  const sy=v=>H-M.b-(v-y0)/(y1-y0)*(H-M.t-M.b);
  const pm=Math.max(...Object.values(P).flatMap(o=>Object.values(o)));
- const sr=p=>3+Math.sqrt(p/pm)*38;
+ const sr=p=>MOB?2.5+Math.sqrt(p/pm)*22:3+Math.sqrt(p/pm)*38;
  let h="";
  const xt=[10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
- xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+22}" text-anchor="middle">${v.toLocaleString()}</text>`);
+ xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+(MOB?18:22)}" text-anchor="middle">${v.toLocaleString()}</text>`);
  const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-6}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
- h+=`<text class="ax" x="${W/2}" y="${H-8}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="16" y="${H/2}" transform="rotate(-90 16 ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
+ h+=`<text class="ax" x="${W/2}" y="${H-(MOB?6:8)}" text-anchor="middle">${CAT.x.name} (로그)</text><text class="ax" x="${MOB?12:16}" y="${H/2}" transform="rotate(-90 ${MOB?12:16} ${H/2})" text-anchor="middle">${ind.name} (${ind.unit})</text>`;
 
  pts.sort((a,b)=>b.p-a.p).forEach(d=>{const f=sel===d.c;
   h+=`<circle data-c="${d.c}" class="${f?"sel":""}" cx="${sx(d.x)}" cy="${sy(d.y)}" r="${sr(d.p)}" fill="${COL[CT[d.c][1]]}"/>`;
   });
  const placed=[],ov=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
  const order=[...pts].sort((a,b)=>(b.c==="KOR")-(a.c==="KOR")||(b.c===sel)-(a.c===sel)||b.p-a.p);
- order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=d.c==="KOR"||d.c===sel?20:16,w=nm.length*fs*1.02+4,hh=fs+2;
+ order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?15:12):(d.c==="KOR"||d.c===sel?20:16),w=nm.length*fs*1.02+4,hh=fs+2;
   const cands=[];for(const k of [0,1,2,3,4]){const o=k*20;cands.push([cx-w/2,cy-r-hh-1-o],[cx-w/2,cy+r+2+o],[cx+r+3+o,cy-hh/2],[cx-r-3-w-o,cy-hh/2],[cx+r+3+o,cy-hh-o/2],[cx-r-3-w-o,cy-hh-o/2],[cx+r+3+o,cy+o/2],[cx-r-3-w-o,cy+o/2])}
   let best=null,bs=1e9;
   for(const [x,y] of cands){const b={x:Math.max(M.l,Math.min(W-M.r-w,x)),y:Math.max(2,Math.min(H-M.b-hh,y)),w,h:hh};const sc=placed.filter(q=>ov(b,q)).length;if(sc<bs){bs=sc;best=b}if(!sc)break}
-  const lx=best.x+w/2,ly=best.y+hh/2;if(Math.hypot(lx-cx,ly-cy)>r+hh+4)h+=`<line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly}" stroke="#7a8896" stroke-width="1"/>`;
+  const lx=best.x+w/2,ly=best.y+hh/2;if(Math.hypot(lx-cx,ly-cy)>r+hh+14)h+=`<line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly}" stroke="#a9b5c0" stroke-width="1"/>`;
   placed.push(best);
   h+=`<text class="lab" style="font-size:${fs}px" x="${best.x+w/2}" y="${best.y+hh-4}" text-anchor="middle">${nm}</text>`});
  svg.innerHTML=h;
@@ -131,4 +135,5 @@ function draw(){
 function stop(){clearInterval(timer);timer=null;$("play").textContent="▶"}
 function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("play").textContent="❚❚";
  timer=setInterval(()=>{if(cur>=years.at(-1))return stop();cur++;$("yr").value=cur;draw()},350)}
+addEventListener("resize",()=>{if(Y&&ind&&ind.status==="ready")draw()});
 </script></body></html>
