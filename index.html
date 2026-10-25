@@ -144,7 +144,7 @@ function draw(){
   el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
 let spd=1;
 $("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));};
-let wait=false,fc=0;const MS=1750;
+let wait=false,fc=0;const MS=350;
 function step(){const L=years.at(-1);if(fc>=L){if(!wait){wait=true;setTimeout(()=>{wait=false;if(timer){fc=years[0];cur=fc;$("yr").value=cur;draw()}},1600)}return}
  fc=Math.min(L,fc+50/MS*spd);cur=Math.floor(fc+1e-9);$("yr").value=cur;draw()}
 function go(d){if(!years.length)return;stop();cur=Math.max(years[0],Math.min(years.at(-1),cur+d));$("yr").value=cur;draw()}
