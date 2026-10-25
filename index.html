@@ -81,7 +81,7 @@ function buildNav(){$("nav").innerHTML=CAT.categories.map((c,i)=>`<section class
 function showCat(c){document.querySelectorAll("#nav .cg").forEach(g=>g.classList.toggle("act",+g.dataset.c===c))}
 function pick(c,i){ci=c;ii=i;location.hash=c+"-"+i;showCat(c);
  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",+b.dataset.c===c&&+b.dataset.i===i));
- $("chip").textContent=(c+1)+". "+CAT.categories[c].name;$("h1").textContent=CAT.categories[c].indicators[i].name;load()}
+ $("chip").textContent=(c+1)+". "+CAT.categories[c].name;$("h1").textContent="1인당 GDP와 "+CAT.categories[c].indicators[i].name;load()}
 async function load(){stop();sel=null;
  ind=CAT.categories[ci].indicators[ii];
  const msg=$("msg");
