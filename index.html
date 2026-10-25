@@ -9,7 +9,7 @@
 .card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
 #big{font-size:64px;font-weight:800;line-height:1;letter-spacing:-1px}
-#big small{display:block;font-size:18px;font-weight:500;color:var(--mut);letter-spacing:0;margin-top:4px}
+#big small{display:block;font-size:18px;font-weight:600;color:var(--mut);letter-spacing:0}
 .ttl{text-align:right}.ttl h1{font-size:34px;margin:0;font-weight:800}.sub{color:var(--mut);font-size:17px}
 .ctl{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 8px}
 select{font:inherit;font-weight:600;padding:10px 38px 10px 18px;border:2px solid var(--teal);border-radius:999px;background:#f3fbf9;color:var(--fg)}
@@ -103,7 +103,7 @@ function draw(){
  const sy=v=>H-M.b-(v-y0)/(y1-y0)*(H-M.t-M.b);
  const pm=Math.max(...Object.values(P).flatMap(o=>Object.values(o)));
  const sr=p=>MOB?2.5+Math.sqrt(p/pm)*22:3+Math.sqrt(p/pm)*38;
- let h="";
+ let h=`<text x="${W-M.r-8}" y="${H-M.b-12}" text-anchor="end" style="font-size:${MOB?96:170}px;font-weight:800;fill:#bfe9df;opacity:.85;pointer-events:none">${cur}</text>`;
  const xt=[10000,20000,50000,100000].filter(v=>v>=x0&&v<=x1);
  xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+(MOB?18:22)}" text-anchor="middle">${v.toLocaleString()}</text>`);
  const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-6}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}
@@ -122,7 +122,7 @@ function draw(){
   placed.push(best);
   h+=`<text class="lab" style="font-size:${fs}px" x="${best.x+w/2}" y="${best.y+hh-4}" text-anchor="middle">${nm}</text>`});
  svg.innerHTML=h;
- $("big").firstChild.textContent=cur;$("bigsub").textContent="단위: "+ind.unit;
+ $("big").firstChild.textContent="";$("bigsub").textContent="단위: "+ind.unit;
  const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
  $("l1").textContent="OECD 단순평균 ("+pts.length+"개국)";$("v1").textContent=avg.toFixed(1)+" "+ind.unit;
  const ko=[...pts].sort((a,b)=>b.y-a.y).findIndex(d=>d.c==="KOR"),kd=pts.find(d=>d.c==="KOR");
