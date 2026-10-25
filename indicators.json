@@ -1,0 +1,13 @@
+{"categories":[
+{"id":"health","name":"보건·의료","indicators":[
+ {"id":"life_exp","name":"기대수명 (출생시, 전체)","unit":"세","scale":"linear","source":"OECD Health Statistics","flow":"OECD.ELS.HD,DSD_HEALTH_STAT@DF_LE,1.1","filters":{"MEASURE":"LFEXP","AGE":"Y0","SEX":"_T"},"status":"ready"},
+ {"id":"health_exp","name":"1인당 의료비 (PPP)","unit":"US$","scale":"log","source":"OECD","status":"todo"}]},
+{"id":"economy","name":"경제·생산성","indicators":[
+ {"id":"productivity","name":"시간당 노동생산성","unit":"US$","scale":"log","source":"OECD","status":"todo"}]},
+{"id":"labour","name":"노동·임금","indicators":[
+ {"id":"avg_wage","name":"평균임금 (PPP)","unit":"US$","scale":"log","source":"OECD","status":"todo"}]},
+{"id":"env","name":"환경·기후","indicators":[
+ {"id":"co2","name":"1인당 CO₂ 배출","unit":"t","scale":"linear","source":"OECD","status":"todo"}]}
+],
+"x":{"id":"gdp_pc","name":"1인당 GDP (PPP, 2021 불변 US$)","wb":"NY.GDP.PCAP.PP.KD"},
+"size":{"id":"pop","name":"인구","wb":"SP.POP.TOTL"}}
