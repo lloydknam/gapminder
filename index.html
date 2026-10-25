@@ -48,12 +48,13 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 @media(max-width:900px){#mbtn{display:block}.hd b{font-size:22px}.hd span{display:none}.hd img{width:44px;height:44px}.shell{display:block;padding:12px}#nav{display:none;position:fixed;inset:70px 12px 12px 12px;width:auto;max-height:none;z-index:9;top:70px}#nav.open{display:block}}
 @media(max-width:640px){.ax{font-size:12px}.lab{stroke-width:3px}.hd{padding:10px 12px;gap:10px}.hd b{font-size:17px;white-space:nowrap}.hd{gap:8px}.hd img{width:40px;height:40px;border-width:2px}.hd>div{min-width:0}#mbtn{white-space:nowrap;padding:6px 10px;font-size:14px;flex:none}.ttl{text-align:left;width:100%}.ttl h1{font-size:26px}.sub{font-size:14px}.chip{font-size:14px}#big{font-size:46px}#big small{font-size:15px}.stats{flex-wrap:nowrap}.stats>div{flex:1;min-width:0}.stats .r{text-align:right}.stats .l{font-size:14px}.stats .v{font-size:26px}.leg{font-size:15px;gap:10px 14px}#play{width:52px;height:52px;font-size:22px}.src{font-size:13px}select{font-size:16px}body{font-size:17px;background:#fff}.shell{padding:8px 6px}.card{border:0;border-radius:0;padding:4px 4px 0}.box{border:0;margin-top:2px}.wrap{padding:0}}
 .kr{stroke:#ff4f7b;stroke-width:5;transform-box:fill-box;transform-origin:center;animation:kp 1.4s ease-out infinite}.kr.k2{animation-delay:.7s}@keyframes kp{0%{transform:scale(1);opacity:.95}100%{transform:scale(2.3);opacity:0}}@media(prefers-reduced-motion:reduce){.kr{animation:none;opacity:.6}}
+#spd{display:flex;gap:4px;flex:none}#spd button{font:inherit;font-size:16px;font-weight:700;padding:6px 12px;border:2px solid var(--teal);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}#spd button.on{background:var(--teal);color:#fff}@media(max-width:640px){.row{flex-wrap:wrap;gap:10px}#yr{order:3;flex:1 0 100%}#spd{margin-left:auto}#spd button{font-size:14px;padding:5px 10px}}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴</button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
 <div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 640"><g id="main"></g><g id="fx" pointer-events="none"><circle class="kr" id="kr1" r="10" fill="none"/><circle class="kr k2" id="kr2" r="10" fill="none"/></g></svg></div>
 <div class="stats"><div><div class="l" id="l1"></div><div class="v" id="v1">—</div></div><div class="r"><div class="l" id="l2"></div><div class="v t" id="v2">—</div></div></div>
-<div class="row"><button id="play">▶</button><input id="yr" type="range"></div>
+<div class="row"><button id="play">▶</button><input id="yr" type="range"><div id="spd" role="group" aria-label="재생 속도"><button data-s="0.5">0.5×</button><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="4">4×</button></div></div>
 <div class="leg" id="leg"></div><div class="src">출처: OECD · World Bank (1인당 GDP·인구) · 선·점 위에 마우스를 올리면 값이 보입니다</div>
 </div><footer><a href="https://github.com/lloydknam" target="_blank" rel="noopener"><img src="assets/brand/lockup-light.svg" alt="Lloyd's balcony lab · with claude · GitHub(@lloydknam)" height="48"></a></footer></div></main></div><div id="tip"></div>
 <script>
@@ -133,8 +134,11 @@ function draw(){
    t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${d.y.toFixed(1)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`};
   el.onmouseleave=()=>$("tip").style.display="none";
   el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
+let spd=1;
+$("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));if(timer){clearInterval(timer);timer=setInterval(step,350/spd)}};
+function step(){if(cur>=years.at(-1))return stop();cur++;$("yr").value=cur;draw()}
 function stop(){clearInterval(timer);timer=null;$("play").textContent="▶"}
 function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("play").textContent="❚❚";
- timer=setInterval(()=>{if(cur>=years.at(-1))return stop();cur++;$("yr").value=cur;draw()},350)}
+ timer=setInterval(step,350/spd)}
 addEventListener("resize",()=>{if(Y&&ind&&ind.status==="ready")draw()});
 </script></body></html>
