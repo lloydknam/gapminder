@@ -15,13 +15,14 @@ def save(name, d):
     json.dump(d, open(OUT / f"{name}.json", "w"), separators=(",", ":"))
     print(f"saved {name}: {len(d)} countries")
 
-def worldbank(code):
+def worldbank(code, mult=1):
     url = f"https://api.worldbank.org/v2/country/{';'.join(COUNTRIES)}/indicator/{code}?format=json&per_page=20000&date=1990:2030"
-    meta, rows = json.loads(get(url))
+    res = json.loads(get(url))
+    if len(res) < 2 or not res[1]: raise RuntimeError(f"세계은행 지표 없음/빈 응답: {res[0] if res else res}")
     d = {}
-    for r in rows:
+    for r in res[1]:
         if r["value"] is not None:
-            d.setdefault(r["countryiso3code"], {})[r["date"]] = r["value"]
+            d.setdefault(r["countryiso3code"], {})[r["date"]] = r["value"] * mult
     return d
 
 def opencsv(flow, start):
@@ -79,10 +80,11 @@ def probe(ind):
 
 save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
 save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
-ok, flows, probes = [], {}, []
+ok, flows, probes, wbs = [], {}, [], []
 for c in cat["categories"]:
     for ind in c["indicators"]:
-        if ind["status"] == "ready": flows.setdefault(ind["flow"], []).append(ind)
+        if ind["status"] == "ready" and ind.get("wb"): wbs.append(ind)
+        elif ind["status"] == "ready": flows.setdefault(ind["flow"], []).append(ind)
         elif ind["status"] == "probe": probes.append(ind)
 for flow, inds in flows.items():
     try:
@@ -93,6 +95,12 @@ for flow, inds in flows.items():
         r = res[ind["id"]]
         if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True)
         else: save(ind["id"], r); ok.append(ind["id"])
+    json.dump(ok, open(OUT / "ready.json", "w"))
+for ind in wbs:
+    try:
+        save(ind["id"], worldbank(ind["wb"], ind.get("mult", 1))); ok.append(ind["id"])
+    except BaseException as e:
+        print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True)
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in probes:
     try: probe(ind)

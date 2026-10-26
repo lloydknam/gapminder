@@ -143,14 +143,15 @@ function draw(){
  $("main").innerHTML=h;const kp=pts.find(q=>q.c==="KOR");["kr1","kr2"].forEach(i=>{const e=$(i);if(kp){e.setAttribute("cx",sx(kp.x));e.setAttribute("cy",sy(kp.y));e.setAttribute("r",sr(kp.p));e.style.display=""}else e.style.display="none"});
  $("big").firstChild.textContent="";$("bigsub").textContent="단위: "+ind.unit;
  const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
- $("l1").textContent=GN[GRP]+" 단순평균 ("+pts.length+"개국)";$("v1").textContent=avg.toFixed(1)+" "+ind.unit;
+ $("l1").textContent=GN[GRP]+" 단순평균 ("+pts.length+"개국)";$("v1").textContent=fv(avg)+" "+ind.unit;
  const ko=[...pts].sort((a,b)=>b.y-a.y).findIndex(d=>d.c==="KOR"),kd=pts.find(d=>d.c==="KOR");
- $("l2").textContent="한국"+(ko>=0?" · "+(ko+1)+(GRP==="all"?"위(높은 순)":"위("+GN[GRP]+" 중)"):"");$("v2").textContent=kd?kd.y.toFixed(1)+" "+ind.unit:"—";
+ $("l2").textContent="한국"+(ko>=0?" · "+(ko+1)+(GRP==="all"?"위(높은 순)":"위("+GN[GRP]+" 중)"):"");$("v2").textContent=kd?fv(kd.y)+" "+ind.unit:"—";
  $("main").querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
   el.onmousemove=e=>{const t=$("tip");t.style.display="block";t.style.left=e.clientX+12+"px";t.style.top=e.clientY+12+"px";
-   t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${d.y.toFixed(1)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`};
+   t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${fv(d.y)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`};
   el.onmouseleave=()=>$("tip").style.display="none";
   el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
+const fv=v=>Math.abs(v)>=1000?Math.round(v).toLocaleString():v.toFixed(1);
 let GRP="all";const G7=["USA","JPN","DEU","GBR","FRA","ITA","CAN","KOR","CHN"],GN={all:"전체",oecd:"OECD",big:"주요국",g7:"G7+한중"};
 function inG(c){if(GRP==="all")return true;if(GRP==="oecd")return c!=="CHN";if(GRP==="g7")return G7.includes(c);const q=P&&P[c];if(!q)return false;const ks=Object.keys(q);return ks.length&&q[ks.sort().pop()]>=1e7}
 $("grp").onclick=e=>{const b=e.target.closest("button");if(!b)return;GRP=b.dataset.g;document.querySelectorAll("#grp button").forEach(x=>x.classList.toggle("on",x===b));if(Y)draw()};
