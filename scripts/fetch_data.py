@@ -51,9 +51,29 @@ def oecd(ind):
 
 save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
 save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
+def probe(ind):
+    url = f"https://sdmx.oecd.org/public/rest/data/{ind['flow']}/all?startPeriod=2015&format=csvfile"
+    req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
+    rd = csv.DictReader(io.TextIOWrapper(urllib.request.urlopen(req, timeout=600), encoding="utf-8-sig", newline=""))
+    uniq, n = {}, 0
+    for r in rd:
+        if any(r.get(k) != v for k, v in ind.get("filters", {}).items()): continue
+        n += 1
+        for k, v in r.items():
+            if k in ("OBS_VALUE", "TIME_PERIOD", "REF_AREA", "STRUCTURE", "STRUCTURE_ID", "STRUCTURE_NAME", "ACTION"): continue
+            u = uniq.setdefault(k, set())
+            if len(u) <= 300: u.add(v)
+    pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
+    json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
+    print("probe", ind["id"], n)
+
 ok = []
 for c in cat["categories"]:
     for ind in c["indicators"]:
+        if ind["status"] == "probe":
+            try: probe(ind)
+            except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
+            continue
         if ind["status"] != "ready": continue
         try:
             save(ind["id"], oecd(ind)); ok.append(ind["id"])

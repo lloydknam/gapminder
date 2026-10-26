@@ -72,7 +72,7 @@ let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
 (async()=>{
- [CAT,CT]=await Promise.all([j("indicators.json"),j("countries.json")]);try{const rd=await j("data/ready.json");CAT.categories.forEach(c=>c.indicators.forEach(n=>{if(!rd.includes(n.id))n.status="todo"}))}catch(e){}
+ [CAT,CT]=await Promise.all([j("indicators.json"),j("countries.json")]);try{const rd=await j("data/ready.json");CAT.categories.forEach(c=>c.indicators.forEach(n=>{if(!rd.includes(n.id))n.status="todo"}))}catch(e){};CAT.categories=CAT.categories.filter(c=>c.indicators.some(n=>n.status!=="probe"))
  $("play").onclick=toggle;$("mbtn").onclick=()=>$("nav").classList.toggle("open");
  $("yr").oninput=e=>{stop();cur=+e.target.value;draw()};
  $("leg").innerHTML=Object.entries(COL).map(([k,v])=>`<span><i style="background:${v}"></i>${k}</span>`).join("");
