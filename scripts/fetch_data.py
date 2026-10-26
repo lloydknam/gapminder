@@ -45,6 +45,7 @@ def oecd_flow(flow, inds):
         for ind in inds:
             if r.get("FREQ", "A") != ind.get("freq", "A"): continue
             S = st[ind["id"]]
+            if ind.get("suffix") and not r["TIME_PERIOD"].endswith(ind["suffix"]): continue
             for k in ind["filters"]: S["seen"].setdefault(k, set()).add(r.get(k))
             if any(r.get(k) != v for k, v in ind["filters"].items()): continue
             pref = ind.get("prefer")
