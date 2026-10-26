@@ -37,7 +37,7 @@ def oecd(ind):
         if any(r.get(k) != v for k, v in ind["filters"].items()): continue
         c = r["REF_AREA"]
         if c not in COUNTRIES or r.get("FREQ", "A") != "A" or not r["OBS_VALUE"]: continue
-        vals.setdefault((c, r["TIME_PERIOD"][:4]), []).append((r.get(pref, "") if pref else "", float(r["OBS_VALUE"])))
+        vals.setdefault((c, r["TIME_PERIOD"][:4]), []).append((r.get(pref, "") if pref else "", float(r["OBS_VALUE"]) * ind.get("mult", 1)))
     d, conflict = {}, 0
     for (c, y), L in vals.items():
         if pref: v = max(L)[1]
