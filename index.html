@@ -104,10 +104,12 @@ function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(
  $("nav").onclick=e=>{const b=e.target.closest("button");if(b){pick(+b.dataset.c,+b.dataset.i);$("nav").classList.remove("open");return}
   const h=e.target.closest("h3");if(h)showCat(+h.dataset.c)}}
 function showCat(c){document.querySelectorAll("#nav .cg").forEach(g=>g.classList.toggle("act",+g.dataset.c===c))}
+function josa(w){const ch=w.trim().slice(-1),c=ch.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3)return (c-0xAC00)%28?"과":"와";if(/[0-9]/.test(ch))return "01368".includes(ch)?"과":"와";return "와"}
+function ttlOf(n){const k=n.indexOf(" (");const w=k<0?n:n.slice(0,k),r=k<0?"":n.slice(k);return w+josa(w)+" 1인당 GDP"+(r?`<small class="p">${r}</small>`:"")}
 function kw(t,tag){const k=t.indexOf(" (");if(k<0)return t;return t.slice(0,k)+(tag?`<small class="p">${t.slice(k)}</small>`:`<tspan class="p">${t.slice(k)}</tspan>`)}
 function pick(c,i){ci=c;ii=i;location.hash=c+"-"+i;showCat(c);
  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",+b.dataset.c===c&&+b.dataset.i===i));
- $("chip").textContent=(c+1)+". "+CAT.categories[c].name;$("h1").innerHTML=kw("1인당 GDP와 "+CAT.categories[c].indicators[i].name,"small");load()}
+ $("chip").textContent=(c+1)+". "+CAT.categories[c].name;$("h1").innerHTML=ttlOf(CAT.categories[c].indicators[i].name);load()}
 function srcLine(){const wb=c=>`<a href="https://data.worldbank.org/indicator/${c}" target="_blank" rel="noopener">World Bank WDI · ${c}</a>`;
  let y;if(ind.wb)y=wb(ind.wb);else{const m=(ind.flow||"").split(",");y="OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")}
  $("srcl").innerHTML="출처 — 지표: "+y+" · 1인당 GDP: "+wb(CAT.x.wb)+" · 인구: "+wb(CAT.size.wb)}
