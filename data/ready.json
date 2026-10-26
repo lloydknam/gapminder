@@ -1,1 +1,1 @@
-["life_exp", "health_exp_gdp", "health_exp_pc", "physicians", "avoid_mort", "alcohol", "hours", "tud", "cbc", "avg_wage", "gini", "poverty", "socx_pub", "waste_pc"]
+["life_exp", "health_exp_gdp", "health_exp_pc", "physicians", "avoid_mort", "alcohol", "nurses", "beds", "hours", "tud", "cbc", "avg_wage", "min_wage", "edu_emp", "gini", "poverty", "socx_pub", "socx_old", "pension_rr", "waste_pc", "ghg_pc", "tax_total", "tax_income", "tax_ssc", "tax_prop", "tax_cons", "gerd", "berd", "herd", "goverd", "old65", "young15"]
