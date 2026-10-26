@@ -24,7 +24,8 @@ circle{stroke:rgba(255,255,255,.55);stroke-width:1;cursor:pointer;fill-opacity:1
 #play{width:64px;height:64px;border-radius:50%;border:0;background:var(--teal);color:#fff;font-size:26px;cursor:pointer;flex:none}
 input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
 .leg{display:flex;gap:18px;flex-wrap:wrap;font-size:18px;color:var(--mut);margin-top:10px}.leg i{display:inline-block;width:16px;height:16px;border-radius:50%;margin-right:6px;vertical-align:-2px}
-#tip{position:fixed;pointer-events:none;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:10px 14px;font-size:18px;display:none}
+@media(pointer:coarse){#tip{font-size:13px!important;padding:5px 9px!important;max-width:58vw}}
+#tip{position:fixed;pointer-events:none;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:6px 10px;font-size:14px;line-height:1.45;display:none}
 #msg{color:var(--mut);padding:60px 10px;text-align:center}
 .src{font-size:15px;color:var(--mut);margin-top:10px}
 footer{margin-top:18px;font-size:15px;color:var(--mut);text-align:center}footer a{color:inherit}
@@ -73,7 +74,7 @@ const COL={"유럽":"#9cc3f5","아시아":"#f7a3b5","북미":"#9edcb8","중남�
 let M={l:96,r:20,t:16,b:62},W=960,H=640,MOB=false;
 let CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null;
 const $=id=>document.getElementById(id),svg=$("chart");
-const j=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()});
+const j=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()});
 (async()=>{
  [CAT,CT]=await Promise.all([j("indicators.json"),j("countries.json")]);try{const rd=await j("data/ready.json");CAT.categories.forEach(c=>c.indicators.forEach(n=>{if(n.status!=="probe"&&!rd.includes(n.id))n.status="todo"}))}catch(e){};CAT.categories=CAT.categories.filter(c=>c.indicators.some(n=>n.status!=="probe"))
  $("play").onclick=toggle;$("mbtn").onclick=()=>$("nav").classList.toggle("open");
@@ -95,7 +96,7 @@ function pick(c,i){ci=c;ii=i;location.hash=c+"-"+i;showCat(c);
 function srcLine(){const wb=c=>`<a href="https://data.worldbank.org/indicator/${c}" target="_blank" rel="noopener">World Bank WDI · ${c}</a>`;
  let y;if(ind.wb)y=wb(ind.wb);else{const m=(ind.flow||"").split(",");y="OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")}
  $("srcl").innerHTML="출처 — 지표: "+y+" · 1인당 GDP: "+wb(CAT.x.wb)+" · 인구: "+wb(CAT.size.wb)}
-async function load(){stop();sel=null;
+async function load(){stop();sel=null;$("tip").style.display="none";
  ind=CAT.categories[ci].indicators[ii];srcLine();
  const msg=$("msg");
  if(ind.status!=="ready"){svg.style.display="none";msg.hidden=false;msg.textContent="이 지표는 데이터 준비 중입니다.";return}
@@ -121,7 +122,7 @@ function draw(){
  const allY=[];for(const c in Y)if(inG(c))for(const k in Y[c])allY.push(Y[c][k]);
  const allX=[];for(const c in X)if(inG(c))for(const k in X[c])allX.push(X[c][k]);
  let y0=Math.min(...allY),y1=Math.max(...allY);const pad=(y1-y0)*.05;y0-=pad;y1+=pad;
- const x0=Math.min(...allX)*.9,x1=Math.max(...allX)*1.1;
+ const x0=Math.min(...allX)*(MOB?.86:.9),x1=Math.max(...allX)*(MOB?1.22:1.1);
  const sx=v=>M.l+(Math.log(v)-Math.log(x0))/(Math.log(x1)-Math.log(x0))*(W-M.l-M.r);
  const sy=v=>H-M.b-(v-y0)/(y1-y0)*(H-M.t-M.b);
  const pm=Math.max(...Object.values(P).flatMap(o=>Object.values(o)));
@@ -151,14 +152,18 @@ function draw(){
  const ko=[...pts].sort((a,b)=>b.y-a.y).findIndex(d=>d.c==="KOR"),kd=pts.find(d=>d.c==="KOR");
  $("l2").textContent="한국"+(ko>=0?" · "+(ko+1)+(GRP==="all"?"위(높은 순)":"위("+GN[GRP]+" 중)"):"");$("v2").textContent=kd?fv(kd.y)+" "+ind.unit:"—";
  $("main").querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
-  el.onmousemove=e=>{const t=$("tip");t.style.display="block";t.style.left=e.clientX+12+"px";t.style.top=e.clientY+12+"px";
-   t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${fv(d.y)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`};
+  el.onmousemove=e=>{const t=$("tip");window._tipc=d.c;
+   t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${fv(d.y)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`;
+   t.style.display="block";const w=t.offsetWidth,h=t.offsetHeight;let lx=e.clientX+12,ly=e.clientY+12;if(lx+w>innerWidth-6)lx=Math.max(6,e.clientX-w-12);if(ly+h>innerHeight-6)ly=Math.max(6,e.clientY-h-12);t.style.left=lx+"px";t.style.top=ly+"px";
+   clearTimeout(window._tipt);if(matchMedia("(pointer:coarse)").matches)window._tipt=setTimeout(()=>{t.style.display="none"},2200)};
   el.onmouseleave=()=>$("tip").style.display="none";
-  el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}})}
+  el.onclick=()=>{sel=sel===d.c?null:d.c;draw()}});
+ if(window._tipc&&!pts.some(q=>q.c===window._tipc))$("tip").style.display="none"}
 const fv=v=>Math.abs(v)>=1000?Math.round(v).toLocaleString():v.toFixed(1);
+document.addEventListener("click",e=>{if(e.target.closest("button,#yr"))$("tip").style.display="none"},true);
 let GRP="all";const G7=["USA","JPN","DEU","GBR","FRA","ITA","CAN","KOR","CHN"],GN={all:"전체",oecd:"OECD",big:"주요국",g7:"G7+한중"};
 function inG(c){if(GRP==="all")return true;if(GRP==="oecd")return c!=="CHN";if(GRP==="g7")return G7.includes(c);const q=P&&P[c];if(!q)return false;const ks=Object.keys(q);return ks.length&&q[ks.sort().pop()]>=1e7}
-$("grp").onclick=e=>{const b=e.target.closest("button");if(!b)return;GRP=b.dataset.g;document.querySelectorAll("#grp button").forEach(x=>x.classList.toggle("on",x===b));if(Y)draw()};
+$("grp").onclick=e=>{const b=e.target.closest("button");if(!b)return;GRP=b.dataset.g;$("tip").style.display="none";document.querySelectorAll("#grp button").forEach(x=>x.classList.toggle("on",x===b));if(Y)draw()};
 let spd=1;
 $("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));};
 let wait=false,fc=0;const MS=412;
