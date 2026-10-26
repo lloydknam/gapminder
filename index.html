@@ -59,7 +59,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 .axt .p{font-weight:500;font-size:.68em;fill:var(--mut)}#h1 small.p,.ttl h1 small.p{font-size:.52em;font-weight:500;color:var(--mut);margin-left:.3em}
 @media(max-width:640px){footer{display:none}}
 @media(max-width:640px){.hd{justify-content:flex-start;padding-right:96px}.hd>div{text-align:left}#mbtn{right:10px}}
-@media(max-width:900px){.hd{flex-wrap:nowrap}#mbtn{min-width:118px;font-size:18px;font-weight:800;padding:11px 20px;border-radius:999px;border:0;background:linear-gradient(180deg,#34c9ae,#1fa98f);color:#fff;box-shadow:0 3px 10px rgba(31,169,143,.5);white-space:nowrap;letter-spacing:.5px}#mbtn small{display:none}#nav{inset:12px!important;top:12px!important;padding-top:56px}#nclose{display:block!important;position:absolute;top:8px;right:10px;width:auto!important;padding:4px 12px!important;border-radius:999px!important;background:var(--deep)!important;color:#fff!important;font-size:14px!important;font-weight:800!important}}
+@media(max-width:900px){.hd{flex-wrap:nowrap}#mbtn{min-width:118px;font-size:18px;font-weight:800;padding:11px 20px;border-radius:999px;border:0;background:linear-gradient(180deg,#34c9ae,#1fa98f);color:#fff;box-shadow:0 3px 10px rgba(31,169,143,.5);white-space:nowrap;letter-spacing:.5px}#mbtn small{display:none}#nav{inset:12px!important;top:12px!important;padding-top:56px}#nav #ncount{display:block;position:absolute;top:10px;left:12px;right:96px;font-size:13px;font-weight:800;color:var(--deep);line-height:1.2}#nav #ncount small{display:block;font-weight:600;font-size:11px;color:var(--mut)}#nclose{display:block!important;position:absolute;top:8px;right:10px;width:auto!important;padding:4px 12px!important;border-radius:999px!important;background:var(--deep)!important;color:#fff!important;font-size:14px!important;font-weight:800!important}}
 @media(max-width:640px){.hd{padding-right:136px}#mbtn{right:8px;min-width:116px;font-size:17px;padding:10px 16px}}
 @media(max-width:900px){
 #nav.open{display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;overflow:auto;padding:46px 8px 8px!important}
@@ -73,7 +73,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 #nav .ci button.on{font-weight:800}
 #nav .ci button i{font-size:11px;padding:0 6px}
 }
-#nav #nclose{display:none}
+#nav #nclose{display:none}#ncount{display:none}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 + 중국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴<small>분류·지표 선택</small></button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
@@ -100,7 +100,7 @@ const j=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()
  buildNav();$("nclose").onclick=e=>{e.stopPropagation();$("nav").classList.remove("open")};const m=(location.hash.match(/(\d+)-(\d+)/)||[0,0,0]);pick(+m[1],+m[2]);
 })();
 let ci=0,ii=0;
-function buildNav(){$("nav").innerHTML='<button id="nclose" type="button">✕ 닫기</button>'+CAT.categories.map((c,i)=>`<section class="cg" data-c="${i}"><h3 data-c="${i}">${i+1}. ${c.name}</h3><div class="ci">`+c.indicators.map((n,k)=>`<button data-c="${i}" data-i="${k}" class="${n.status==="ready"?"":"todo"}">${n.name}${n.status==="ready"?"":"<i>준비 중</i>"}</button>`).join("")+`</div></section>`).join("");
+function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(n=>n.status==="ready").length,0);$("nav").innerHTML=`<span id="ncount">${CAT.categories.length}개 분야 · ${nn}개 지표 <small>(OECD, World Bank)</small></span><button id="nclose" type="button">✕ 닫기</button>`+CAT.categories.map((c,i)=>`<section class="cg" data-c="${i}"><h3 data-c="${i}">${i+1}. ${c.name}</h3><div class="ci">`+c.indicators.map((n,k)=>`<button data-c="${i}" data-i="${k}" class="${n.status==="ready"?"":"todo"}">${n.name}${n.status==="ready"?"":"<i>준비 중</i>"}</button>`).join("")+`</div></section>`).join("");
  $("nav").onclick=e=>{const b=e.target.closest("button");if(b){pick(+b.dataset.c,+b.dataset.i);$("nav").classList.remove("open");return}
   const h=e.target.closest("h3");if(h)showCat(+h.dataset.c)}}
 function showCat(c){document.querySelectorAll("#nav .cg").forEach(g=>g.classList.toggle("act",+g.dataset.c===c))}
