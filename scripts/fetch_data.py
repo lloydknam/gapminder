@@ -25,8 +25,10 @@ def worldbank(code):
     return d
 
 def oecd(ind):
-    url = f"https://sdmx.oecd.org/public/rest/data/{ind['flow']}/all?startPeriod=1990&format=csvfilewithlabels"
-    rd = csv.DictReader(io.StringIO(get(url)))
+    url = f"https://sdmx.oecd.org/public/rest/data/{ind['flow']}/all?startPeriod=1990&format=csvfile"
+    req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
+    resp = urllib.request.urlopen(req, timeout=600)
+    rd = csv.DictReader(io.TextIOWrapper(resp, encoding="utf-8-sig", newline=""))
     vals, seen = {}, {}
     pref = ind.get("prefer")
     for r in rd:
@@ -55,7 +57,7 @@ for c in cat["categories"]:
         if ind["status"] != "ready": continue
         try:
             save(ind["id"], oecd(ind)); ok.append(ind["id"])
-        except Exception as e:
-            print(f"[실패] {ind['id']}: {e}")
-json.dump(ok, open(OUT / "ready.json", "w"))
+        except BaseException as e:
+            print(f"[실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
+        json.dump(ok, open(OUT / "ready.json", "w"))
 print("완료:", ok)
