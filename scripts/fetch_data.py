@@ -109,7 +109,13 @@ for flow, inds in flows.items():
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in wbs:
     try:
-        r = worldbank(ind["wb"], ind.get("mult", 1), ind.get("wbsrc"))
+        tries = [(ind["wb"], ind.get("wbsrc")), (ind["wb"], None)] + ([(ind["wbalt"], None)] if ind.get("wbalt") else [])
+        for k, (cd, sr) in enumerate(tries):
+            try:
+                r = worldbank(cd, ind.get("mult", 1), sr); break
+            except Exception as e:
+                print(f"  [재시도 {cd} src={sr}] {e}", flush=True)
+                if k == len(tries) - 1: raise
         if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}")
         else: save(ind["id"], r); ok.append(ind["id"])
         import time; time.sleep(0.7)
