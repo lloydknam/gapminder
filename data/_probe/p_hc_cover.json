@@ -1,0 +1,1 @@
+{"rows": 3000, "values": {"FREQ": ["A"], "MEASURE": ["HIC"], "UNIT_MEASURE": ["PS", "PT_POP"], "INSURANCE_TYPE": ["COVGCMED", "PHINCMPI", "PHINDUPI", "PHINPMPI", "PHINSUPI", "PHINTPHI", "TPRIBASI"], "OBS_STATUS": ["", "B", "D", "E", "P"], "OBS_STATUS2": ["", "B", "D"], "UNIT_MULT": ["0", "3"]}}
