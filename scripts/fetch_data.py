@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """OECD(지표) + World Bank(X축 GDP, 크기 인구) -> data/*.json  (OECD 38개국만)"""
-import csv, io, json, sys, urllib.request, pathlib
+import csv, io, json, sys, urllib.request, urllib.error, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "data"; OUT.mkdir(exist_ok=True)
 COUNTRIES = list(json.load(open(ROOT / "countries.json")))
@@ -24,37 +24,46 @@ def worldbank(code):
             d.setdefault(r["countryiso3code"], {})[r["date"]] = r["value"]
     return d
 
-def oecd(ind):
-    url = f"https://sdmx.oecd.org/public/rest/data/{ind['flow']}/all?startPeriod=1990&format=csvfile"
-    req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
-    resp = urllib.request.urlopen(req, timeout=600)
-    rd = csv.DictReader(io.TextIOWrapper(resp, encoding="utf-8-sig", newline=""))
-    vals, seen = {}, {}
-    pref = ind.get("prefer")
-    for r in rd:
-        for k in ind["filters"]:
-            seen.setdefault(k, set()).add(r.get(k))
-        if any(r.get(k) != v for k, v in ind["filters"].items()): continue
-        c = r["REF_AREA"]
-        if c not in COUNTRIES or r.get("FREQ", "A") != "A" or not r["OBS_VALUE"]: continue
-        vals.setdefault((c, r["TIME_PERIOD"][:4]), []).append((r.get(pref, "") if pref else "", float(r["OBS_VALUE"]) * ind.get("mult", 1)))
-    d, conflict = {}, 0
-    for (c, y), L in vals.items():
-        if pref: v = max(L)[1]
-        elif len({x[1] for x in L}) == 1: v = L[0][1]
-        else: conflict += 1; continue
-        d.setdefault(c, {})[y] = v
-    if conflict: print(f"  경고: 중복값 충돌 {conflict}건 제외")
-    if not d:
-        raise RuntimeError("필터 결과 없음. 실제 값: " + str({k: sorted(map(str, v))[:40] for k, v in seen.items()}))
-    return d
+def opencsv(flow, start):
+    import time
+    url = f"https://sdmx.oecd.org/public/rest/data/{flow}/all?startPeriod={start}&format=csvfile"
+    for att in range(1, 6):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
+            resp = urllib.request.urlopen(req, timeout=600)
+            return csv.DictReader(io.TextIOWrapper(resp, encoding="utf-8-sig", newline=""))
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or att == 5: raise
+            print(f"  429 재시도 {att}", flush=True); time.sleep(60 * att)
 
-save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
-save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
+def oecd_flow(flow, inds):
+    """한 flow를 한 번만 내려받아 해당 flow의 모든 지표를 동시에 처리 -> {id: data | Exception}"""
+    st = {i["id"]: {"vals": {}, "seen": {}} for i in inds}
+    for r in opencsv(flow, 1990):
+        c = r["REF_AREA"]
+        if c not in COUNTRIES or not r["OBS_VALUE"]: continue
+        for ind in inds:
+            if r.get("FREQ", "A") != ind.get("freq", "A"): continue
+            S = st[ind["id"]]
+            for k in ind["filters"]: S["seen"].setdefault(k, set()).add(r.get(k))
+            if any(r.get(k) != v for k, v in ind["filters"].items()): continue
+            pref = ind.get("prefer")
+            S["vals"].setdefault((c, r["TIME_PERIOD"][:4]), []).append((r.get(pref, "") if pref else "", float(r["OBS_VALUE"]) * ind.get("mult", 1)))
+    out = {}
+    for ind in inds:
+        S, d, conflict = st[ind["id"]], {}, 0
+        for (c, y), L in S["vals"].items():
+            if ind.get("prefer"): v = max(L)[1]
+            elif len({x[1] for x in L}) == 1: v = L[0][1]
+            else: conflict += 1; continue
+            d.setdefault(c, {})[y] = v
+        if conflict: print(f"  경고 {ind['id']}: 중복값 충돌 {conflict}건 제외")
+        out[ind["id"]] = d if d else RuntimeError("필터 결과 없음. 실제 값: " + str({k: sorted(map(str, v))[:40] for k, v in S["seen"].items()}))
+    return out
+
 def probe(ind):
     url = f"https://sdmx.oecd.org/public/rest/data/{ind['flow']}/all?startPeriod=2015&format=csvfile"
-    req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
-    rd = csv.DictReader(io.TextIOWrapper(urllib.request.urlopen(req, timeout=600), encoding="utf-8-sig", newline=""))
+    rd = opencsv(ind["flow"], 2015)
     uniq, n = {}, 0
     for r in rd:
         if any(r.get(k) != v for k, v in ind.get("filters", {}).items()): continue
@@ -67,17 +76,23 @@ def probe(ind):
     json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1 or k in ("FREQ", "UNIT_MEASURE", "MEASURE")}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
     print("probe", ind["id"], n)
 
-ok = []
+ok, flows, probes = [], {}, []
 for c in cat["categories"]:
     for ind in c["indicators"]:
-        if ind["status"] == "probe":
-            try: probe(ind)
-            except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
-            continue
-        if ind["status"] != "ready": continue
-        try:
-            save(ind["id"], oecd(ind)); ok.append(ind["id"])
-        except BaseException as e:
-            print(f"[실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
-        json.dump(ok, open(OUT / "ready.json", "w"))
+        if ind["status"] == "ready": flows.setdefault(ind["flow"], []).append(ind)
+        elif ind["status"] == "probe": probes.append(ind)
+for flow, inds in flows.items():
+    try:
+        res = oecd_flow(flow, inds)
+    except BaseException as e:
+        print(f"[실패] {flow}: {type(e).__name__} {e}", flush=True); continue
+    for ind in inds:
+        r = res[ind["id"]]
+        if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True)
+        else: save(ind["id"], r); ok.append(ind["id"])
+    json.dump(ok, open(OUT / "ready.json", "w"))
+for ind in probes:
+    try: probe(ind)
+    except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
+json.dump(ok, open(OUT / "ready.json", "w"))
 print("완료:", ok)
