@@ -77,7 +77,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 </style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b>클사무관의 <em>갭마인더</em></b><span>OECD 38개국 + 중국 · 지표별 시간 변화</span></div><button id="mbtn">☰ 메뉴<small>분류·지표 선택</small></button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
-<div id="grp" role="group" aria-label="국가 범위"><button data-g="all" class="on">전체</button><button data-g="oecd">OECD</button><button data-g="big">주요국 (1천만↑)</button><button data-g="g7">G7+한중</button></div>
+<div id="grp" role="group" aria-label="국가 범위"><button data-g="all" class="on">전체</button><button data-g="oecd">OECD</button><button data-g="big">주요국 (1천만↑)</button><button data-g="g7">G7+한중</button><button id="iso" type="button" title="국가명을 영문 약자(ISO)로 표시">KOR</button></div>
 <div class="box"><div id="msg" hidden></div><svg id="chart" viewBox="0 0 960 640"><defs id="defs"></defs><g id="main"></g><g id="fx" pointer-events="none"><circle class="kr" id="kr1" r="10" fill="none"/><circle class="kr k2" id="kr2" r="10" fill="none"/></g></svg></div>
 <div class="stats"><div><div class="l" id="l1"></div><div class="v" id="v1">—</div></div><div class="r"><div class="l" id="l2"></div><div class="v t" id="v2">—</div></div></div>
 <div class="row"><button id="play">▶</button><input id="yr" type="range"><div id="spd" role="group" aria-label="재생 속도"><button data-s="0.5">0.5×</button><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="4">4×</button></div></div>
@@ -154,7 +154,7 @@ function draw(){
   });
  const placed=[],ov=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
  const order=[...pts].sort((a,b)=>(b.c==="KOR")-(a.c==="KOR")||(b.c===sel)-(a.c===sel)||b.p-a.p);
- order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=CT[d.c][0],fs=MOB?(d.c==="KOR"||d.c===sel?13:10):(d.c==="KOR"||d.c===sel?23:18),w=nm.length*fs*1.02+4,hh=fs+2;
+ order.forEach(d=>{const cx=sx(d.x),cy=sy(d.y),r=sr(d.p),nm=NM(d.c),fs=MOB?(d.c==="KOR"||d.c===sel?13:10):(d.c==="KOR"||d.c===sel?23:18),w=nm.length*fs*1.02+4,hh=fs+2;
   const cands=[];for(const k of [0,1,2,3,4]){const o=k*20;cands.push([cx-w/2,cy-r-hh-1-o],[cx-w/2,cy+r+2+o],[cx+r+3+o,cy-hh/2],[cx-r-3-w-o,cy-hh/2],[cx+r+3+o,cy-hh-o/2],[cx-r-3-w-o,cy-hh-o/2],[cx+r+3+o,cy+o/2],[cx-r-3-w-o,cy+o/2])}
   let best=null,bs=1e9;
   for(const [x,y] of cands){const b={x:Math.max(M.l,Math.min(W-M.r-w,x)),y:Math.max(2,Math.min(H-M.b-hh,y)),w,h:hh};const sc=placed.filter(q=>ov(b,q)).length;if(sc<bs){bs=sc;best=b}if(!sc)break}
@@ -169,7 +169,7 @@ function draw(){
  $("l2").textContent="한국"+(ko>=0?" · "+(ko+1)+(GRP==="all"?"위(높은 순)":"위("+GN[GRP]+" 중)"):"");$("v2").textContent=kd?fv(kd.y)+" "+ind.unit:"—";
  $("main").querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
   el.onmousemove=e=>{const t=$("tip");window._tipc=d.c;
-   t.innerHTML=`<b>${CT[d.c][0]}</b> ${cur}<br>${ind.name}: ${fv(d.y)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`;
+   t.innerHTML=`<b>${NM(d.c)}</b> ${cur}<br>${ind.name}: ${fv(d.y)} ${ind.unit}<br>1인당 GDP: ${Math.round(d.x).toLocaleString()}<br>인구: ${Math.round(d.p).toLocaleString()}`;
    t.style.display="block";const w=t.offsetWidth,h=t.offsetHeight;let lx=e.clientX+12,ly=e.clientY+12;if(lx+w>innerWidth-6)lx=Math.max(6,e.clientX-w-12);if(ly+h>innerHeight-6)ly=Math.max(6,e.clientY-h-12);t.style.left=lx+"px";t.style.top=ly+"px";
    clearTimeout(window._tipt);if(matchMedia("(pointer:coarse)").matches)window._tipt=setTimeout(()=>{t.style.display="none"},2200)};
   el.onmouseleave=()=>$("tip").style.display="none";
@@ -179,7 +179,8 @@ const fv=v=>Math.abs(v)>=1000?Math.round(v).toLocaleString():v.toFixed(1);
 document.addEventListener("click",e=>{if(e.target.closest("button,#yr"))$("tip").style.display="none"},true);
 let GRP="all";const G7=["USA","JPN","DEU","GBR","FRA","ITA","CAN","KOR","CHN"],GN={all:"전체",oecd:"OECD",big:"주요국",g7:"G7+한중"};
 function inG(c){if(GRP==="all")return true;if(GRP==="oecd")return c!=="CHN";if(GRP==="g7")return G7.includes(c);const q=P&&P[c];if(!q)return false;const ks=Object.keys(q);return ks.length&&q[ks.sort().pop()]>=1e7}
-$("grp").onclick=e=>{const b=e.target.closest("button");if(!b)return;GRP=b.dataset.g;$("tip").style.display="none";document.querySelectorAll("#grp button").forEach(x=>x.classList.toggle("on",x===b));if(Y)draw()};
+let ISO=false;try{ISO=localStorage.iso==="1"}catch(_){}$("iso").classList.toggle("on",ISO);const NM=c=>ISO?c:CT[c][0];
+$("grp").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.id==="iso"){ISO=!ISO;try{localStorage.iso=ISO?"1":"0"}catch(_){}b.classList.toggle("on",ISO);$("tip").style.display="none";if(Y)draw();return}GRP=b.dataset.g;$("tip").style.display="none";document.querySelectorAll("#grp button[data-g]").forEach(x=>x.classList.toggle("on",x===b));if(Y)draw()};
 let spd=1;
 $("spd").onclick=e=>{const b=e.target.closest("button");if(!b)return;spd=+b.dataset.s;document.querySelectorAll("#spd button").forEach(x=>x.classList.toggle("on",x===b));};
 let wait=false,fc=0;const MS=412;
