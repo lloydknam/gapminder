@@ -76,6 +76,8 @@ def probe(ind):
     json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1 or k in ("FREQ", "UNIT_MEASURE", "MEASURE")}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
     print("probe", ind["id"], n)
 
+save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
+save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
 ok, flows, probes = [], {}, []
 for c in cat["categories"]:
     for ind in c["indicators"]:
