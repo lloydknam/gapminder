@@ -2,7 +2,7 @@ name: update-data
 on:
   workflow_dispatch:
   push:
-    paths: [indicators.json, scripts/fetch_data.py]
+    paths: [indicators.json, scripts/fetch_data.py, countries.json]
   schedule: [{cron: "0 3 1 * *"}]
 permissions: {contents: write}
 jobs:
