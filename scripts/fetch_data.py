@@ -64,7 +64,7 @@ def probe(ind):
             u = uniq.setdefault(k, set())
             if len(u) <= 300: u.add(v)
     pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
-    json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
+    json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1 or k in ("FREQ", "UNIT_MEASURE", "MEASURE")}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
     print("probe", ind["id"], n)
 
 ok = []
