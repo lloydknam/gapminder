@@ -108,7 +108,7 @@ function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(
   const h=e.target.closest("h3");if(h)showCat(+h.dataset.c)}}
 function showCat(c){document.querySelectorAll("#nav .cg").forEach(g=>g.classList.toggle("act",+g.dataset.c===c))}
 function josa(w){const ch=w.trim().slice(-1),c=ch.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3)return (c-0xAC00)%28?"과":"와";if(/[0-9]/.test(ch))return "01368".includes(ch)?"과":"와";return "와"}
-function ttlOf(n){const k=n.indexOf(" (");const w=k<0?n:n.slice(0,k),r=k<0?"":n.slice(k);return w+(EN?" vs. GDP per capita":josa(w)+" 1인당 GDP")+(r?`<small class="p">${r}</small>`:"")}
+function ttlOf(n){const k=n.indexOf(" (");const w=k<0?n:n.slice(0,k);return w+(EN?" vs. GDP per capita":josa(w)+" 1인당 GDP")}
 function kw(t,tag){const k=t.indexOf(" (");if(k<0)return t;return t.slice(0,k)+(tag?`<small class="p">${t.slice(k)}</small>`:`<tspan class="p">${t.slice(k)}</tspan>`)}
 function pick(c,i){ci=c;ii=i;location.hash=c+"-"+i;showCat(c);
  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",+b.dataset.c===c&&+b.dataset.i===i));
