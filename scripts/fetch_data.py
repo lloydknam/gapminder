@@ -15,10 +15,15 @@ def save(name, d):
     json.dump(d, open(OUT / f"{name}.json", "w"), separators=(",", ":"))
     print(f"saved {name}: {len(d)} countries")
 
-def worldbank(code, mult=1):
-    url = f"https://api.worldbank.org/v2/country/{';'.join(COUNTRIES)}/indicator/{code}?format=json&per_page=20000&date=1990:2030"
-    res = json.loads(get(url))
-    if len(res) < 2 or not res[1]: raise RuntimeError(f"세계은행 지표 없음/빈 응답: {res[0] if res else res}")
+def worldbank(code, mult=1, src=None):
+    import time
+    url = f"https://api.worldbank.org/v2/country/{';'.join(COUNTRIES)}/indicator/{code}?format=json&per_page=20000&date=1990:2030" + (f"&source={src}" if src else "")
+    for att in range(3):
+        res = json.loads(get(url))
+        if len(res) >= 2 and res[1]: break
+        time.sleep(3 * (att + 1))
+    else:
+        raise RuntimeError(f"세계은행 지표 없음/빈 응답: {res[0] if res else res}")
     d = {}
     for r in res[1]:
         if r["value"] is not None:
@@ -98,7 +103,8 @@ for flow, inds in flows.items():
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in wbs:
     try:
-        save(ind["id"], worldbank(ind["wb"], ind.get("mult", 1))); ok.append(ind["id"])
+        save(ind["id"], worldbank(ind["wb"], ind.get("mult", 1), ind.get("wbsrc"))); ok.append(ind["id"])
+        import time; time.sleep(0.7)
     except BaseException as e:
         print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True)
     json.dump(ok, open(OUT / "ready.json", "w"))
