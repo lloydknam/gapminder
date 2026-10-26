@@ -47,9 +47,10 @@ def opencsv(flow, start):
             if e.code != 429 or att == 5: raise
             print(f"  429 재시도 {att}", flush=True); time.sleep(60 * att)
 
+DIAG = {}
 def oecd_flow(flow, inds):
     """한 flow를 한 번만 내려받아 해당 flow의 모든 지표를 동시에 처리 -> {id: data | Exception}"""
-    st = {i["id"]: {"vals": {}, "seen": {}} for i in inds}
+    st = {i["id"]: {"vals": {}, "seen": {}, "combo": {}} for i in inds}
     for r in opencsv(flow, 1990):
         c = r["REF_AREA"]
         if c not in COUNTRIES or not r["OBS_VALUE"]: continue
@@ -58,6 +59,9 @@ def oecd_flow(flow, inds):
             S = st[ind["id"]]
             if ind.get("suffix") and not r["TIME_PERIOD"].endswith(ind["suffix"]): continue
             for k in ind["filters"]: S["seen"].setdefault(k, set()).add(r.get(k))
+            fk = list(ind["filters"])
+            if r.get(fk[0]) == ind["filters"][fk[0]] and len(S["combo"]) < 600:
+                ck = tuple(r.get(k) for k in fk); S["combo"][ck] = S["combo"].get(ck, 0) + 1
             if any(r.get(k) != v for k, v in ind["filters"].items()): continue
             pref = ind.get("prefer")
             S["vals"].setdefault((c, r["TIME_PERIOD"][:4]), []).append((r.get(pref, "") if pref else "", float(r["OBS_VALUE"]) * ind.get("mult", 1)))
@@ -70,6 +74,7 @@ def oecd_flow(flow, inds):
             else: conflict += 1; continue
             d.setdefault(c, {})[y] = v
         if conflict: print(f"  경고 {ind['id']}: 중복값 충돌 {conflict}건 제외")
+        DIAG[ind["id"]] = {"conflict": conflict, "keys": list(ind["filters"]), "top_combos": sorted(([list(k), n] for k, n in S["combo"].items()), key=lambda x: -x[1])[:25]}
         out[ind["id"]] = d if d else RuntimeError("필터 결과 없음. 실제 값: " + str({k: sorted(map(str, v))[:40] for k, v in S["seen"].items()}))
     return out
 
@@ -93,7 +98,7 @@ save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
 ok, flows, probes, wbs = [], {}, [], []
 FAIL = {}
 def note(k, m):
-    FAIL[k] = str(m)[:1500]; json.dump(FAIL, open(OUT / "failures.json", "w"), ensure_ascii=False, indent=1)
+    FAIL[k] = str(m)[:3500]; json.dump(FAIL, open(OUT / "failures.json", "w"), ensure_ascii=False, indent=1)
 for c in cat["categories"]:
     for ind in c["indicators"]:
         if ind["status"] == "ready" and ind.get("wb"): wbs.append(ind)
@@ -106,8 +111,8 @@ for flow, inds in flows.items():
         print(f"[실패] {flow}: {type(e).__name__} {e}", flush=True); note(flow, f"{type(e).__name__} {e}"); continue
     for ind in inds:
         r = res[ind["id"]]
-        if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True); note(ind["id"], r)
-        elif not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], "품질미달")
+        if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True); note(ind["id"], str(r) + " | DIAG " + json.dumps(DIAG.get(ind["id"]), ensure_ascii=False))
+        elif not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], f"품질미달: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r} | DIAG " + json.dumps(DIAG.get(ind["id"]), ensure_ascii=False))
         else: save(ind["id"], r); ok.append(ind["id"])
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in wbs:
