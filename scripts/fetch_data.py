@@ -91,6 +91,9 @@ def probe(ind):
 save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
 save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
 ok, flows, probes, wbs = [], {}, [], []
+FAIL = {}
+def note(k, m):
+    FAIL[k] = str(m)[:1500]; json.dump(FAIL, open(OUT / "failures.json", "w"), ensure_ascii=False, indent=1)
 for c in cat["categories"]:
     for ind in c["indicators"]:
         if ind["status"] == "ready" and ind.get("wb"): wbs.append(ind)
@@ -100,11 +103,11 @@ for flow, inds in flows.items():
     try:
         res = oecd_flow(flow, inds)
     except BaseException as e:
-        print(f"[실패] {flow}: {type(e).__name__} {e}", flush=True); continue
+        print(f"[실패] {flow}: {type(e).__name__} {e}", flush=True); note(flow, f"{type(e).__name__} {e}"); continue
     for ind in inds:
         r = res[ind["id"]]
-        if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True)
-        elif not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}")
+        if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True); note(ind["id"], r)
+        elif not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], "품질미달")
         else: save(ind["id"], r); ok.append(ind["id"])
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in wbs:
@@ -116,11 +119,11 @@ for ind in wbs:
             except Exception as e:
                 print(f"  [재시도 {cd} src={sr}] {e}", flush=True)
                 if k == len(tries) - 1: raise
-        if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}")
+        if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], "품질미달")
         else: save(ind["id"], r); ok.append(ind["id"])
         import time; time.sleep(0.7)
     except BaseException as e:
-        print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True)
+        print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True); note(ind["id"], f"{type(e).__name__} {e}")
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in probes:
     try: probe(ind)
