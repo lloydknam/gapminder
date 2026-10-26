@@ -1,1 +1,1 @@
-{"rows": 53070, "values": {"MEASURE": ["F3T4", "FD2", "FD3", "FD4", "GD"], "UNIT_MEASURE": ["PT_B1GQ", "USD", "XDC"], "SECTOR": ["S13", "S1311"], "UNIT_MULT": ["0", "6"], "CURRENCY": ["AUD", "CAD", "CHF", "CLP", "COP", "CRC", "CZK", "DKK", "EUR", "GBP", "HUF", "ILS", "ISK", "JPY", "KRW", "MXN", "NOK", "NZD", "PLN", "RUB", "SEK", "TRY", "USD", "_Z"]}}
+{"rows": 17690, "values": {"MEASURE": ["F3T4", "FD2", "FD3", "FD4", "GD"], "SECTOR": ["S13", "S1311"]}}
