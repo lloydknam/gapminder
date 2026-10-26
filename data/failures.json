@@ -1,0 +1,23 @@
+{
+ "tobacco_pc": "품질미달",
+ "consult": "품질미달",
+ "los": "품질미달",
+ "discharge": "품질미달",
+ "ltc_recip": "필터 결과 없음. 실제 값: {'MEASURE': ['FLTE', 'FTE_FLTE', 'LTCB', 'LTCR'], 'UNIT_MEASURE': ['10P2HB_Y_GE65', '10P3HB_Y_GE65', 'BD', 'PS', 'PT_POP', 'PT_POP_Y_GE65', 'PT_POP_Y_GE80', 'PT_RCP_Y_GE65', 'PT_RCP_Y_GE80', 'PT_WR_FLT', 'PT_WR_FLT_F'], 'AGE': ['Y_GE65', 'Y_GE80', 'Y_LE17', 'Y_LE64', '_T', '_Z'], 'SEX': ['F', 'M', '_T', '_Z'], 'MODE_PROVISION': ['HB', 'INST', '_T']}",
+ "ltc_work": "필터 결과 없음. 실제 값: {'MEASURE': ['FLTE', 'FTE_FLTE', 'LTCB', 'LTCR'], 'UNIT_MEASURE': ['10P2HB_Y_GE65', '10P3HB_Y_GE65', 'BD', 'PS', 'PT_POP', 'PT_POP_Y_GE65', 'PT_POP_Y_GE80', 'PT_RCP_Y_GE65', 'PT_RCP_Y_GE80', 'PT_WR_FLT', 'PT_WR_FLT_F'], 'HEALTH_PROF': ['CARE', 'MINU', '_T', '_Z'], 'WORKER_STATUS': ['ICSE93_1_PERM', 'ICSE93_1_TEMP', '_T', '_Z'], 'SEX': ['F', 'M', '_T', '_Z'], 'ATTAINMENT_LEV': ['ISCED11A_0T2', 'ISCED11A_3_4', 'ISCED11A_5T8', '_T', '_Z'], 'WORK_TIME_ARNGMNT': ['FT', 'PT', '_T', '_Z']}",
+ "tour_gdp": "품질미달",
+ "aic_pc": "필터 결과 없음. 실제 값: {'TRANSACTION': ['B1GQ_POP', 'P3_POP', 'P41_POP'], 'SECTOR': ['S1', 'S14'], 'EXPENDITURE': ['_T', '_Z'], 'UNIT_MEASURE': ['USD_PPP_PS']}",
+ "hh_inc_pc": "필터 결과 없음. 실제 값: {'MEASURE': ['B6GS1M_POP', 'B6N_R_PPP_P31S14', 'B6N_R_PPP_P31S14_GR', 'B7GS1M_POP', 'B7N_R_GR', 'B7N_R_PPP_P41', 'B7N_R_PPP_P41_GR', 'B8NS1M', 'FS1M_B9F', 'LES1M_B90', 'LES1M_BF90_POP', 'LES1M_F2AS', 'LES1M_F3AS', 'LES1M_F51AS', 'LES1M_F52AS', 'LES1M_F62AS', 'LES1M_F6MAS', 'LES1M_FAS_POP', 'LES1M_FD4', 'LES1M_N111N_POP', 'LES1M_N211N_POP', 'LES1M_NKN_POP', 'LES1M_NN_POP', 'P31S1M_CP04'], 'UNIT_MEASURE': ['IX', 'PC', 'PT_B6N_S1M', 'PT_B7N_S1M', 'PT_FAS_S1M', 'USD_PPP_PS', 'XDC']}",
+ "neet": "품질미달",
+ "tax_wedge": "품질미달",
+ "tax_wedge_fam": "품질미달",
+ "cit": "필터 결과 없음. 실제 값: {'MEASURE': ['CIT', 'CIT_C', 'CIT_EX_ST', 'CIT_LSN', 'CIT_SCG'], 'UNIT_MEASURE': ['PT_INC_TAX'], 'TARGETING': ['ST', 'TA'], 'SECTOR': ['S13', 'S1311', 'S13M']}",
+ "women_min": "품질미달",
+ "real_rate": "품질미달",
+ "women_mgr": "품질미달",
+ "wbl": "RuntimeError 세계은행 지표 없음/빈 응답: {'message': [{'id': '175', 'key': 'Invalid format', 'value': 'The indicator was not found. It may have been deleted or archived.'}]}",
+ "literacy": "품질미달",
+ "edu_exp_gov": "품질미달",
+ "broad_money": "품질미달",
+ "acct": "품질미달"
+}
