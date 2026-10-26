@@ -11,6 +11,11 @@ def get(url):
     with urllib.request.urlopen(req, timeout=120) as r:
         return r.read().decode("utf-8-sig")
 
+def quality(d):
+    """국가 30개 이상, 연도 10개 이상, 한국 값 존재"""
+    ys = {y for c in d.values() for y in c}
+    return len(d) >= 30 and len(ys) >= 10 and "KOR" in d
+
 def save(name, d):
     json.dump(d, open(OUT / f"{name}.json", "w"), separators=(",", ":"))
     print(f"saved {name}: {len(d)} countries")
@@ -99,11 +104,14 @@ for flow, inds in flows.items():
     for ind in inds:
         r = res[ind["id"]]
         if isinstance(r, Exception): print(f"[실패] {ind['id']}: {r}", flush=True)
+        elif not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}")
         else: save(ind["id"], r); ok.append(ind["id"])
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in wbs:
     try:
-        save(ind["id"], worldbank(ind["wb"], ind.get("mult", 1), ind.get("wbsrc"))); ok.append(ind["id"])
+        r = worldbank(ind["wb"], ind.get("mult", 1), ind.get("wbsrc"))
+        if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}")
+        else: save(ind["id"], r); ok.append(ind["id"])
         import time; time.sleep(0.7)
     except BaseException as e:
         print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True)
