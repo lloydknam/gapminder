@@ -74,7 +74,20 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 #nav .ci button i{font-size:11px;padding:0 6px}
 }
 #nav #nclose{display:none}#ncount{display:none}
-</style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b><span id="t1" style="display:inline;color:inherit;font:inherit">클사무관의</span> <em id="t2">갭마인더</em></b><i id="tcnt"></i><span id="tsub">OECD 38개국 + 중국 · 지표별 시간 변화</span></div><button id="mbtn"><i id="mb1" style="font-style:normal">☰ 메뉴</i><small id="mb2">분류·지표 선택</small></button></header>
+#cursel{display:none}
+@media(min-width:901px) and (max-width:1280px){
+#cursel{display:block;flex:1 1 0;margin-left:0;min-width:0;text-align:right;font-size:17px;font-weight:700;color:var(--deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mbtn{display:block;margin-left:0;min-width:118px;font-size:18px;font-weight:800;padding:11px 20px;border-radius:999px;border:0;background:linear-gradient(180deg,#34c9ae,#1fa98f);color:#fff;box-shadow:0 3px 10px rgba(31,169,143,.5);white-space:nowrap;letter-spacing:.5px;flex:none}
+.hd{padding-right:156px}
+#mbtn small{display:none}
+#nav{display:none;position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 24px));max-height:calc(100vh - 24px);overflow:auto;z-index:9;margin:0;padding:60px 20px 16px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+#nav.open{display:flex}
+#nav #ncount{display:block;position:absolute;top:14px;left:20px;right:120px;font-size:15px;font-weight:800;color:var(--deep);line-height:1.25}
+#nav #ncount small{display:block;font-weight:600;font-size:12px;color:var(--mut)}
+#nav #nclose{display:block;position:absolute;top:12px;right:16px;width:auto;padding:6px 16px;border-radius:999px;background:var(--deep);color:#fff;font-size:16px;font-weight:800}
+#nav #nclose:hover{background:var(--deep)}
+}
+</style></head><body><header class="hd"><img src="assets/clerk.jpg" alt="클사무관"><div><b><span id="t1" style="display:inline;color:inherit;font:inherit">클사무관의</span> <em id="t2">갭마인더</em></b><i id="tcnt"></i><span id="tsub">OECD 38개국 + 중국 · 지표별 시간 변화</span></div><div id="cursel"></div><button id="mbtn"><i id="mb1" style="font-style:normal">☰ 메뉴</i><small id="mb2">분류·지표 선택</small></button></header>
 <div class="shell"><nav id="nav"></nav><main><div class="wrap"><div class="card">
 <div class="top"><div id="big">—<small id="bigsub"></small></div><div class="ttl"><div class="chip" id="chip"></div><h1 id="h1"></h1><div class="sub" id="sub2">X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙</div></div></div>
 <div id="xrow"><label for="xsel" id="xlab">X축</label><select id="xsel" aria-label="X축 지표"></select></div><div id="grp" role="group" aria-label="국가 범위"><button data-g="all" class="on">전체</button><button data-g="oecd">OECD</button><button data-g="big">주요국 (1천만↑)</button><button data-g="g7">G7+한중</button><span id="lang" role="switch" aria-checked="false" aria-label="한국어 / English" tabindex="0"><b data-l="ko">한</b><b data-l="en">EN</b></span></div>
@@ -108,7 +121,7 @@ const $=id=>document.getElementById(id),svg=$("chart");
 const j=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()});
 (async()=>{
  [CAT,CT]=await Promise.all([j("indicators.json"),j("countries.json")]);try{I=await j("i18n.json")}catch(e){};try{META=await j("data/meta.json")}catch(e){};try{const rd=await j("data/ready.json");CAT.categories.forEach(c=>c.indicators.forEach(n=>{if(n.status!=="probe"&&!rd.includes(n.id))n.status="todo"}))}catch(e){};CAT.categories=CAT.categories.filter(c=>c.indicators.some(n=>n.status!=="probe"))
- $("play").onclick=toggle;$("mbtn").onclick=()=>$("nav").classList.toggle("open");
+ $("play").onclick=toggle;document.addEventListener("click",e=>{const n=$("nav");if(n.classList.contains("open")&&!e.target.closest("#nav,#mbtn"))n.classList.remove("open")});addEventListener("keydown",e=>{if(e.key==="Escape")$("nav").classList.remove("open")});$("mbtn").onclick=()=>$("nav").classList.toggle("open");
  $("yr").oninput=e=>{stop();cur=+e.target.value;draw()};
  
  (()=>{const mix=(h,t,a)=>{const n=parseInt(h.slice(1),16),r=[n>>16&255,n>>8&255,n&255].map(v=>Math.round(v+(t-v)*a));return`rgb(${r})`};
@@ -120,7 +133,7 @@ const IC_O='<svg class="ic" viewBox="0 0 22 22" aria-label="OECD"><circle cx="11
 const ico=n=>n.wb?IC_W:IC_O;
 function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(n=>n.status==="ready").length,0);$("nav").innerHTML=`<span id="ncount">${EN?CAT.categories.length+" categories · "+nn+" indicators":CAT.categories.length+"개 분야 · "+nn+"개 지표"} <small>(${IC_O}OECD · ${IC_W}World Bank)</small></span><button id="nclose" type="button">${S("close")}</button>`+CAT.categories.map((c,i)=>`<section class="cg" data-c="${i}"><h3 data-c="${i}">${i+1}. ${cN(c)}</h3><div class="ci">`+c.indicators.map((n,k)=>`<button data-c="${i}" data-i="${k}" class="${n.status==="ready"?"":"todo"}">${ico(n)}${iN(n)}${n.status==="ready"?"":"<i>"+S("todo")+"</i>"}</button>`).join("")+`</div></section>`).join("");
  $("nav").insertBefore(XROW,$("nav").children[1]||null);
- $("nav").onclick=e=>{const b=e.target.closest("button");if(b){pick(+b.dataset.c,+b.dataset.i);$("nav").classList.remove("open");return}
+ $("nav").onclick=e=>{const b=e.target.closest("button");if(b){pick(+b.dataset.c,+b.dataset.i);$("nav").classList.remove("open");if(matchMedia("(max-width:1280px)").matches)scrollTo({top:0,behavior:"smooth"});return}
   const h=e.target.closest("h3");if(h)showCat(+h.dataset.c)}}
 function showCat(c){document.querySelectorAll("#nav .cg").forEach(g=>g.classList.toggle("act",+g.dataset.c===c))}
 function josa(w){const ch=w.trim().slice(-1),c=ch.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3)return (c-0xAC00)%28?"과":"와";if(/[0-9]/.test(ch))return "01368".includes(ch)?"과":"와";return "와"}
@@ -129,7 +142,7 @@ function kw(t,tag){const k=t.indexOf(" (");if(k<0)return t;return t.slice(0,k)+(
 function pick(c,i){ci=c;ii=i;setHash();showCat(c);
  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",+b.dataset.c===c&&+b.dataset.i===i));
  titles();load()}
-function titles(){$("chip").textContent=(ci+1)+". "+cN(CAT.categories[ci]);$("h1").innerHTML=ttlOf(iN(CAT.categories[ci].indicators[ii]));$("sub2").textContent=EN?"X: "+xS()+" · Size: population · Colour: continent":"X: "+xS()+" · 크기: 인구 · 색: 대륙"}
+function titles(){{const cs=$("cursel");if(cs)cs.textContent=cN(CAT.categories[ci])+" › "+iN(CAT.categories[ci].indicators[ii]).replace(/ \(.*$/,"")}$("chip").textContent=(ci+1)+". "+cN(CAT.categories[ci]);$("h1").innerHTML=ttlOf(iN(CAT.categories[ci].indicators[ii]));$("sub2").textContent=EN?"X: "+xS()+" · Size: population · Colour: continent":"X: "+xS()+" · 크기: 인구 · 색: 대륙"}
 function srcLine(){const wb=c=>`<a href="https://data.worldbank.org/indicator/${c}" target="_blank" rel="noopener">World Bank WDI · ${c}</a>`;
  const so=n=>{if(n.wb)return wb(n.wb);const m=(n.flow||"").split(",");return "OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")};
  $("srcl").innerHTML=S("src")+so(ind)+(EN?" · "+xS()+": ":" · "+xS()+": ")+so(xd())+S("srcp")+wb(CAT.size.wb)}
