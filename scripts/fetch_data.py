@@ -135,3 +135,6 @@ for ind in probes:
     except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
 json.dump(ok, open(OUT / "ready.json", "w"))
 print("완료:", ok)
+
+import datetime
+json.dump({"updated": (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")}, open(OUT / "meta.json", "w"))
