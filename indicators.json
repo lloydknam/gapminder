@@ -2187,20 +2187,6 @@
       "UNIT_MEASURE": "PT_OTE_S13"
      },
      "status": "ready"
-    },
-    {
-     "id": "sng_state",
-     "name": "광역(주)정부 지출 비중 (일반정부 지출 중)",
-     "unit": "%",
-     "scale": "linear",
-     "source": "OECD",
-     "flow": "OECD.CFE.RDG,DSD_DASHBOARD@EXPEND,1.0",
-     "filters": {
-      "MEASURE": "E1",
-      "SECTOR": "S1312",
-      "UNIT_MEASURE": "PT_OTE_S13"
-     },
-     "status": "ready"
     }
    ]
   },
@@ -3281,38 +3267,6 @@
       "CATEGORY": "_T",
       "DOMAIN": "_T",
       "UNIT_MEASURE": "PT_TAX_REV"
-     },
-     "status": "ready"
-    },
-    {
-     "id": "ecr_net",
-     "name": "순 유효탄소가격 (배출량 가중평균)",
-     "unit": "EUR/tCO2e",
-     "scale": "linear",
-     "source": "OECD",
-     "flow": "OECD.CTP.TPS,DSD_NECR@DF_NECRS,1.1",
-     "filters": {
-      "MEASURE": "NETECR",
-      "SECTOR": "_T",
-      "EMISSIONS_SOURCE": "_T",
-      "UNIT_MEASURE": "EUR_TCO2E",
-      "STATISTICAL_OPERATION": "MEANW"
-     },
-     "status": "ready"
-    },
-    {
-     "id": "ecr_tax",
-     "name": "탄소세·연료세 유효탄소가격",
-     "unit": "EUR/tCO2e",
-     "scale": "linear",
-     "source": "OECD",
-     "flow": "OECD.CTP.TPS,DSD_NECR@DF_NECRS,1.1",
-     "filters": {
-      "MEASURE": "ECRATE",
-      "SECTOR": "_T",
-      "EMISSIONS_SOURCE": "_T",
-      "UNIT_MEASURE": "EUR_TCO2E",
-      "STATISTICAL_OPERATION": "MEANW"
      },
      "status": "ready"
     }
