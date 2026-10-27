@@ -269,7 +269,26 @@
 "female_share": "Female population (share)",
 "adol_fert": "Adolescent fertility rate (per 1,000 women aged 15–19)",
 "top20": "Top 20% income share",
-"int_rev": "Interest payments (% of government revenue)"
+"int_rev": "Interest payments (% of government revenue)",
+"gini_mkt": "Gini coefficient (market income)",
+"gini_gross": "Gini coefficient (gross income)",
+"pov_child": "Child poverty rate (under 18, 50% of median)",
+"pov_old": "Elderly poverty rate (over 65, 50% of median)",
+"pov_work": "Working-age poverty rate (18–65, 50% of median)",
+"pov_mkt": "Relative poverty rate (market income, 50% of median)",
+"pov_gap": "Poverty gap (50% of median)",
+"d9d1": "Income decile ratio D9/D1",
+"d9d5": "Income decile ratio D9/D5",
+"d5d1": "Income decile ratio D5/D1",
+"fb_emp": "Employment rate, foreign-born",
+"nb_emp": "Employment rate, native-born",
+"pat_env": "Environment-related technology patents (share)",
+"pat_ict": "ICT patents (share)",
+"long_hrs": "Employees working 50+ hours per week (share)",
+"agr_ghg": "Agricultural greenhouse gas emissions (CO₂e)",
+"neonatal": "Neonatal mortality (per 1,000 births)",
+"debt_sec": "Government debt: securities (share of total debt)",
+"debt_loan": "Government debt: loans (share of total debt)"
 },
 "unit": {
 "세": "years",
@@ -301,7 +320,9 @@
 "% 1인당 GDP": "% of GDP per capita",
 "US$/㎥": "US$ per m³",
 "MJ/US$": "MJ per US$",
-"kg/ha": "kg/ha"
+"kg/ha": "kg/ha",
+"배": "×",
+"백만 t": "Mt CO₂e"
 },
 "unit_ind": {
 "mobile": "subscriptions",
