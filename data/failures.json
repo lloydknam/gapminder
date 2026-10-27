@@ -1,6 +1,4 @@
 {
- "smoke_f": "품질미달",
- "smoke_m": "품질미달",
- "lend_rate": "품질미달",
- "dep_rate": "품질미달"
+ "neonatal": "필터 결과 없음. 실제 값: {'MEASURE': ['INM', 'MATM', 'NEOM', 'PERM'], 'UNIT_MEASURE': ['DT_10P3BR', 'DT_10P3BR_L', 'DT_10P5BR_L'], 'GESTATION_THRESHOLD': ['NONE', 'WK22', '_Z']} | DIAG {\"conflict\": 0, \"keys\": [\"MEASURE\", \"UNIT_MEASURE\", \"GESTATION_THRESHOLD\"], \"top_combos\": [[[\"NEOM\", \"DT_10P3BR_L\", \"NONE\"], 1315], [[\"NEOM\", \"DT_10P3BR_L\", \"WK22\"], 744]]}",
+ "gini_gross": "품질미달: 35개국, 연도 36개, KOR=False | DIAG {\"conflict\": 0, \"keys\": [\"MEASURE\", \"STATISTICAL_OPERATION\", \"AGE\", \"DEFINITION\"], \"top_combos\": [[[\"INC_GROSS_GINI\", \"_Z\", \"_T\", \"D_CUR\"], 522], [[\"INC_GROSS_GINI\", \"_Z\", \"Y18T65\", \"D_CUR\"], 522], [[\"INC_GROSS_GINI\", \"_Z\", \"Y_GT65\", \"D_CUR\"], 522], [[\"INC_GROSS_GINI\", \"_Z\", \"Y_GT65\", \"D_INC\"], 55], [[\"INC_GROSS_GINI\", \"_Z\", \"Y18T65\", \"D_INC\"], 55], [[\"INC_GROSS_GINI\", \"_Z\", \"_T\", \"D_INC\"], 55], [[\"INC_GROSS_GINI\", \"_Z\", \"_T\", \"D_PREV\"], 15], [[\"INC_GROSS_GINI\", \"_Z\", \"Y18T65\", \"D_PREV\"], 15], [[\"INC_GROSS_GINI\", \"_Z\", \"Y_GT65\", \"D_PREV\"], 15]]}"
 }
