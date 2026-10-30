@@ -200,7 +200,7 @@ function draw(){
  $("main").innerHTML=h;const kp=pts.find(q=>q.c==="KOR");["kr1","kr2"].forEach(i=>{const e=$(i);if(kp){e.setAttribute("cx",sx(kp.x));e.setAttribute("cy",sy(kp.y));e.setAttribute("r",sr(kp.p));e.style.display=""}else e.style.display="none"});
  $("big").firstChild.textContent="";$("bigsub").textContent=S("unit")+iU(ind);
  const avg=pts.reduce((a,d)=>a+d.y,0)/pts.length;
- $("l1").textContent=EN?GN[GRP]+" simple average ("+pts.length+" countries)":GN[GRP]+" 단순평균 ("+pts.length+"개국)";$("v1").textContent=fv(avg)+" "+iU(ind);
+ $("l1").textContent=EN?GN[GRP]+" average ("+pts.length+")":GN[GRP]+" 단순평균 ("+pts.length+"개국)";$("v1").textContent=fv(avg)+" "+iU(ind);
  const ko=[...pts].sort((a,b)=>b.y-a.y).findIndex(d=>d.c==="KOR"),kd=pts.find(d=>d.c==="KOR");
  $("l2").textContent=S("korea")+(ko>=0?" · "+(EN?ord(ko+1)+(GRP==="all"?" (high to low)":" (among "+GN[GRP]+")"):(ko+1)+(GRP==="all"?"위(높은 순)":"위("+GN[GRP]+" 중)")):"");$("v2").textContent=kd?fv(kd.y)+" "+iU(ind):"—";
  $("main").querySelectorAll("circle").forEach(el=>{const d=pts.find(q=>q.c===el.dataset.c);
