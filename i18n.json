@@ -342,7 +342,13 @@
 "imf_ur": "Unemployment rate (IMF)",
 "imf_ca": "Current account balance (IMF, % GDP)",
 "imf_xvol": "Goods export volume growth (IMF)",
-"imf_mvol": "Goods import volume growth (IMF)"
+"imf_mvol": "Goods import volume growth (IMF)",
+"imf_gap": "Output gap (IMF, % of potential GDP)",
+"imf_gdp": "GDP, current prices (IMF, US$ billion)",
+"imf_gdp_ppp": "GDP, PPP (IMF, int'l $ billion)",
+"imf_gdppc_ppp": "GDP per capita, PPP (IMF, int'l $)",
+"imf_tx": "Export volume growth, goods & services (IMF)",
+"imf_tm": "Import volume growth, goods & services (IMF)"
 },
 "unit": {
 "세": "years",
@@ -376,7 +382,11 @@
 "MJ/US$": "MJ per US$",
 "kg/ha": "kg/ha",
 "배": "×",
-"백만 t": "Mt CO₂e"
+"백만 t": "Mt CO₂e",
+"% 잠재GDP": "% of potential GDP",
+"10억 US$": "US$ billion",
+"10억 국제$": "Int'l $ billion",
+"국제$": "Int'l $"
 },
 "unit_ind": {
 "mobile": "subscriptions",

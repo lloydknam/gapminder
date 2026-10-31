@@ -754,6 +754,46 @@
      "imf": "NGDPDPC",
      "proj": true,
      "status": "ready"
+    },
+    {
+     "id": "imf_gap",
+     "name": "산출갭 (IMF, 잠재GDP 대비)",
+     "unit": "% 잠재GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NGAP_NPGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_gdp",
+     "name": "GDP 규모 (IMF, 명목 10억 US$)",
+     "unit": "10억 US$",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NGDPD",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_gdp_ppp",
+     "name": "GDP 규모 (IMF, PPP 10억 국제$)",
+     "unit": "10억 국제$",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "PPPGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_gdppc_ppp",
+     "name": "1인당 GDP (IMF, PPP 국제$)",
+     "unit": "국제$",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "PPPPC",
+     "proj": true,
+     "status": "ready"
     }
    ]
   },
@@ -2548,6 +2588,26 @@
      "scale": "linear",
      "source": "IMF",
      "imf": "TMG_RPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_tx",
+     "name": "재화·서비스 수출물량 증가율 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "TX_RPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_tm",
+     "name": "재화·서비스 수입물량 증가율 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "TM_RPCH",
      "proj": true,
      "status": "ready"
     }
