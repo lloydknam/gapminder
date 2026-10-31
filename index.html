@@ -104,7 +104,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 #corl{overflow:auto;flex:1;min-height:120px;border-top:1px solid var(--line)}
 .cr{display:grid;grid-template-columns:22px 1fr 90px 120px;gap:6px;align-items:center;padding:5px 2px;border-bottom:1px solid #eef3f2;cursor:pointer;font-size:13px;line-height:1.25}.cr:hover{background:#e9f8f4}.cr .nm{display:flex;gap:5px;align-items:center;min-width:0}.cr .nm span{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.cr .ic{width:14px;height:14px;flex:none}.cr .rk{color:#8a97a5;font-size:11.5px;text-align:right}
 .cr .bar{position:relative;height:14px;background:#f1f5f4;border-radius:7px}.cr .bar:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#b9c6c3}.cr .bar b{position:absolute;top:1px;bottom:1px;border-radius:6px}.cr .rv{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.cr .rv small{display:block;white-space:nowrap;font-weight:600;color:#8a97a5;font-size:10.5px}
-#corn{font-size:11.5px;color:#7a8794;line-height:1.45;margin:8px 2px 0}@media(max-width:600px){.cr{grid-template-columns:16px 1fr 56px 86px}#corbox h2{font-size:16px}}
+#corn{font-size:11.5px;color:#7a8794;line-height:1.45;margin:8px 2px 0}@media(max-width:600px){.cr{grid-template-columns:16px 1fr 50px 92px}.cr .rv small{white-space:normal}#corbox h2{font-size:16px}}
 @media(min-width:901px){#nav #xlab{font-size:19px!important;font-weight:800}#nav #xbtn{font-size:18px!important;font-weight:700;padding:8px 18px!important}#nav #cbtn{font-size:18px!important;padding:8px 18px!important}#nav #xdd{max-width:640px}#nav #xlist button{font-size:17px!important;padding:6px 14px!important}#nav #xlist .xg{font-size:15px}#nav #xrow{gap:12px}}
 @media(min-width:901px){#nav{gap:5px 6px!important;padding:10px 16px!important}#nav h3{padding:7px 4px!important;font-size:19px!important;border-width:2px!important}.ci{gap:5px 6px!important;padding-top:6px!important;margin-top:1px!important}#nav .ci button{font-size:19px!important;padding:5px 15px!important;line-height:1.25}#nav #xrow{margin:0!important}}
 @media(min-width:901px){#corbox{width:min(860px,94vw);padding:20px 24px 14px}#corbox h2{font-size:26px}#corsub{font-size:16px}.cctl{font-size:16px;gap:6px 8px}.cctl button{font-size:16px;padding:4px 14px}.cr{grid-template-columns:30px 1fr 150px 150px;font-size:19px;padding:8px 4px}.cr .ic{width:22px;height:22px}.cr .rk{font-size:15px}.cr .bar{height:18px;border-radius:9px}.cr .rv{font-size:19px}.cr .rv small{font-size:14px}#corn{font-size:14px}#corx{font-size:30px}}
@@ -259,39 +259,52 @@ function toggle(){if(timer)return stop();if(cur>=years.at(-1))cur=years[0];$("pl
  fc=cur;timer=setInterval(step,50)}
 addEventListener("resize",()=>{if(Y&&ind&&ind.status==="ready")draw()});
 /* ===== 상관 탐색: 현재 Y 지표와 상관이 높은 X 지표 찾기 ===== */
-const CR={D:null,mode:"cur",sign:"all",oth:false,rows:[],busy:false};
+const CR={D:null,mode:"cur",sign:"all",sort:"r",oth:false,rows:[],busy:false};
 const corLab=()=>{const b=$("cbtn");if(b)b.textContent=EN?"🔍 Find best X":"🔍 상관 탐색"};
 const nmOf=n=>n.id==="gdp_pc"?S("xname"):iN(n);
 const rankA=a=>{const ix=a.map((v,i)=>[v,i]).sort((p,q)=>p[0]-q[0]),r=Array(a.length);for(let i=0;i<ix.length;){let k=i;while(k+1<ix.length&&ix[k+1][0]===ix[i][0])k++;const m=(i+k)/2+1;for(let t=i;t<=k;t++)r[ix[t][1]]=m;i=k+1}return r};
 const pear=(a,b)=>{const n=a.length;let sa=0,sb=0;for(let i=0;i<n;i++){sa+=a[i];sb+=b[i]}const ma=sa/n,mb=sb/n;let c=0,va=0,vb=0;for(let i=0;i<n;i++){const x=a[i]-ma,y=b[i]-mb;c+=x*y;va+=x*x;vb+=y*y}return va&&vb?c/Math.sqrt(va*vb):NaN};
-function xsec(S,mode,y){const r={};for(const c in CT){if(!inG(c))continue;const o=S[c];if(!o)continue;let v=null;
+const cutOf=n=>n&&n.proj&&META&&META.proj_from?META.proj_from-1:9999;
+function xsec(S,mode,y,cut){cut=cut||9999;const r={};let mx=-1;if(mode==="last"){for(const c in S)for(const k in S[c])if(+k<=cut&&+k>mx)mx=+k}
+ for(const c in CT){if(!inG(c))continue;const o=S[c];if(!o)continue;let v=null;
  if(mode==="avg"){let s=0,n=0;for(let t=y-9;t<=y;t++)if(o[t]!=null){s+=o[t];n++}if(n)v=s/n}
+ else if(mode==="last"){let b=-1;for(const k in o)if(+k<=cut&&+k>b)b=+k;if(b>=mx-4&&b>=0)v=o[b]}
  else{let bd=3;for(const k in o){const d=Math.abs(+k-y);if(d<bd){bd=d;v=o[k]}}}
  if(v!=null)r[c]=v}return r}
 async function corLoad(){if(CR.D)return;CR.busy=true;const list=[{id:"gdp_pc",name:"1인당 GDP (PPP, 2021 불변 US$)",scale:"log",unit:"US$",wb:CAT.x.wb},...allInds()];CR.list=list.filter(n=>n.id!==ind.id);
  const D={},ids=list.map(n=>n.id);let done=0,i=0;const tot=ids.length;
  const w=async()=>{while(i<tot){const id=ids[i++];try{D[id]=await fetch(`data/${id}.json`).then(r=>r.ok?r.json():null)}catch(e){D[id]=null}done++;const e=$("corl");if(e&&done%10===0)e.innerHTML=`<p style="padding:18px 6px;color:var(--mut)">${EN?"Loading data":"데이터 불러오는 중"} ${done}/${tot}</p>`}};
  await Promise.all(Array.from({length:10},w));CR.D=D;CR.busy=false}
-function corCompute(){const y=cur,mode=CR.mode,ys=xsec(Y,mode,y),ny=Object.keys(ys).length,rows=[];
- for(const n of CR.list){const S=CR.D[n.id];if(!S)continue;const xs=xsec(S,mode,y),a=[],b=[],lg=n.scale==="log";
+const pvOf=x=>CR.mode==="kor"&&CR.sort==="d"?x.rho:x.r;
+function corCompute(){const y=cur,mode=CR.mode,rows=[];
+ if(mode==="kor"){const yk=Y.KOR||{};CR.ny=0;
+  for(const n of CR.list){const S=CR.D[n.id];if(!S||!S.KOR)continue;const xk=S.KOR,cut=Math.min(cutOf(ind),cutOf(n)),lg=n.scale==="log";
+   const ts=Object.keys(yk).map(Number).filter(t=>t<=cut&&xk[t]!=null&&(!lg||xk[t]>0)).sort((p,q)=>p-q);
+   if(ts.length<10)continue;const a=ts.map(t=>lg?Math.log(xk[t]):xk[t]),b=ts.map(t=>yk[t]),r=pear(a,b);if(!isFinite(r))continue;
+   const da=[],db=[];for(let i=1;i<ts.length;i++)if(ts[i]-ts[i-1]===1){da.push(a[i]-a[i-1]);db.push(b[i]-b[i-1])}
+   rows.push({n,r,rho:da.length>=8?pear(da,db):NaN,N:ts.length,t0:ts[0],t1:ts.at(-1)})}
+  const v=x=>{const q=pvOf(x);return isFinite(q)?Math.abs(q):-1};rows.sort((p,q)=>v(q)-v(p));CR.rows=rows.filter(x=>isFinite(pvOf(x)));return}
+ const ys=xsec(Y,mode,y,cutOf(ind)),ny=Object.keys(ys).length;
+ for(const n of CR.list){const S=CR.D[n.id];if(!S)continue;const xs=xsec(S,mode,y,cutOf(n)),a=[],b=[],lg=n.scale==="log";
   for(const c in ys){const x=xs[c];if(x==null||(lg&&x<=0))continue;a.push(lg?Math.log(x):x);b.push(ys[c])}
   if(a.length<Math.min(15,Math.ceil(.6*ny)))continue;const r=pear(a,b);if(!isFinite(r))continue;rows.push({n,r,rho:pear(rankA(a),rankA(b)),N:a.length})}
  rows.sort((p,q)=>Math.abs(q.r)-Math.abs(p.r));CR.rows=rows;CR.ny=ny}
-function corRender(){const ctl=$("cctl"),T=EN?{m1:"Selected year",m2:"10-yr avg",s0:"All",s1:"Positive (+)",s2:"Negative (−)",bs:"Basis"}:{m1:"선택 연도",m2:"최근 10년 평균",s0:"전체",s1:"양(+)",s2:"음(−)",bs:"기준"};
- ctl.innerHTML=`<span>${T.bs}</span><button data-m="cur" class="${CR.mode==="cur"?"on":""}">${T.m1}</button><button data-m="avg" class="${CR.mode==="avg"?"on":""}">${T.m2}</button><i></i><button data-s="all" class="${CR.sign==="all"?"on":""}">${T.s0}</button><button data-s="pos" class="${CR.sign==="pos"?"on":""}">${T.s1}</button><button data-s="neg" class="${CR.sign==="neg"?"on":""}">${T.s2}</button><i></i><button data-o="1" class="${CR.oth?"on":""}">${EN?"Other categories only":"다른 분야만"}</button>`;
+function corRender(){const ctl=$("cctl"),T=EN?{m1:"Selected year",m2:"10-yr avg",m3:"Latest per country",m4:"Korea time series",k1:"Rank by level",k2:"Rank by change",s0:"All",s1:"Positive (+)",s2:"Negative (−)",bs:"Basis"}:{m1:"선택 연도",m2:"최근 10년 평균",m3:"국가별 최신값",m4:"한국 시계열",k1:"수준 상관순",k2:"증감 상관순",s0:"전체",s1:"양(+)",s2:"음(−)",bs:"기준"};
+ ctl.innerHTML=`<span>${T.bs}</span><button data-m="cur" class="${CR.mode==="cur"?"on":""}">${T.m1}</button><button data-m="avg" class="${CR.mode==="avg"?"on":""}">${T.m2}</button><button data-m="last" class="${CR.mode==="last"?"on":""}">${T.m3}</button><button data-m="kor" class="${CR.mode==="kor"?"on":""}">${T.m4}</button><i></i>${CR.mode==="kor"?`<button data-k="r" class="${CR.sort==="r"?"on":""}">${T.k1}</button><button data-k="d" class="${CR.sort==="d"?"on":""}">${T.k2}</button><i></i>`:""}<button data-s="all" class="${CR.sign==="all"?"on":""}">${T.s0}</button><button data-s="pos" class="${CR.sign==="pos"?"on":""}">${T.s1}</button><button data-s="neg" class="${CR.sign==="neg"?"on":""}">${T.s2}</button><i></i><button data-o="1" class="${CR.oth?"on":""}">${EN?"Other categories only":"다른 분야만"}</button>`;
  const yn=iN(ind).replace(/ \(.*$/,""),gl=document.querySelector("#grp button.on[data-g]"),gs=gl?gl.textContent:"";
  $("corh").textContent=EN?`Best X-axis for "${yn}"`:`"${yn}"와 상관이 가장 높은 X축 지표`;
- $("corsub").textContent=(EN?`Y fixed · ${CR.list.length} indicators tested · ${CR.mode==="cur"?cur+" (±2 yrs)":"avg of "+(cur-9)+"–"+cur} · scope: ${gs} · ${CR.ny} countries`:`Y 고정 · ${CR.list.length}개 지표 대입 · ${CR.mode==="cur"?cur+"년(±2년)":(cur-9)+"–"+cur+"년 평균"} 단면 · 범위: ${gs} · ${CR.ny}개국`);
- const myc=CAT.categories[ci].id;let rows=CR.rows.filter(x=>(CR.sign==="all"||(CR.sign==="pos"?x.r>0:x.r<0))&&!(CR.oth&&x.n.cat&&x.n.cat.id===myc)).slice(0,40);
- $("corl").innerHTML=rows.length?rows.map((x,i)=>{const w=Math.abs(x.r)*50,pos=x.r>0,col=pos?"#2bb8a0":"#f08a24";return `<div class="cr" data-id="${x.n.id}" title="${EN?"Click to set as X-axis":"클릭하면 X축으로 설정"}"><span class="rk">${i+1}</span><span class="nm">${x.n.id==="gdp_pc"?"":ico(x.n)}<span>${nmOf(x.n).replace(/</g,"&lt;")}${Math.abs(x.r)>=.95?" ⚠":""}</span></span><span class="bar"><b style="${pos?"left:50%":"right:50%"};width:${w}%;background:${col}"></b></span><span class="rv" style="color:${pos?"#0f7a68":"#b35d00"}">${x.r>0?"+":""}${x.r.toFixed(2)}<small>ρ${x.rho>0?"+":""}${x.rho.toFixed(2)} n=${x.N}</small></span></div>`}).join(""):`<p style="padding:18px 6px;color:var(--mut)">${EN?"No indicator with enough overlapping countries.":"겹치는 국가가 충분한 지표가 없습니다."}</p>`;
- $("corn").textContent=EN?"r = Pearson correlation (log-transformed for log-scale X), ρ = Spearman rank correlation. ⚠ = |r|≥0.95, probably a near-identical definition. Correlation is not causation: income and age structure often drive many pairs at once. ‘Other categories only’ hides indicators from the same category as Y (often near-duplicates). Click a row to plot it.":"r = 피어슨 상관계수(로그축 지표는 로그 변환), ρ = 스피어먼 순위상관. ⚠ = |r|≥0.95로 정의가 거의 같은 지표일 수 있음. 상관은 인과가 아니며, 소득수준·고령화 같은 공통요인이 여러 쌍을 동시에 움직이는 경우가 많습니다. ‘다른 분야만’은 Y와 같은 분야 지표(정의가 겹치기 쉬움)를 숨깁니다. 행을 누르면 그 지표가 X축으로 설정됩니다."}
+ const K=CR.mode==="kor",bs=CR.mode==="cur"?(EN?cur+" (±2 yrs)":cur+"년(±2년)"):CR.mode==="avg"?(EN?"avg of "+(cur-9)+"–"+cur:(cur-9)+"–"+cur+"년 평균"):CR.mode==="last"?(EN?"latest value per country (within 5 yrs of newest)":"국가별 최신값(최신연도 5년 이내)"):(EN?"Korea, year by year (actuals only)":"한국 연도별 시계열(실적 연도만)");
+ $("corsub").textContent=EN?`Y fixed · ${CR.list.length} indicators tested · ${bs}`+(K?"":` · scope: ${gs} · ${CR.ny} countries`):`Y 고정 · ${CR.list.length}개 지표 대입 · ${bs}`+(K?"":` 단면 · 범위: ${gs} · ${CR.ny}개국`);
+ const myc=CAT.categories[ci].id;let rows=CR.rows.filter(x=>(CR.sign==="all"||(CR.sign==="pos"?pvOf(x)>0:pvOf(x)<0))&&!(CR.oth&&x.n.cat&&x.n.cat.id===myc)).slice(0,40);
+ $("corl").innerHTML=rows.length?rows.map((x,i)=>{const pv=pvOf(x),sv=K?(CR.sort==="d"?x.r:x.rho):x.rho,w=Math.abs(pv)*50,pos=pv>0,col=pos?"#2bb8a0":"#f08a24";return `<div class="cr" data-id="${x.n.id}" title="${EN?"Click to set as X-axis":"클릭하면 X축으로 설정"}"><span class="rk">${i+1}</span><span class="nm">${x.n.id==="gdp_pc"?"":ico(x.n)}<span>${nmOf(x.n).replace(/</g,"&lt;")}${Math.abs(x.r)>=.95&&!K?" ⚠":""}</span></span><span class="bar"><b style="${pos?"left:50%":"right:50%"};width:${w}%;background:${col}"></b></span><span class="rv" style="color:${pos?"#0f7a68":"#b35d00"}">${pv>0?"+":""}${pv.toFixed(2)}<small>${K?(CR.sort==="d"?"r":"Δr"):"ρ"}${isFinite(sv)?(sv>0?"+":"")+sv.toFixed(2):"–"} ${K?x.t0+"–"+x.t1:"n="+x.N}</small></span></div>`}).join(""):`<p style="padding:18px 6px;color:var(--mut)">${EN?"No indicator with enough overlapping countries.":"겹치는 국가가 충분한 지표가 없습니다."}</p>`;
+ $("corn").textContent=EN?"r = Pearson correlation (log-transformed for log-scale X), ρ = Spearman rank correlation. ⚠ = |r|≥0.95, probably a near-identical definition. Correlation is not causation: income and age structure often drive many pairs at once. ‘Other categories only’ hides indicators from the same category as Y (often near-duplicates). Click a row to plot it."+(CR.mode==="kor"?" Korea mode: r = correlation of yearly levels (trending series look correlated even if unrelated), Δr = correlation of year-on-year changes (more robust). Years shown under each value.":""):"r = 피어슨 상관계수(로그축 지표는 로그 변환), ρ = 스피어먼 순위상관. ⚠ = |r|≥0.95로 정의가 거의 같은 지표일 수 있음. 상관은 인과가 아니며, 소득수준·고령화 같은 공통요인이 여러 쌍을 동시에 움직이는 경우가 많습니다. ‘다른 분야만’은 Y와 같은 분야 지표(정의가 겹치기 쉬움)를 숨깁니다. 행을 누르면 그 지표가 X축으로 설정됩니다."+(CR.mode==="kor"?" 한국 시계열 모드: r은 연도별 수준의 상관(추세가 있는 지표끼리는 무관해도 높게 나옴), Δr은 전년 대비 변화끼리의 상관(더 신뢰할 만함)이며, 값 아래에 분석 구간이 표시됩니다.":"")}
 async function corOpen(){if(!ind||ind.status!=="ready")return;if(timer){stop();cur=years.at(-1);$("yr").value=cur;draw()}$("nav").classList.remove("open");const box=$("cor");box.hidden=false;
  if(!CR.D){$("corh").textContent=EN?"Finding the best X-axis…":"상관 높은 X축 찾는 중…";$("corsub").textContent="";$("cctl").innerHTML="";$("corn").textContent="";$("corl").innerHTML=`<p style="padding:18px 6px;color:var(--mut)">${EN?"Loading data":"데이터 불러오는 중"}…</p>`;await corLoad()}
  CR.list=[{id:"gdp_pc",name:"1인당 GDP (PPP, 2021 불변 US$)",scale:"log",unit:"US$",wb:CAT.x.wb},...allInds()].filter(n=>n.id!==ind.id);corCompute();corRender()}
 const corClose=()=>{$("cor").hidden=true};
 document.addEventListener("click",e=>{const t=e.target;if(t.closest&&t.closest("#cbtn")){corOpen();return}
  if(t.id==="cor"||(t.closest&&t.closest("#corx"))){corClose();return}
- const b=t.closest&&t.closest("#cctl button");if(b){if(b.dataset.m){CR.mode=b.dataset.m;corCompute()}if(b.dataset.s)CR.sign=b.dataset.s;if(b.dataset.o)CR.oth=!CR.oth;corRender();return}
+ const b=t.closest&&t.closest("#cctl button");if(b){if(b.dataset.m){CR.mode=b.dataset.m;corCompute()}if(b.dataset.s)CR.sign=b.dataset.s;if(b.dataset.k){CR.sort=b.dataset.k;corCompute()}if(b.dataset.o)CR.oth=!CR.oth;corRender();return}
  const r=t.closest&&t.closest(".cr");if(r){xid=r.dataset.id;corClose();$("xsel").value=xid;xChange({target:$("xsel")});buildX()}});
 addEventListener("keydown",e=>{if(e.key==="Escape")corClose()});
 </script></body></html>
