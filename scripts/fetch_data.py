@@ -196,6 +196,23 @@ for ind in imfs:
     except BaseException as e:
         print(f"[실패] {ind['id']} (IMF {ind['imf']}): {type(e).__name__} {e}", flush=True); note(ind["id"], f"{type(e).__name__} {e}")
     json.dump(ok, open(OUT / "ready.json", "w"))
+def dbn_probe(ds):
+    pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
+    out = {}
+    info = json.loads(get(f"{DBN}/datasets/IMF/{ds}"))["datasets"]["docs"][0]
+    out["dimensions_labels"] = info.get("dimensions_labels")
+    out["dimensions_values_labels"] = {k: (dict(list(v.items())[:80]) if isinstance(v, dict) else v) for k, v in (info.get("dimensions_values_labels") or {}).items()}
+    out["nb_series"] = info.get("nb_series")
+    for lim in (5, None):
+        try:
+            j = json.loads(get(f"{DBN}/series/IMF/{ds}?observations=1" + (f"&limit={lim}" if lim else "")))["series"]["docs"][:5]
+            out["sample"] = [{"series_code": d.get("series_code"), "dimensions": d.get("dimensions"), "tail": list(zip(d.get("period", []), d.get("value", [])))[-4:]} for d in j]; break
+        except RuntimeError as e: out["sample_err"] = str(e)[:300]
+    json.dump(out, open(pd / f"dbn_ds_{ds}.json", "w"), ensure_ascii=False, indent=0)
+    print("DBnomics 프로브", ds)
+for ds in ["FM", "HPDD", "FISCALDECENTRALIZATION", "GFSMAB"]:
+    try: dbn_probe(ds)
+    except BaseException as e: print(f"[DBnomics 프로브 실패] {ds}: {type(e).__name__} {e}", flush=True)
 for ind in probes:
     try: probe(ind)
     except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
