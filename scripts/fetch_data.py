@@ -128,17 +128,25 @@ def dbn_dataset():
 ISO2 = {"AUS":"AU","AUT":"AT","BEL":"BE","CAN":"CA","CHL":"CL","COL":"CO","CRI":"CR","CZE":"CZ","DNK":"DK","EST":"EE","FIN":"FI","FRA":"FR","DEU":"DE","GRC":"GR","HUN":"HU","ISL":"IS","IRL":"IE","ISR":"IL","ITA":"IT","JPN":"JP","KOR":"KR","LVA":"LV","LTU":"LT","LUX":"LU","MEX":"MX","NLD":"NL","NZL":"NZ","NOR":"NO","POL":"PL","PRT":"PT","SVK":"SK","SVN":"SI","ESP":"ES","SWE":"SE","CHE":"CH","TUR":"TR","GBR":"GB","USA":"US","CHN":"CN"}
 ISO3 = {v: k for k, v in ISO2.items()}
 def imf_ids(ds, code, sector=None, mult=1):
-    """FM·재정분권 등(ISO2 REF_AREA): series_ids로 직접 요청"""
-    ids = [f"A.{ISO2[c]}.{code}" + (f".{sector}" if sector else "") for c in COUNTRIES if c in ISO2]
-    d = {}; n = 0
-    for i in range(0, len(ids), 20):
-        j = json.loads(get(f"{DBN}/series/IMF/{ds}?observations=1&series_ids={','.join(ids[i:i+20])}"))["series"]
+    """FM·재정분권 등(ISO2 REF_AREA): dimensions 필터로 조회 후 국가 매핑"""
+    import urllib.parse
+    dims = {"INDICATOR": [code]}
+    if sector: dims["REF_SECTOR"] = [sector]
+    d = {}; n = 0; off = 0; LIM = 1000
+    while off < 8000:
+        url = f"{DBN}/series/IMF/{ds}?observations=1&dimensions={urllib.parse.quote(json.dumps(dims))}&limit={LIM}&offset={off}"
+        try: j = json.loads(get(url))["series"]
+        except RuntimeError:
+            if LIM > 100: LIM = 100; continue
+            raise
         for doc in j["docs"]:
             n += 1
             c = ISO3.get(doc.get("dimensions", {}).get("REF_AREA"))
-            if not c: continue
+            if not c or c not in COUNTRIES: continue
             for per, v in zip(doc.get("period", []), doc.get("value", [])):
                 if isinstance(v, (int, float)) and int(str(per)[:4]) >= 1990: d.setdefault(c, {})[str(per)[:4]] = v * mult
+        off += LIM
+        if off >= j.get("num_found", 0) or not j["docs"]: break
     if not d: raise RuntimeError(f"DBnomics {ds}/{code}: 시리즈 없음 (응답 {n}건)")
     return d
 def imf(code, mult=1):
