@@ -1,0 +1,243 @@
+{
+"dimensions_labels": {
+"FREQ": "Frequency",
+"INDICATOR": "Indicator",
+"REF_AREA": "Reference Area"
+},
+"dimensions_values_labels": {
+"FREQ": {
+"A": "Annual",
+"B": "Bi-annual",
+"D": "Daily",
+"M": "Monthly",
+"Q": "Quarterly",
+"W": "Weekly"
+},
+"INDICATOR": {
+"All_Indicators": "All Indicators",
+"GGCBP_G01_PGDP_PT": "Cyclically adjusted primary balance (% of potential GDP)",
+"GGCB_G01_PGDP_PT": "Cyclically adjusted balance (% of potential GDP)",
+"GGR_G01_GDP_PT": "Revenue (% of GDP)",
+"GGXCNL_G01_GDP_PT": "Net lending/borrowing (also referred as overall balance) (% of GDP)",
+"GGXONLB_G01_GDP_PT": "Primary net lending/borrowing (also referred as primary balance) (% of GDP)",
+"GGXWDN_G01_GDP_PT": "Net debt (% of GDP)",
+"G_XWDG_G01_GDP_PT": "Gross debt (% of GDP)",
+"G_X_G01_GDP_PT": "Expenditure (% of GDP)"
+},
+"REF_AREA": {
+"1C_035": "Emerging Market and Middle-Income Economies",
+"1C_229": "Low-Income Countries",
+"1C_230": "Low-Income Asia",
+"1C_231": "Low-Income Latin America",
+"1C_232": "Low-Income Sub-Saharan Africa",
+"1C_234": "Low-Income Others",
+"1C_235": "Low-Income Oil Producers",
+"1C_ALL": "All Countries and Country Groups",
+"1C_ALLC": "All Countries",
+"1C_ALLG": "All Country Groups",
+"1C_EMEUR": "Emerging Europe",
+"1C_EMFLAT": "Emerging Market Latin America",
+"1C_EMMA": "Emerging Market and Middle-Income Africa",
+"1C_EMMENA": "Emerging Market Middle East and North Africa",
+"1C_EMMENAP": "Emerging Market and Middle-Income Middle East and North Africa and Pakistan",
+"1C_Metadata_by_Country": "Metadata by Country",
+"1C_Oil_producers": "Oil producers",
+"AD": "Andorra",
+"AE": "United Arab Emirates",
+"AF": "Afghanistan",
+"AG": "Antigua and Barbuda",
+"AL": "Albania",
+"AM": "Armenia",
+"AO": "Angola",
+"AR": "Argentina",
+"AT": "Austria",
+"AU": "Australia",
+"AW": "Aruba",
+"AZ": "Azerbaijan",
+"BA": "Bosnia and Herzegovina",
+"BB": "Barbados",
+"BD": "Bangladesh",
+"BE": "Belgium",
+"BF": "Burkina Faso",
+"BG": "Bulgaria",
+"BH": "Bahrain",
+"BI": "Burundi",
+"BJ": "Benin",
+"BN": "Brunei Darussalam",
+"BO": "Bolivia",
+"BR": "Brazil",
+"BS": "Bahamas",
+"BT": "Bhutan",
+"BW": "Botswana",
+"BY": "Belarus",
+"BZ": "Belize",
+"CA": "Canada",
+"CD": "Congo, the Democratic Republic of the",
+"CF": "Central African Republic",
+"CG": "Congo",
+"CH": "Switzerland",
+"CI": "Cote d`Ivoire",
+"CL": "Chile",
+"CM": "Cameroon",
+"CN": "China",
+"CO": "Colombia",
+"CR": "Costa Rica",
+"CV": "Cabo Verde",
+"CY": "Cyprus",
+"CZ": "Czech Republic",
+"DE": "Germany",
+"DJ": "Djibouti",
+"DK": "Denmark",
+"DM": "Dominica",
+"DO": "Dominican Republic",
+"DZ": "Algeria",
+"EC": "Ecuador",
+"EE": "Estonia",
+"EG": "Egypt",
+"ER": "Eritrea",
+"ES": "Spain",
+"ET": "Ethiopia",
+"FI": "Finland",
+"FJ": "Fiji",
+"FM": "Micronesia, Federated States of",
+"FR": "France",
+"GA": "Gabon",
+"GB": "United Kingdom",
+"GD": "Grenada",
+"GE": "Georgia"
+}
+},
+"nb_series": 1356,
+"sample": [
+{
+"series_code": "A.1C_035.GGCBP_G01_PGDP_PT",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGCBP_G01_PGDP_PT",
+"REF_AREA": "1C_035"
+},
+"tail": [
+[
+"2027",
+-3.15564138551097
+],
+[
+"2028",
+-3.05875870536747
+],
+[
+"2029",
+-2.94659973637787
+],
+[
+"2030",
+-2.91499140797786
+]
+]
+},
+{
+"series_code": "A.1C_035.GGCB_G01_PGDP_PT",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGCB_G01_PGDP_PT",
+"REF_AREA": "1C_035"
+},
+"tail": [
+[
+"2027",
+-5.93487101612888
+],
+[
+"2028",
+-5.89507813923082
+],
+[
+"2029",
+-5.84896072407494
+],
+[
+"2030",
+-5.85405837317238
+]
+]
+},
+{
+"series_code": "A.1C_035.GGR_G01_GDP_PT",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGR_G01_GDP_PT",
+"REF_AREA": "1C_035"
+},
+"tail": [
+[
+"2027",
+26.2879591072494
+],
+[
+"2028",
+26.3030172759153
+],
+[
+"2029",
+26.2897527323887
+],
+[
+"2030",
+26.2745756486236
+]
+]
+},
+{
+"series_code": "A.1C_035.GGXCNL_G01_GDP_PT",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXCNL_G01_GDP_PT",
+"REF_AREA": "1C_035"
+},
+"tail": [
+[
+"2027",
+-5.64825620384433
+],
+[
+"2028",
+-5.51654656276368
+],
+[
+"2029",
+-5.41681712214671
+],
+[
+"2030",
+-5.39109008104371
+]
+]
+},
+{
+"series_code": "A.1C_035.GGXONLB_G01_GDP_PT",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXONLB_G01_GDP_PT",
+"REF_AREA": "1C_035"
+},
+"tail": [
+[
+"2027",
+-3.06474113370175
+],
+[
+"2028",
+-2.88678593687222
+],
+[
+"2029",
+-2.72740436761367
+],
+[
+"2030",
+-2.66539589208624
+]
+]
+}
+]
+}

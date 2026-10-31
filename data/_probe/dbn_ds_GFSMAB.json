@@ -1,0 +1,295 @@
+{
+"dimensions_labels": {
+"CLASSIFICATION": "Classification",
+"FREQ": "Frequency",
+"REF_AREA": "Reference Area",
+"REF_SECTOR": "Reporting Institutional Sector",
+"UNIT_MEASURE": "Unit of Measure"
+},
+"dimensions_values_labels": {
+"CLASSIFICATION": {
+"G11__Z": "Tax revenue",
+"G12__Z": "Social contributions",
+"G13__Z": "Grants revenue",
+"G14__Z": "Other revenue",
+"G1__Z": "Revenue",
+"G21__Z": "Compensation of employees",
+"G22__Z": "Use of goods and services",
+"G23__Z": "Consumption of fixed capital",
+"G24__Z": "Interest expense",
+"G25__Z": "Subsidies",
+"G26__Z": "Grants expense",
+"G27__Z": "Social benefits",
+"G28__Z": "Other expense",
+"G2G__Z": "Expense, excluding consumption of fixed capital",
+"G2M__Z": "Expenditure",
+"G2__Z": "Expense",
+"G31_NG": "Investment in nonfinancial assets",
+"G31_NN": "Net/gross investment in nonfinancial assets",
+"G32_F": "Net acquisition of financial assets",
+"G33_F": "Net incurrence of liabilities",
+"G61_NN": "Stock position of nonfinancial assets",
+"G62_F": "Stock position of financial assets",
+"G63NC_FD4": "Debt, net of highly liquid assets",
+"G63N_FD4": "Net debt",
+"G63_F": "Stock position of liabilities",
+"G63_F3T4": "D1 debt liabilities at market value ",
+"G63_FD2": "D2 debt liabilities at market value ",
+"G63_FD3": "D3 debt liabilities at market value ",
+"G63_FD4": "Gross debt (D4) at market value ",
+"G6M2_F": "Net financial worth",
+"G6_F_NN": "Net worth",
+"GGOB__Z": "Gross operating balance",
+"GNLB__Z": "Net lending (+) / Net borrowing (-)",
+"GNOB__Z": "Net operating balance",
+"GPB__Z": "Primary net lending / borrowing"
+},
+"FREQ": {
+"A": "Annual",
+"B": "Bi-annual",
+"D": "Daily",
+"M": "Monthly",
+"Q": "Quarterly",
+"W": "Weekly"
+},
+"REF_AREA": {
+"1C_355": "Curacao & St. Maarten",
+"1C_473": "Yemen Arab Rep.",
+"1C_AAA": "AAA",
+"1C_ALL": "All Countries and Country Groups",
+"1C_ALLC": "All Countries",
+"1C_ALLG": "All Country Groups",
+"1C_Al_Countries_for_Dissemination_Online": "All Countries for Dissemination - Online",
+"1C_All_Countries_PDF": "All Countries PDF",
+"1C_All_Countries_for_Dissemination": "All Countries for Dissemination",
+"1C_GFSY_2014_Country_Pages": "All Countries for Dissemination - Print",
+"1C_Template_I": "Template I",
+"1C_Template_II": "Template II",
+"1C_Template_III": "Template III",
+"1C_Template_IV": "Template IV",
+"AD": "Andorra",
+"AE": "United Arab Emirates",
+"AF": "Afghanistan",
+"AG": "Antigua and Barbuda",
+"AI": "Anguilla",
+"AL": "Albania",
+"AM": "Armenia",
+"AN": "Netherlands Antilles",
+"AO": "Angola",
+"AR": "Argentina",
+"AT": "Austria",
+"AU": "Australia",
+"AW": "Aruba",
+"AZ": "Azerbaijan",
+"All Countries Table A and B": "All Countries Table A and B",
+"BA": "Bosnia and Herzegovina",
+"BB": "Barbados",
+"BD": "Bangladesh",
+"BE": "Belgium",
+"BF": "Burkina Faso",
+"BG": "Bulgaria",
+"BH": "Bahrain",
+"BI": "Burundi",
+"BJ": "Benin",
+"BN": "Brunei Darussalam",
+"BO": "Bolivia",
+"BR": "Brazil",
+"BS": "Bahamas",
+"BT": "Bhutan",
+"BW": "Botswana",
+"BY": "Belarus",
+"BZ": "Belize",
+"CA": "Canada",
+"CD": "Congo, the Democratic Republic of the",
+"CF": "Central African Republic",
+"CG": "Congo",
+"CH": "Switzerland",
+"CI": "Cote d`Ivoire",
+"CK": "Cook Islands",
+"CL": "Chile",
+"CM": "Cameroon",
+"CN": "China",
+"CO": "Colombia",
+"CR": "Costa Rica",
+"CS": "Serbia and Montenegro",
+"CV": "Cabo Verde",
+"CY": "Cyprus",
+"CZ": "Czech Republic",
+"DE": "Germany",
+"DJ": "Djibouti",
+"DK": "Denmark",
+"DM": "Dominica",
+"DO": "Dominican Republic",
+"DZ": "Algeria",
+"EC": "Ecuador",
+"EE": "Estonia",
+"EG": "Egypt",
+"ER": "Eritrea",
+"ES": "Spain",
+"ET": "Ethiopia",
+"FI": "Finland",
+"FJ": "Fiji",
+"FM": "Micronesia, Federated States of",
+"FR": "France",
+"GA": "Gabon",
+"GB": "United Kingdom"
+},
+"REF_SECTOR": {
+"S13": "General government",
+"S1311": "Central government (excl. social security funds)",
+"S13112": "Extrabudgetary central government",
+"S1311B": "Budgetary central government",
+"S1312": "State governments",
+"S1313": "Local governments",
+"S1314": "Social security funds",
+"S1321": "Central government (incl. social security funds)"
+},
+"UNIT_MEASURE": {
+"XDC": "Domestic currency",
+"XDC_R_B1GQ": "Percent of GDP"
+}
+},
+"nb_series": 109200,
+"sample": [
+{
+"series_code": "A.AD.S13.XDC.G11__Z",
+"dimensions": {
+"CLASSIFICATION": "G11__Z",
+"FREQ": "A",
+"REF_AREA": "AD",
+"REF_SECTOR": "S13",
+"UNIT_MEASURE": "XDC"
+},
+"tail": [
+[
+"2020",
+365.924614689991
+],
+[
+"2021",
+417.342366459994
+],
+[
+"2022",
+535.840306130037
+],
+[
+"2023",
+547.921303330001
+]
+]
+},
+{
+"series_code": "A.AD.S13.XDC.G12__Z",
+"dimensions": {
+"CLASSIFICATION": "G12__Z",
+"FREQ": "A",
+"REF_AREA": "AD",
+"REF_SECTOR": "S13",
+"UNIT_MEASURE": "XDC"
+},
+"tail": [
+[
+"2020",
+274.16904263
+],
+[
+"2021",
+275.70081911
+],
+[
+"2022",
+308.72118087
+],
+[
+"2023",
+350.50196429
+]
+]
+},
+{
+"series_code": "A.AD.S13.XDC.G13__Z",
+"dimensions": {
+"CLASSIFICATION": "G13__Z",
+"FREQ": "A",
+"REF_AREA": "AD",
+"REF_SECTOR": "S13",
+"UNIT_MEASURE": "XDC"
+},
+"tail": [
+[
+"2020",
+0.0
+],
+[
+"2021",
+0.0
+],
+[
+"2022",
+0.0
+],
+[
+"2023",
+0.0
+]
+]
+},
+{
+"series_code": "A.AD.S13.XDC.G14__Z",
+"dimensions": {
+"CLASSIFICATION": "G14__Z",
+"FREQ": "A",
+"REF_AREA": "AD",
+"REF_SECTOR": "S13",
+"UNIT_MEASURE": "XDC"
+},
+"tail": [
+[
+"2020",
+189.36278441
+],
+[
+"2021",
+161.58919325
+],
+[
+"2022",
+225.46828372
+],
+[
+"2023",
+213.84737697998
+]
+]
+},
+{
+"series_code": "A.AD.S13.XDC.G1__Z",
+"dimensions": {
+"CLASSIFICATION": "G1__Z",
+"FREQ": "A",
+"REF_AREA": "AD",
+"REF_SECTOR": "S13",
+"UNIT_MEASURE": "XDC"
+},
+"tail": [
+[
+"2020",
+829.456441729991
+],
+[
+"2021",
+854.632378819995
+],
+[
+"2022",
+1070.02977072004
+],
+[
+"2023",
+1112.27064459998
+]
+]
+}
+]
+}

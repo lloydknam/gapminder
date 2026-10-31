@@ -1,0 +1,282 @@
+{
+"dimensions_labels": {
+"FREQ": "Frequency",
+"INDICATOR": "Indicator",
+"REF_AREA": "Reference Area",
+"REF_SECTOR": "Reporting Institutional Sector"
+},
+"dimensions_values_labels": {
+"FREQ": {
+"A": "Annual",
+"B": "Bi-annual",
+"D": "Daily",
+"M": "Monthly",
+"Q": "Quarterly",
+"W": "Weekly"
+},
+"INDICATOR": {
+"cfc": "Consumption of fixed capital, share of general government",
+"comp": "Compensation of employees, share of general government",
+"cs": "Capital spending, share of general government",
+"debt": "Debt, share of own revenue",
+"defense": "Defense, share of general government",
+"deficit": "Deficit, share of own spending",
+"ea": "Economic affairs, share of general government",
+"edu": "Education, share of general government",
+"ep": "Environmental protection, share of general government",
+"exc": "Excise, share of general government",
+"gps": "General public services, share of general government",
+"gs": "Goods and Services, share of general government",
+"hca": "Housing & community ammenities, share of general government",
+"health": "Health, share of general government",
+"interest": "Interest, share of general government",
+"ipcg": "Income, Profits, Capital Gains, share of general government",
+"it": "International Trade, share of general government",
+"oe": "Other expenses, share of general government",
+"or": "Other revenue, share of general government",
+"ot": "Other Taxes, share of general government",
+"payroll": "Payroll, share of general government",
+"pos": "Public order & safety, share of general government",
+"property": "Property, share of general government",
+"rd": "Revenue decentralization (ratio of own revenues to general government revenues)",
+"recreation": "Recreation, share of general government",
+"sb": "Social benefits, share of general government",
+"sc": "Social contributions, share of general government",
+"sd": "Expenditure decentralization (ratio of own spending to general government spending)",
+"sp": "Social protection, share of general government",
+"subs": "Subsidies, share of general government",
+"taxd": "Tax revenue decentralization (share of general government)",
+"transferDep1": "Transfer dependency method 1, ratio of net transfers to own spending",
+"transferDep2": "Transfer dependency method 2, ratio of net transfers to own revenue",
+"ugs": "Use of goods & services, share of general government",
+"vat": "VAT, share of general government",
+"vfi": "Vertical Fiscal Imbalance (1- ratio of own revenue to own spending)"
+},
+"REF_AREA": {
+"AE": "United Arab Emirates",
+"AF": "Afghanistan",
+"AL": "Albania",
+"AM": "Armenia",
+"AT": "Austria",
+"AU": "Australia",
+"AZ": "Azerbaijan",
+"BA": "Bosnia and Herzegovina",
+"BE": "Belgium",
+"BG": "Bulgaria",
+"BR": "Brazil",
+"BY": "Belarus",
+"CA": "Canada",
+"CH": "Switzerland",
+"CL": "Chile",
+"CN": "China",
+"CO": "Colombia",
+"CR": "Costa Rica",
+"CV": "Cabo Verde",
+"CY": "Cyprus",
+"CZ": "Czech Republic",
+"DE": "Germany",
+"DK": "Denmark",
+"EE": "Estonia",
+"ES": "Spain",
+"FI": "Finland",
+"FR": "France",
+"GB": "United Kingdom",
+"GE": "Georgia",
+"GR": "Greece",
+"GT": "Guatemala",
+"HN": "Honduras",
+"HR": "Croatia",
+"HU": "Hungary",
+"ID": "Indonesia",
+"IE": "Ireland",
+"IL": "Israel",
+"IR": "Iran, Islamic Republic of",
+"IS": "Iceland",
+"IT": "Italy",
+"JP": "Japan",
+"KE": "Kenya",
+"KG": "Kyrgyzstan",
+"KH": "Cambodia",
+"KI": "Kiribati",
+"KR": "Korea, Republic of",
+"KZ": "Kazakhstan",
+"LT": "Lithuania",
+"LU": "Luxembourg",
+"LV": "Latvia",
+"MD": "Moldova, Republic of",
+"MH": "Marshall islands",
+"MK": "North Macedonia, Republic of",
+"MM": "Myanmar",
+"MN": "Mongolia",
+"MT": "Malta",
+"MU": "Mauritius",
+"MX": "Mexico",
+"NA": "Namibia",
+"NL": "Netherlands",
+"NO": "Norway",
+"NP": "Nepal",
+"NZ": "New Zealand",
+"PE": "Peru",
+"PL": "Poland",
+"PT": "Portugal",
+"PW": "Palau",
+"PY": "Paraguay",
+"RO": "Romania",
+"RS": "Serbia",
+"RU": "Russian Federation",
+"RW": "Rwanda",
+"SE": "Sweden",
+"SI": "Slovenia",
+"SK": "Slovakia",
+"SN": "Senegal",
+"SO": "Somalia",
+"SV": "El Salvador",
+"TH": "Thailand",
+"TN": "Tunisia"
+},
+"REF_SECTOR": {
+"1C_CG": "Central Government",
+"1C_LG": "Local Government",
+"1C_SG": "State Government",
+"1C_SNG": "Subnational Government"
+}
+},
+"nb_series": 8398,
+"sample": [
+{
+"series_code": "A.AE.cfc.1C_CG",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "cfc",
+"REF_AREA": "AE",
+"REF_SECTOR": "1C_CG"
+},
+"tail": [
+[
+"2017",
+0.147401615977287
+],
+[
+"2018",
+0.156138211488724
+],
+[
+"2019",
+0.163361176848412
+],
+[
+"2020",
+0.132023677229881
+]
+]
+},
+{
+"series_code": "A.AE.cfc.1C_SG",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "cfc",
+"REF_AREA": "AE",
+"REF_SECTOR": "1C_SG"
+},
+"tail": [
+[
+"2017",
+0.849871814250946
+],
+[
+"2018",
+0.840785562992096
+],
+[
+"2019",
+0.834016263484955
+],
+[
+"2020",
+0.864583075046539
+]
+]
+},
+{
+"series_code": "A.AE.cfc.1C_SNG",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "cfc",
+"REF_AREA": "AE",
+"REF_SECTOR": "1C_SNG"
+},
+"tail": [
+[
+"2017",
+0.849871814250946
+],
+[
+"2018",
+0.840785562992096
+],
+[
+"2019",
+0.834016263484955
+],
+[
+"2020",
+0.864583075046539
+]
+]
+},
+{
+"series_code": "A.AE.comp.1C_CG",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "comp",
+"REF_AREA": "AE",
+"REF_SECTOR": "1C_CG"
+},
+"tail": [
+[
+"2017",
+0.281285464763641
+],
+[
+"2018",
+0.261669099330902
+],
+[
+"2019",
+0.208488434553146
+],
+[
+"2020",
+0.208277568221092
+]
+]
+},
+{
+"series_code": "A.AE.comp.1C_SG",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "comp",
+"REF_AREA": "AE",
+"REF_SECTOR": "1C_SG"
+},
+"tail": [
+[
+"2017",
+0.717794418334961
+],
+[
+"2018",
+0.737376689910889
+],
+[
+"2019",
+0.79080855846405
+],
+[
+"2020",
+0.789517343044281
+]
+]
+}
+]
+}

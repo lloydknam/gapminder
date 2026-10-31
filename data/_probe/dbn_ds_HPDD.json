@@ -1,0 +1,235 @@
+{
+"dimensions_labels": {
+"FREQ": "Frequency",
+"INDICATOR": "Indicator",
+"REF_AREA": "Reference Area"
+},
+"dimensions_values_labels": {
+"FREQ": {
+"A": "Annual",
+"B": "Bi-annual",
+"D": "Daily",
+"M": "Monthly",
+"Q": "Quarterly",
+"W": "Weekly"
+},
+"INDICATOR": {
+"GGXWDG_GDP": "Debt to GDP Ratio"
+},
+"REF_AREA": {
+"1C_459": "Yemen, P.D. Rep.",
+"5Y": "Eastern Caribbean Currency Union",
+"AE": "United Arab Emirates",
+"AF": "Afghanistan",
+"AG": "Antigua and Barbuda",
+"AI": "Anguilla",
+"AL": "Albania",
+"AM": "Armenia",
+"AN": "Netherlands Antilles",
+"AO": "Angola",
+"AR": "Argentina",
+"AT": "Austria",
+"AU": "Australia",
+"AZ": "Azerbaijan",
+"BA": "Bosnia and Herzegovina",
+"BB": "Barbados",
+"BD": "Bangladesh",
+"BE": "Belgium",
+"BF": "Burkina Faso",
+"BG": "Bulgaria",
+"BH": "Bahrain",
+"BI": "Burundi",
+"BJ": "Benin",
+"BN": "Brunei Darussalam",
+"BO": "Bolivia",
+"BR": "Brazil",
+"BS": "Bahamas",
+"BT": "Bhutan",
+"BW": "Botswana",
+"BY": "Belarus",
+"BZ": "Belize",
+"CA": "Canada",
+"CD": "Congo, the Democratic Republic of the",
+"CF": "Central African Republic",
+"CG": "Congo",
+"CH": "Switzerland",
+"CI": "Cote d`Ivoire",
+"CL": "Chile",
+"CM": "Cameroon",
+"CN": "China",
+"CO": "Colombia",
+"CR": "Costa Rica",
+"CS": "Serbia and Montenegro",
+"CSH": "Former Czechoslovakia",
+"CV": "Cape Verde",
+"CY": "Cyprus",
+"CZ": "Czech Republic",
+"DE": "Germany",
+"DJ": "Djibouti",
+"DK": "Denmark",
+"DM": "Dominica",
+"DO": "Dominican Republic",
+"DZ": "Algeria",
+"EC": "Ecuador",
+"EE": "Estonia",
+"EG": "Egypt",
+"ER": "Eritrea",
+"ES": "Spain",
+"ET": "Ethiopia",
+"FI": "Finland",
+"FJ": "Fiji",
+"FM": "Micronesia, Federated States of",
+"FR": "France",
+"GA": "Gabon",
+"GB": "United Kingdom",
+"GD": "Grenada",
+"GE": "Georgia",
+"GH": "Ghana",
+"GM": "Gambia",
+"GN": "Guinea",
+"GQ": "Equatorial Guinea",
+"GR": "Greece",
+"GT": "Guatemala",
+"GW": "Guinea-Bissau",
+"GY": "Guyana",
+"HK": "Hong Kong, China",
+"HN": "Honduras",
+"HR": "Croatia",
+"HT": "Haiti",
+"HU": "Hungary"
+}
+},
+"nb_series": 191,
+"sample": [
+{
+"series_code": "A.5Y.GGXWDG_GDP",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXWDG_GDP",
+"REF_AREA": "5Y"
+},
+"tail": [
+[
+"2012",
+86.5367466019282
+],
+[
+"2013",
+85.8290282825157
+],
+[
+"2014",
+84.0108289176327
+],
+[
+"2015",
+81.2676846805414
+]
+]
+},
+{
+"series_code": "A.AE.GGXWDG_GDP",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXWDG_GDP",
+"REF_AREA": "AE"
+},
+"tail": [
+[
+"2012",
+17.0346405100082
+],
+[
+"2013",
+15.8202375218276
+],
+[
+"2014",
+15.5850459152944
+],
+[
+"2015",
+18.0762995817214
+]
+]
+},
+{
+"series_code": "A.AF.GGXWDG_GDP",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXWDG_GDP",
+"REF_AREA": "AF"
+},
+"tail": [
+[
+"2012",
+6.62524928528885
+],
+[
+"2013",
+6.74872467481724
+],
+[
+"2014",
+6.38030001837899
+],
+[
+"2015",
+6.24600667400587
+]
+]
+},
+{
+"series_code": "A.AG.GGXWDG_GDP",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXWDG_GDP",
+"REF_AREA": "AG"
+},
+"tail": [
+[
+"2012",
+87.1474888218112
+],
+[
+"2013",
+94.2630905807603
+],
+[
+"2014",
+100.422125885386
+],
+[
+"2015",
+104.357530015991
+]
+]
+},
+{
+"series_code": "A.AI.GGXWDG_GDP",
+"dimensions": {
+"FREQ": "A",
+"INDICATOR": "GGXWDG_GDP",
+"REF_AREA": "AI"
+},
+"tail": [
+[
+"2012",
+30.94138410248
+],
+[
+"2013",
+30.4221492262941
+],
+[
+"2014",
+24.1126303407107
+],
+[
+"2015",
+22.1470333477966
+]
+]
+}
+]
+}
