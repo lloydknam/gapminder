@@ -8,8 +8,14 @@ cat = json.load(open(ROOT / "indicators.json"))
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "gapminder-sample"})
-    with urllib.request.urlopen(req, timeout=120) as r:
-        return r.read().decode("utf-8-sig")
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            return r.read().decode("utf-8-sig")
+    except urllib.error.HTTPError as e:
+        body = ""
+        try: body = e.read().decode("utf-8", "replace")[:300]
+        except Exception: pass
+        raise RuntimeError(f"HTTP {e.code} {url[:140]} :: {body}") from None
 
 def quality(d):
     """국가 30개 이상, 연도 10개 이상, 한국 값 존재"""
@@ -98,7 +104,16 @@ WEO_DS = None
 def dbn_dataset():
     global WEO_DS
     if WEO_DS: return WEO_DS
-    res = json.loads(get(f"{DBN}/datasets/IMF?limit=1000"))
+    docs, off = [], 0
+    while True:
+        res = None
+        for lim in ("limit=100&", "limit=50&", ""):
+            try: res = json.loads(get(f"{DBN}/datasets/IMF?{lim}offset={off}")); break
+            except RuntimeError as e: err = e
+        if res is None: raise err
+        d = res["datasets"]; docs += d["docs"]; off += len(d["docs"])
+        if not d["docs"] or off >= d.get("num_found", 0): break
+    res = {"datasets": {"docs": docs}}
     names = [d["code"] for d in res["datasets"]["docs"]]
     pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
     json.dump({d["code"]: d.get("name") for d in res["datasets"]["docs"]}, open(pd / "imf_datasets.json", "w"), ensure_ascii=False, indent=0)
@@ -113,8 +128,12 @@ def dbn_dataset():
 def imf(code, mult=1):
     import urllib.parse
     ds = dbn_dataset(); d = {}; seen = 0; raw = []
-    for off in range(0, 6000, 1000):
-        j = json.loads(get(f"{DBN}/series/IMF/{ds}?q={urllib.parse.quote(code)}&observations=1&limit=1000&offset={off}"))["series"]
+    off = 0; LIM = 1000
+    while off < 8000:
+        try: j = json.loads(get(f"{DBN}/series/IMF/{ds}?q={urllib.parse.quote(code)}&observations=1&limit={LIM}&offset={off}"))["series"]
+        except RuntimeError as e:
+            if LIM > 100: LIM = 100; continue
+            raise
         for doc in j["docs"]:
             dims = doc.get("dimensions", {}); vs = list(dims.values())
             if code not in vs: continue
@@ -123,8 +142,8 @@ def imf(code, mult=1):
             if not c: continue
             for per, v in zip(doc.get("period", []), doc.get("value", [])):
                 if isinstance(v, (int, float)) and int(str(per)[:4]) >= 1990: d.setdefault(c, {})[str(per)[:4]] = v * mult
-        seen += len(j["docs"])
-        if off + 1000 >= j.get("num_found", 0): break
+        seen += len(j["docs"]); off += LIM
+        if off >= j.get("num_found", 0) or not j["docs"]: break
     if not d:
         pd = OUT / "_probe"; pd.mkdir(exist_ok=True); json.dump(raw, open(pd / f"dbn_{code}.json", "w"), ensure_ascii=False, indent=0)
         raise RuntimeError(f"DBnomics에서 {code} 시리즈를 찾지 못함 (검색 {seen}건)")
