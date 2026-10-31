@@ -160,7 +160,7 @@ function pick(c,i){ci=c;ii=i;setHash();showCat(c);
  titles();load()}
 function titles(){{const cs=$("cursel");if(cs)cs.textContent=cN(CAT.categories[ci])+" › "+iN(CAT.categories[ci].indicators[ii]).replace(/ \(.*$/,"")}$("chip").textContent=(ci+1)+". "+cN(CAT.categories[ci]);$("h1").innerHTML=ttlOf(iN(CAT.categories[ci].indicators[ii]));$("sub2").textContent=EN?"X: "+xS()+" · Size: population · Colour: continent":"X: "+xS()+" · 크기: 인구 · 색: 대륙"}
 function srcLine(){const wb=c=>`<a href="https://data.worldbank.org/indicator/${c}" target="_blank" rel="noopener">World Bank WDI · ${c}</a>`;
- const so=n=>{if(n.imf)return `<a href="https://db.nomics.world/IMF/WEO" target="_blank" rel="noopener">IMF WEO · ${n.imf}</a>`+(n.proj?(EN?" via DBnomics (incl. projections)":" DBnomics 경유 (전망 포함)"):"");if(n.wb)return wb(n.wb);const m=(n.flow||"").split(",");return "OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")};
+ const so=n=>{if(n.imf)return `<a href="https://db.nomics.world/IMF/${n.imfds||"WEO"}" target="_blank" rel="noopener">IMF ${n.imfds||"WEO"} · ${n.imf}</a>`+(n.proj?(EN?" via DBnomics (incl. projections)":" DBnomics 경유 (전망 포함)"):"");if(n.wb)return wb(n.wb);const m=(n.flow||"").split(",");return "OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")};
  $("srcl").innerHTML=S("src")+so(ind)+(EN?" · "+xS()+": ":" · "+xS()+": ")+so(xd())+S("srcp")+wb(CAT.size.wb)+(ind.proj?(EN?" · Projection years: X and size held at latest actuals":" · 전망 연도의 X축·크기는 최신 실적값 고정"):"")}
 async function load(){stop();sel=null;$("tip").style.display="none";
  ind=CAT.categories[ci].indicators[ii];FWD=!!ind.proj;srcLine();

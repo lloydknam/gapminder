@@ -348,7 +348,18 @@
 "imf_gdp_ppp": "GDP, PPP (IMF, int'l $ billion)",
 "imf_gdppc_ppp": "GDP per capita, PPP (IMF, int'l $)",
 "imf_tx": "Export volume growth, goods & services (IMF)",
-"imf_tm": "Import volume growth, goods & services (IMF)"
+"imf_tm": "Import volume growth, goods & services (IMF)",
+"imf_fm_cab": "Cyclically adjusted balance (IMF Fiscal Monitor, % potential GDP)",
+"imf_fm_cap": "Cyclically adjusted primary balance (IMF Fiscal Monitor, % potential GDP)",
+"imf_fd_sd": "Subnational expenditure decentralization (IMF, % of general government spending)",
+"imf_fd_rd": "Subnational revenue decentralization (IMF, % of general government revenue)",
+"imf_fd_taxd": "Subnational tax decentralization (IMF, % of general government tax)",
+"imf_fd_vfi": "Vertical fiscal imbalance (IMF, subnational)",
+"imf_fd_edu": "Subnational share of education spending (IMF, % of general government)",
+"imf_fd_health": "Subnational share of health spending (IMF, % of general government)",
+"imf_fd_sp": "Subnational share of social protection spending (IMF, % of general government)",
+"imf_fd_ep": "Subnational share of environmental protection spending (IMF, % of general government)",
+"imf_fd_ea": "Subnational share of economic affairs spending (IMF, % of general government)"
 },
 "unit": {
 "세": "years",

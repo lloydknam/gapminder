@@ -125,6 +125,22 @@ def dbn_dataset():
         json.dump({"dimensions_labels": info.get("dimensions_labels"), "dimensions_values_labels": info.get("dimensions_values_labels")}, open(pd / "imf_catalog.json", "w"), ensure_ascii=False, indent=0)
     except BaseException as e: print("[WEO 카탈로그 실패]", e)
     return WEO_DS
+ISO2 = {"AUS":"AU","AUT":"AT","BEL":"BE","CAN":"CA","CHL":"CL","COL":"CO","CRI":"CR","CZE":"CZ","DNK":"DK","EST":"EE","FIN":"FI","FRA":"FR","DEU":"DE","GRC":"GR","HUN":"HU","ISL":"IS","IRL":"IE","ISR":"IL","ITA":"IT","JPN":"JP","KOR":"KR","LVA":"LV","LTU":"LT","LUX":"LU","MEX":"MX","NLD":"NL","NZL":"NZ","NOR":"NO","POL":"PL","PRT":"PT","SVK":"SK","SVN":"SI","ESP":"ES","SWE":"SE","CHE":"CH","TUR":"TR","GBR":"GB","USA":"US","CHN":"CN"}
+ISO3 = {v: k for k, v in ISO2.items()}
+def imf_ids(ds, code, sector=None, mult=1):
+    """FM·재정분권 등(ISO2 REF_AREA): series_ids로 직접 요청"""
+    ids = [f"A.{ISO2[c]}.{code}" + (f".{sector}" if sector else "") for c in COUNTRIES if c in ISO2]
+    d = {}; n = 0
+    for i in range(0, len(ids), 20):
+        j = json.loads(get(f"{DBN}/series/IMF/{ds}?observations=1&series_ids={','.join(ids[i:i+20])}"))["series"]
+        for doc in j["docs"]:
+            n += 1
+            c = ISO3.get(doc.get("dimensions", {}).get("REF_AREA"))
+            if not c: continue
+            for per, v in zip(doc.get("period", []), doc.get("value", [])):
+                if isinstance(v, (int, float)) and int(str(per)[:4]) >= 1990: d.setdefault(c, {})[str(per)[:4]] = v * mult
+    if not d: raise RuntimeError(f"DBnomics {ds}/{code}: 시리즈 없음 (응답 {n}건)")
+    return d
 def imf(code, mult=1):
     import urllib.parse
     ds = dbn_dataset(); d = {}; seen = 0; raw = []
@@ -189,7 +205,7 @@ for ind in wbs:
     json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in imfs:
     try:
-        r = imf(ind["imf"], ind.get("mult", 1))
+        r = imf_ids(ind["imfds"], ind["imf"], ind.get("sector"), ind.get("mult", 1)) if ind.get("imfds") else imf(ind["imf"], ind.get("mult", 1))
         if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], f"품질미달: {len(r)}개국, KOR={'KOR' in r}")
         else: save(ind["id"], r); ok.append(ind["id"])
         import time; time.sleep(0.5)
