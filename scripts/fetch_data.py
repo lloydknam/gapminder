@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """OECD(지표) + World Bank(X축 GDP, 크기 인구) -> data/*.json  (OECD 38개국만)"""
-import csv, io, json, sys, urllib.request, urllib.error, pathlib
+import csv, io, json, re, sys, urllib.request, urllib.error, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "data"; OUT.mkdir(exist_ok=True)
 COUNTRIES = list(json.load(open(ROOT / "countries.json")))
@@ -93,25 +93,42 @@ def probe(ind):
     json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1 or k in ("FREQ", "UNIT_MEASURE", "MEASURE")}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
     print("probe", ind["id"], n)
 
-IMF = "https://www.imf.org/external/datamapper/api/v1/"
-def imf(code, mult=1):
-    res = json.loads(get(IMF + code))
-    vals = res.get("values", {}).get(code)
-    if not vals: raise RuntimeError(f"IMF 지표 없음/빈 응답: {code}")
-    d = {}
-    for c, ys in vals.items():
-        if c in COUNTRIES:
-            for y, v in ys.items():
-                if v is not None and int(y) >= 1990: d.setdefault(c, {})[y] = v * mult
-    return d
-def imf_catalog():
-    res = json.loads(get(IMF + "indicators"))["indicators"]
+DBN = "https://api.db.nomics.world/v22"   # IMF WEO는 DBnomics(공개 API) 경유
+WEO_DS = None
+def dbn_dataset():
+    global WEO_DS
+    if WEO_DS: return WEO_DS
+    res = json.loads(get(f"{DBN}/datasets/IMF?limit=1000"))
+    names = [d["code"] for d in res["datasets"]["docs"]]
     pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
-    out = {k: {"label": v.get("label"), "unit": v.get("unit"), "dataset": v.get("dataset"), "desc": (v.get("description") or "")[:160]} for k, v in res.items()}
-    json.dump(out, open(pd / "imf_catalog.json", "w"), ensure_ascii=False, indent=0)
-    print("IMF 카탈로그", len(out))
-try: imf_catalog()
-except BaseException as e: print(f"[IMF 카탈로그 실패] {type(e).__name__} {e}", flush=True)
+    json.dump({d["code"]: d.get("name") for d in res["datasets"]["docs"]}, open(pd / "imf_datasets.json", "w"), ensure_ascii=False, indent=0)
+    weo = sorted(n for n in names if re.fullmatch(r"WEO:\d{4}-\d{2}", n))
+    if not weo: raise RuntimeError(f"WEO 데이터셋 없음: {names[:30]}")
+    WEO_DS = weo[-1]; print("WEO 데이터셋", WEO_DS)
+    try:
+        info = json.loads(get(f"{DBN}/datasets/IMF/{WEO_DS}"))["datasets"]["docs"][0]
+        json.dump({"dimensions_labels": info.get("dimensions_labels"), "dimensions_values_labels": info.get("dimensions_values_labels")}, open(pd / "imf_catalog.json", "w"), ensure_ascii=False, indent=0)
+    except BaseException as e: print("[WEO 카탈로그 실패]", e)
+    return WEO_DS
+def imf(code, mult=1):
+    import urllib.parse
+    ds = dbn_dataset(); d = {}; seen = 0; raw = []
+    for off in range(0, 6000, 1000):
+        j = json.loads(get(f"{DBN}/series/IMF/{ds}?q={urllib.parse.quote(code)}&observations=1&limit=1000&offset={off}"))["series"]
+        for doc in j["docs"]:
+            dims = doc.get("dimensions", {}); vs = list(dims.values())
+            if code not in vs: continue
+            c = next((v for v in vs if v in COUNTRIES), None)
+            if len(raw) < 3: raw.append({k: doc.get(k) for k in ("series_code", "dimensions", "period", "value")})
+            if not c: continue
+            for per, v in zip(doc.get("period", []), doc.get("value", [])):
+                if isinstance(v, (int, float)) and int(str(per)[:4]) >= 1990: d.setdefault(c, {})[str(per)[:4]] = v * mult
+        seen += len(j["docs"])
+        if off + 1000 >= j.get("num_found", 0): break
+    if not d:
+        pd = OUT / "_probe"; pd.mkdir(exist_ok=True); json.dump(raw, open(pd / f"dbn_{code}.json", "w"), ensure_ascii=False, indent=0)
+        raise RuntimeError(f"DBnomics에서 {code} 시리즈를 찾지 못함 (검색 {seen}건)")
+    return d
 
 save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
 save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
@@ -168,4 +185,4 @@ print("완료:", ok)
 
 import datetime
 _n = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
-json.dump({"updated": _n.strftime("%Y-%m-%d"), "proj_from": _n.year if _n.month >= 4 else _n.year - 1}, open(OUT / "meta.json", "w"))
+json.dump({"updated": _n.strftime("%Y-%m-%d"), "proj_from": int(WEO_DS[4:8]) if WEO_DS else (_n.year if _n.month >= 4 else _n.year - 1)}, open(OUT / "meta.json", "w"))
