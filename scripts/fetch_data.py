@@ -93,15 +93,36 @@ def probe(ind):
     json.dump({"rows": n, "values": {k: sorted(v) for k, v in uniq.items() if len(v) > 1 or k in ("FREQ", "UNIT_MEASURE", "MEASURE")}}, open(pd / f"{ind['id']}.json", "w"), ensure_ascii=False)
     print("probe", ind["id"], n)
 
+IMF = "https://www.imf.org/external/datamapper/api/v1/"
+def imf(code, mult=1):
+    res = json.loads(get(IMF + code))
+    vals = res.get("values", {}).get(code)
+    if not vals: raise RuntimeError(f"IMF 지표 없음/빈 응답: {code}")
+    d = {}
+    for c, ys in vals.items():
+        if c in COUNTRIES:
+            for y, v in ys.items():
+                if v is not None and int(y) >= 1990: d.setdefault(c, {})[y] = v * mult
+    return d
+def imf_catalog():
+    res = json.loads(get(IMF + "indicators"))["indicators"]
+    pd = OUT / "_probe"; pd.mkdir(exist_ok=True)
+    out = {k: {"label": v.get("label"), "unit": v.get("unit"), "dataset": v.get("dataset"), "desc": (v.get("description") or "")[:160]} for k, v in res.items()}
+    json.dump(out, open(pd / "imf_catalog.json", "w"), ensure_ascii=False, indent=0)
+    print("IMF 카탈로그", len(out))
+try: imf_catalog()
+except BaseException as e: print(f"[IMF 카탈로그 실패] {type(e).__name__} {e}", flush=True)
+
 save(cat["x"]["id"], worldbank(cat["x"]["wb"]))
 save(cat["size"]["id"], worldbank(cat["size"]["wb"]))
-ok, flows, probes, wbs = [], {}, [], []
+ok, flows, probes, wbs, imfs = [], {}, [], [], []
 FAIL = {}
 def note(k, m):
     FAIL[k] = str(m)[:3500]; json.dump(FAIL, open(OUT / "failures.json", "w"), ensure_ascii=False, indent=1)
 for c in cat["categories"]:
     for ind in c["indicators"]:
-        if ind["status"] == "ready" and ind.get("wb"): wbs.append(ind)
+        if ind["status"] == "ready" and ind.get("imf"): imfs.append(ind)
+        elif ind["status"] == "ready" and ind.get("wb"): wbs.append(ind)
         elif ind["status"] == "ready": flows.setdefault(ind["flow"], []).append(ind)
         elif ind["status"] == "probe": probes.append(ind)
 for flow, inds in flows.items():
@@ -130,6 +151,15 @@ for ind in wbs:
     except BaseException as e:
         print(f"[실패] {ind['id']} ({ind['wb']}): {type(e).__name__} {e}", flush=True); note(ind["id"], f"{type(e).__name__} {e}")
     json.dump(ok, open(OUT / "ready.json", "w"))
+for ind in imfs:
+    try:
+        r = imf(ind["imf"], ind.get("mult", 1))
+        if not quality(r): print(f"[품질미달] {ind['id']}: {len(r)}개국, 연도 {len({y for c in r.values() for y in c})}개, KOR={'KOR' in r}"); note(ind["id"], f"품질미달: {len(r)}개국, KOR={'KOR' in r}")
+        else: save(ind["id"], r); ok.append(ind["id"])
+        import time; time.sleep(0.5)
+    except BaseException as e:
+        print(f"[실패] {ind['id']} (IMF {ind['imf']}): {type(e).__name__} {e}", flush=True); note(ind["id"], f"{type(e).__name__} {e}")
+    json.dump(ok, open(OUT / "ready.json", "w"))
 for ind in probes:
     try: probe(ind)
     except BaseException as e: print(f"[probe실패] {ind['id']}: {type(e).__name__} {e}", flush=True)
@@ -137,4 +167,5 @@ json.dump(ok, open(OUT / "ready.json", "w"))
 print("완료:", ok)
 
 import datetime
-json.dump({"updated": (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")}, open(OUT / "meta.json", "w"))
+_n = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+json.dump({"updated": _n.strftime("%Y-%m-%d"), "proj_from": _n.year if _n.month >= 4 else _n.year - 1}, open(OUT / "meta.json", "w"))

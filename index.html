@@ -101,7 +101,7 @@ main{flex:1;min-width:0}.wrap{max-width:none;padding:0}
 <script>
 const COL={"유럽":"#9cc3f5","아시아":"#f7a3b5","북미":"#9edcb8","중남미":"#fbcf8f","오세아니아":"#c9b0ec"};
 let M={l:96,r:20,t:16,b:62},W=960,H=640,MOB=false;
-let xid="gdp_pc",META=null,CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null,I=null,EN=false;try{EN=localStorage.lang==="en"}catch(_){}
+let FWD=false,xid="gdp_pc",META=null,CAT,CT,X,P,Y,ind,years=[],cur,sel=null,timer=null,I=null,EN=false;try{EN=localStorage.lang==="en"}catch(_){}
 const KO={t1:"클사무관의",t2:"Global Stats",sub:"OECD 38개국 + 중국 · 지표별 시간 변화",menu:"☰ 메뉴",menu2:"분류·지표 선택",close:"✕ 닫기",sub2:"X: 1인당 GDP(PPP) · 크기: 인구 · 색: 대륙",xname:"1인당 GDP (PPP, 2021 불변 US$)",logs:" (로그)",unit:"단위: ",avgn:"개국",src:"출처 — 지표: ",srcx:" · 1인당 GDP: ",srcp:" · 인구: ",hint:"버블 위에 마우스를 올리면 값이 보입니다",kb:"키보드: ← 왼쪽 방향키 = 1년 전으로 이동 · → 오른쪽 방향키 = 1년 뒤로 이동 · 스페이스바 = 재생/정지 · 마지막 연도에서 멈추며, 재생 버튼을 다시 누르면 처음부터 재생됩니다",nodata:"이 지표는 데이터 준비 중입니다.",todo:"준비 중",korea:"한국",pop:"인구",gdp:"1인당 GDP",gall:"전체",goecd:"OECD",gbig:"주요국 (1천만↑)",gg7:"G7+한중"};
 const ENU={t1:"Clerk Kim's",t2:"Global Stats",sub:"38 OECD countries + China · indicators over time",menu:"☰ Menu",menu2:"Choose category · indicator",close:"✕ Close",sub2:"X: GDP per capita (PPP) · Size: population · Colour: continent",xname:"GDP per capita (PPP, 2021 constant US$)",logs:" (log)",unit:"Unit: ",avgn:" countries",src:"Source — Indicator: ",srcx:" · GDP per capita: ",srcp:" · Population: ",hint:"Hover over a bubble to see its values",kb:"Keyboard: ← back 1 year · → forward 1 year · Space = play/pause · Stops at the last year; press play again to restart",nodata:"Data for this indicator is being prepared.",todo:"coming soon",korea:"Korea",pop:"Population",gdp:"GDP per capita",gall:"All",goecd:"OECD",gbig:"Major (pop. ≥10M)",gg7:"G7 + KOR, CHN"};
 const S=k=>EN?ENU[k]:KO[k],NM=c=>EN?c:CT[c][0],iN=n=>EN&&I&&I.ind[n.id]||n.name,iU=n=>EN&&I&&(I.unit_ind&&I.unit_ind[n.id]||I.unit[n.unit])||n.unit,cN=c=>EN&&I&&I.cat[c.id]||c.name,coN=k=>EN&&I?I.ui.cont[k]:k;
@@ -132,8 +132,9 @@ const j=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()
 })();
 let ci=0,ii=0;
 const IC_O='<svg class="ic" viewBox="0 0 22 22" aria-label="OECD"><circle cx="11" cy="11" r="11" fill="#0b6e8f"/><path d="M11 4.5 4.5 8h13z M6.3 9.3h1.8v5.4H6.3z M10.1 9.3h1.8v5.4h-1.8z M13.9 9.3h1.8v5.4h-1.8z M5 15.7h12v1.6H5z" fill="#fff"/></svg>',IC_W='<svg class="ic" viewBox="0 0 22 22" aria-label="World Bank"><circle cx="11" cy="11" r="11" fill="#f08a24"/><g fill="none" stroke="#fff" stroke-width="1.3"><circle cx="11" cy="11" r="6"/><ellipse cx="11" cy="11" rx="2.6" ry="6"/><path d="M5 11h12"/></g></svg>';
-const ico=n=>n.wb?IC_W:IC_O;
-function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(n=>n.status==="ready").length,0);$("nav").innerHTML=`<span id="ncount">${EN?CAT.categories.length+" categories · "+nn+" indicators":CAT.categories.length+"개 분야 · "+nn+"개 지표"} <small>(${IC_O}OECD · ${IC_W}World Bank)</small></span><button id="nclose" type="button">${S("close")}</button>`+CAT.categories.map((c,i)=>`<section class="cg" data-c="${i}"><h3 data-c="${i}">${i+1}. ${cN(c)}</h3><div class="ci">`+c.indicators.map((n,k)=>`<button data-c="${i}" data-i="${k}" class="${n.status==="ready"?"":"todo"}">${ico(n)}${iN(n)}${n.status==="ready"?"":"<i>"+S("todo")+"</i>"}</button>`).join("")+`</div></section>`).join("");
+const IC_I='<svg class="ic" viewBox="0 0 22 22" aria-label="IMF"><circle cx="11" cy="11" r="11" fill="#1d4e9e"/><path d="M5.2 15.8h11.6v1.5H5.2z M6.2 11.6h2.2v3.5H6.2z M9.9 8.6h2.2v6.5H9.9z M13.6 5.4h2.2v9.7h-2.2z" fill="#fff"/></svg>';
+const ico=n=>n.imf?IC_I:n.wb?IC_W:IC_O;
+function buildNav(){const nn=CAT.categories.reduce((a,c)=>a+c.indicators.filter(n=>n.status==="ready").length,0);$("nav").innerHTML=`<span id="ncount">${EN?CAT.categories.length+" categories · "+nn+" indicators":CAT.categories.length+"개 분야 · "+nn+"개 지표"} <small>(${IC_O}OECD · ${IC_W}World Bank · ${IC_I}IMF)</small></span><button id="nclose" type="button">${S("close")}</button>`+CAT.categories.map((c,i)=>`<section class="cg" data-c="${i}"><h3 data-c="${i}">${i+1}. ${cN(c)}</h3><div class="ci">`+c.indicators.map((n,k)=>`<button data-c="${i}" data-i="${k}" class="${n.status==="ready"?"":"todo"}">${ico(n)}${iN(n)}${n.status==="ready"?"":"<i>"+S("todo")+"</i>"}</button>`).join("")+`</div></section>`).join("");
  $("nav").insertBefore(XROW,$("nav").children[1]||null);
  $("nav").onclick=e=>{const b=e.target.closest("button");if(b){pick(+b.dataset.c,+b.dataset.i);$("nav").classList.remove("open");if(matchMedia("(max-width:1280px)").matches)scrollTo({top:0,behavior:"smooth"});return}
   const h=e.target.closest("h3");if(h)showCat(+h.dataset.c)}}
@@ -146,10 +147,10 @@ function pick(c,i){ci=c;ii=i;setHash();showCat(c);
  titles();load()}
 function titles(){{const cs=$("cursel");if(cs)cs.textContent=cN(CAT.categories[ci])+" › "+iN(CAT.categories[ci].indicators[ii]).replace(/ \(.*$/,"")}$("chip").textContent=(ci+1)+". "+cN(CAT.categories[ci]);$("h1").innerHTML=ttlOf(iN(CAT.categories[ci].indicators[ii]));$("sub2").textContent=EN?"X: "+xS()+" · Size: population · Colour: continent":"X: "+xS()+" · 크기: 인구 · 색: 대륙"}
 function srcLine(){const wb=c=>`<a href="https://data.worldbank.org/indicator/${c}" target="_blank" rel="noopener">World Bank WDI · ${c}</a>`;
- const so=n=>{if(n.wb)return wb(n.wb);const m=(n.flow||"").split(",");return "OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")};
- $("srcl").innerHTML=S("src")+so(ind)+(EN?" · "+xS()+": ":" · "+xS()+": ")+so(xd())+S("srcp")+wb(CAT.size.wb)}
+ const so=n=>{if(n.imf)return `<a href="https://www.imf.org/external/datamapper/${n.imf}" target="_blank" rel="noopener">IMF DataMapper · ${n.imf}</a>`+(n.proj?(EN?" (incl. projections)":" (전망 포함)"):"");if(n.wb)return wb(n.wb);const m=(n.flow||"").split(",");return "OECD · "+((m[1]||"").split("@")[1]||m[1]||"")+(m[2]?" (v"+m[2]+")":"")};
+ $("srcl").innerHTML=S("src")+so(ind)+(EN?" · "+xS()+": ":" · "+xS()+": ")+so(xd())+S("srcp")+wb(CAT.size.wb)+(ind.proj?(EN?" · Projection years: X and size held at latest actuals":" · 전망 연도의 X축·크기는 최신 실적값 고정"):"")}
 async function load(){stop();sel=null;$("tip").style.display="none";
- ind=CAT.categories[ci].indicators[ii];srcLine();
+ ind=CAT.categories[ci].indicators[ii];FWD=!!ind.proj;srcLine();
  const msg=$("msg");
  if(ind.status!=="ready"){svg.style.display="none";msg.hidden=false;msg.textContent=S("nodata");return}
  try{[X,P,Y]=await Promise.all([j(`data/${xid}.json`),j(`data/${CAT.size.id}.json`),j(`data/${ind.id}.json`)])}
@@ -162,7 +163,7 @@ async function load(){stop();sel=null;$("tip").style.display="none";
 function val(S,c,y){const o=S[c];if(!o)return null;if(o[y]!=null)return o[y];
  const k=Object.keys(o).map(Number).sort((a,b)=>a-b);let a=null,b=null;
  for(const t of k){if(t<y)a=t;else if(t>y){b=t;break}}
- if(a==null||b==null||y-a>5||b-y>5)return null;return o[a]+(o[b]-o[a])*(y-a)/(b-a)}
+ if(FWD&&a!=null&&b==null&&y-a<=8)return o[a];if(a==null||b==null||y-a>5||b-y>5)return null;return o[a]+(o[b]-o[a])*(y-a)/(b-a)}
 function draw(){
  const fy=timer?fc:cur;
  const bw=svg.parentElement.clientWidth||960;MOB=bw<640;
@@ -180,6 +181,7 @@ function draw(){
  const pm=Math.max(...Object.values(P).flatMap(o=>Object.values(o)));
  const sr=p=>MOB?2.5+Math.sqrt(p/pm)*22:3+Math.sqrt(p/pm)*38;
  let h=`<text x="${W-M.r-8}" y="${H-M.b-12}" text-anchor="end" style="font-size:${MOB?96:170}px;font-weight:800;fill:#bfe9df;opacity:.85;pointer-events:none">${cur}</text>`;
+ const PJ=ind&&ind.proj&&META&&META.proj_from&&cur>=META.proj_from;if(PJ)h=h.replace("fill:#bfe9df","fill:#f8dcae")+`<text x="${W-M.r-8}" y="${H-M.b-(MOB?112:200)}" text-anchor="end" style="font-size:${MOB?15:24}px;font-weight:800;fill:#c97a12;pointer-events:none">${EN?"IMF projection":"IMF 전망치"}</text>`;
  const xt=xTicks(x0,x1,LG);
  xt.forEach(v=>h+=`<line class="grid" x1="${sx(v)}" x2="${sx(v)}" y1="${M.t}" y2="${H-M.b}"/><text class="ax" x="${sx(v)}" y="${H-M.b+(MOB?16:21)}" text-anchor="middle">${xFmt(v,MOB)}</text>`);
  const n=5;for(let i=0;i<=n;i++){const v=y0+(y1-y0)*i/n;h+=`<line class="grid" x1="${M.l}" x2="${W-M.r}" y1="${sy(v)}" y2="${sy(v)}"/><text class="ax" x="${M.l-(MOB?2:3)}" y="${sy(v)+4}" text-anchor="end">${v.toFixed(v<10?1:0)}</text>`}

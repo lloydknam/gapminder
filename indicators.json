@@ -694,6 +694,66 @@
      "wb": "ST.INT.RCPT.CD",
      "status": "ready",
      "mult": 1e-09
+    },
+    {
+     "id": "imf_growth",
+     "name": "실질 GDP 성장률 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NGDP_RPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_cpi",
+     "name": "소비자물가 상승률 (IMF, 연평균)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "PCPIPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_cpie",
+     "name": "소비자물가 상승률 (IMF, 연말)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "PCPIEPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_sav",
+     "name": "총저축률 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NGSD_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_inv",
+     "name": "총투자율 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NID_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_gdppc",
+     "name": "1인당 GDP (IMF, 명목 US$)",
+     "unit": "US$",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "NGDPDPC",
+     "proj": true,
+     "status": "ready"
     }
    ]
   },
@@ -997,6 +1057,16 @@
       "WORKER_STATUS": "_T",
       "HOUR_BANDS": "H_GE50"
      },
+     "status": "ready"
+    },
+    {
+     "id": "imf_ur",
+     "name": "실업률 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "LUR",
+     "proj": true,
      "status": "ready"
     }
    ]
@@ -2187,6 +2257,76 @@
       "UNIT_MEASURE": "PT_OTE_S13"
      },
      "status": "ready"
+    },
+    {
+     "id": "imf_debt",
+     "name": "일반정부 총부채 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGXWDG_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_netdebt",
+     "name": "일반정부 순부채 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGXWDN_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_bal",
+     "name": "일반정부 재정수지 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGXCNL_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_prim",
+     "name": "일반정부 기초재정수지 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGXONLB_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_struct",
+     "name": "구조적 재정수지 (IMF, 잠재GDP 대비)",
+     "unit": "% 잠재GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGSB_NPGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_rev",
+     "name": "일반정부 수입 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGR_NGDP",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_exp",
+     "name": "일반정부 지출 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "GGX_NGDP",
+     "proj": true,
+     "status": "ready"
     }
    ]
   },
@@ -2379,6 +2519,36 @@
      "scale": "linear",
      "source": "World Bank",
      "wb": "FD.AST.PRVT.GD.ZS",
+     "status": "ready"
+    },
+    {
+     "id": "imf_ca",
+     "name": "경상수지 (IMF, GDP 대비)",
+     "unit": "% GDP",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "BCA_NGDPD",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_xvol",
+     "name": "상품 수출물량 증가율 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "TXG_RPCH",
+     "proj": true,
+     "status": "ready"
+    },
+    {
+     "id": "imf_mvol",
+     "name": "상품 수입물량 증가율 (IMF)",
+     "unit": "%",
+     "scale": "linear",
+     "source": "IMF",
+     "imf": "TMG_RPCH",
+     "proj": true,
      "status": "ready"
     }
    ]
